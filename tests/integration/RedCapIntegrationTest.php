@@ -1,4 +1,8 @@
 <?php
+#-------------------------------------------------------
+# Copyright (C) 2019 The Trustees of Indiana University
+# SPDX-License-Identifier: BSD-3-Clause
+#-------------------------------------------------------
 
 namespace IU\PHPCap;
 
@@ -110,7 +114,7 @@ class RedCapIntegrationTest extends TestCase
                 'surveys_enabled' => 1,
                 'record_autonumbering_enabled' => 1
             ];
-            $project = self::$redCap->createProject($projectData, $format = null);
+            $project = self::$redCap->createProject($projectData);
         
             $projectInfo = $project->exportProjectInfo();
         

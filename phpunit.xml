@@ -23,6 +23,7 @@
       <file>tests/integration/MetadataTest.php</file>
       <file>tests/integration/NextRecordNameTest.php</file>
       <file>tests/integration/PdfFormsTest.php</file>
+      <file>tests/integration/PhpCapVersionTest.php</file>
       <file>tests/integration/ProjectInfoTest.php</file>
       <file>tests/integration/ProjectsTest.php</file>
       <file>tests/integration/ProjectXmlTest.php</file>

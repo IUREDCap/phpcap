@@ -9,11 +9,12 @@ namespace IU\PHPCap;
 use PHPUnit\Framework\TestCase;
 
 use IU\PHPCap\RedCapProject;
+use IU\PHPCap\PhpCapException;
 
 /**
- * PHPUnit tests for next record names for the RedCapProject class.
+ * PHPUnit tests for REDCap version.
  */
-class NextRecordNameTest extends TestCase
+class PhpCapVersionTest extends TestCase
 {
     private static $config;
     private static $basicDemographyProject;
@@ -26,22 +27,11 @@ class NextRecordNameTest extends TestCase
             self::$config['api.url'],
             self::$config['basic.demography.api.token']
         );
-        self::$longitudinalDataProject = new RedCapProject(
-            self::$config['api.url'],
-            self::$config['longitudinal.data.api.token']
-        );
     }
     
-    public function testNextRecordName1()
+    public function testGetPhpCapVersion()
     {
-        $nextRecordName = self::$basicDemographyProject->generateNextRecordName();
-        $this->assertEquals('1101', $nextRecordName, 'Export results check.');
-    }
-    
-    
-    public function testNextRecordName2()
-    {
-        $nextRecordName = self::$longitudinalDataProject->generateNextRecordName();
-        $this->assertEquals('1101', $nextRecordName, 'Export results check.');
+        $result = self::$basicDemographyProject->getPhpCapVersion();
+        $this->assertRegExp('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'PHPCap version format test.');
     }
 }

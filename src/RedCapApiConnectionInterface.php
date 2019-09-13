@@ -1,4 +1,8 @@
 <?php
+#-------------------------------------------------------
+# Copyright (C) 2019 The Trustees of Indiana University
+# SPDX-License-Identifier: BSD-3-Clause
+#-------------------------------------------------------
 
 /**
  * Contains interface for classes implementing a connection to a REDCap API.

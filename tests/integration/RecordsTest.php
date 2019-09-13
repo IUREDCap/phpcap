@@ -1,4 +1,8 @@
 <?php
+#-------------------------------------------------------
+# Copyright (C) 2019 The Trustees of Indiana University
+# SPDX-License-Identifier: BSD-3-Clause
+#-------------------------------------------------------
 
 namespace IU\PHPCap;
 
@@ -319,6 +323,7 @@ class RecordsTest extends TestCase
     public function testExportRecordsApWithNullArgument()
     {
         $result = self::$basicDemographyProject->exportRecordsAp(null);
+        $this->assertNotNull($result);
     }
     
     public function testExportRecordsApWithTooManyArguments()

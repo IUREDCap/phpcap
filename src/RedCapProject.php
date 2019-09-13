@@ -1,4 +1,9 @@
 <?php
+#-------------------------------------------------------
+# Copyright (C) 2019 The Trustees of Indiana University
+# SPDX-License-Identifier: BSD-3-Clause
+#-------------------------------------------------------
+
 /**
  * This file contains the REDCap project class for PHPCap.
  */
@@ -1757,6 +1762,13 @@ class RedCapProject
         return (integer) $result;
     }
     
+    /**
+     * Gets the PHPCap version number.
+     */
+    public function getPhpCapVersion()
+    {
+        return Version::RELEASE_NUMBER;
+    }
  
     /**
      * Gets an array of record ID batches.
