@@ -61,7 +61,8 @@ foreach ($records as $record) {
 
 Documentation
 ----------------------------
-For more information, see the PHPCap documentation: https://aarenson.github.io/PHPCap/
+For more information, see the PHPCap documentation:
+[https://iuredcap.github.io/phpcap](https://iuredcap.github.io/phpcap/)
 
 
 
