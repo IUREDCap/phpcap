@@ -23,7 +23,7 @@ The exportRecords method is a standard PHP method that has 12 parameters that ca
 be set to modify the records that are exported and their format.
 
 The complete documentation for this method can be found in the PHPCap API documentation:
-https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.RedCapProject.html
+https://iuredcap.github.io/phpcap/api/class-IU.PHPCap.RedCapProject.html
 
 Since this method corresponds very closely to the REDCap API Export Records method, the
 REDCap API documentation can also be checked for more information. And the REDCap

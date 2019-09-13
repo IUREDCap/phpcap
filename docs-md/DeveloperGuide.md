@@ -22,7 +22,7 @@ Setup
 2. Get PHPCap:
      
     ```shell
-    git clone https://github.com/aarenson/PHPCap
+    git clone https://github.com/iuredcap/phpcap
     ```
     
 3. Get Composer. Composer is needed to download the development depedencies for PHPCap.
@@ -49,7 +49,7 @@ To set up PHPCap for development on Ubuntu 16, execute the following commands:
 sudo apt-get install php php-curl php-xml php-mbstring
 sudo apt-get install php-xdebug
 sudo apt-get install git
-git clone https://github.com/aarenson/PHPCap
+git clone https://github.com/iuredcap/phpcap
 sudo apt-get install composer
 cd PHPCap
 composer install

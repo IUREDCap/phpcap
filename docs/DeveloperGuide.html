@@ -43,6 +43,10 @@
 <div id="right">
 <div id="rightInner">
 <div id="content">
+<!-- =================================================
+Copyright (C) 2019 The Trustees of Indiana University
+SPDX-License-Identifier: BSD-3-Clause
+================================================== -->
 <h1>Developer Guide</h1>
 <p>This guide is for people interested in developing PHPCap (i.e., actually making changes to the PHPCap code). If you just want to use PHPCap to access REDCap from PHP, please see the
 user guides.</p>
@@ -60,7 +64,7 @@ user guides.</p>
 See: <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></li>
 <li>
 <p>Get PHPCap:</p>
-<div class="description"><pre><code class="language-shell">git clone https://github.com/aarenson/PHPCap</code></pre></div>
+<div class="description"><pre><code class="language-shell">git clone https://github.com/iuredcap/phpcap</code></pre></div>
 </li>
 <li>Get Composer. Composer is needed to download the development depedencies for PHPCap.
 See: <a href="https://getcomposer.org/download/">https://getcomposer.org/download/</a>.
@@ -83,7 +87,7 @@ composer install
 <div class="description"><pre><code class="language-shell">sudo apt-get install php php-curl php-xml php-mbstring
 sudo apt-get install php-xdebug
 sudo apt-get install git
-git clone https://github.com/aarenson/PHPCap
+git clone https://github.com/iuredcap/phpcap
 sudo apt-get install composer
 cd PHPCap
 composer install</code></pre></div>
@@ -238,13 +242,14 @@ This directory is intended as a place for developers to places tests for changes
 <li><a href="http://www.php-fig.org/psr/psr-2/">http://www.php-fig.org/psr/psr-2/</a></li>
 </ul>
 <p>To check for compliance for the PHPCap source code, execute the following command in the root directory of PHPCap:</p>
-<div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 src</code></pre></div>
+<div class="description"><pre><code>./vendor/bin/phpcs src</code></pre></div>
 <p>To check compliance for the automated tests, use:</p>
-<div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 tests/unit tests/integration</code></pre></div>
-<p>To check for compliance for the PHPCap source code and the tests, use:</p>
-<div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 src tests/unit tests/integration</code></pre></div>
+<div class="description"><pre><code>./vendor/bin/phpcs tests/unit tests/integration</code></pre></div>
+<p>To check for compliance for the PHPCap source code and the tests, use the default settings
+(defined in the top-level phpcs.xml file):</p>
+<div class="description"><pre><code>./vendor/bin/phpcs</code></pre></div>
 <p>You can check specific files for compliance by specifying the path to the file, for example:</p>
-<div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 src/RedCapProject.php  </code></pre></div>
+<div class="description"><pre><code>./vendor/bin/phpcs src/RedCapProject.php  </code></pre></div>
 <p>Note that if you are working on Windows and have the git property <strong>core.autocrlf</strong> set to true, you may see errors similar to the following:</p>
 <div class="description"><pre><code>----------------------------------------------------------------------
 FOUND 1 ERROR AFFECTING 1 LINE

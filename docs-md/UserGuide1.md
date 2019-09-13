@@ -62,15 +62,15 @@ If you have [Composer](https://getcomposer.org/) installed, you can get PHPCap u
     
 If you have [Git](https://git-scm.com/) installed, you can use the following:
 
-    git clone https://github.com/aarenson/PHPCap 
+    git clone https://github.com/iuredcap/phpcap 
 
 If you don't have Composer or Git installed, you can get a Zip file of PHPCap from GitHub by clicking on this link:
 
-https://github.com/aarenson/PHPCap/archive/master.zip
+https://github.com/iuredcap/phpcap/archive/master.zip
 
 Or go to this page and click on the "Clone or download" button, and then click on "Download ZIP":
 
-https://github.com/aarenson/PHPCap/
+https://github.com/iuredcap/phpcap/
 
 Then unzip the file to your project directory.
     

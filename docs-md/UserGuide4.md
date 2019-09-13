@@ -15,7 +15,7 @@ importRecords
 ---------------------------
 Detailed documentation for the importRecords method can be found in
 the PHPCap API documentation:
-https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.RedCapProject.html
+https://iuredcap.github.io/phpcap/api/class-IU.PHPCap.RedCapProject.html
 
 Since this method corresponds very closely to the REDCap API Import Records method, the
 REDCap API documentation can also be checked for more information. And the REDCap
@@ -63,7 +63,7 @@ into an existing REDCap record.
 
 Detailed documentation for the importRecords method can be found in
 the PHPCap API documentation:
-https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.RedCapProject.html 
+https://iuredcap.github.io/phpcap/api/class-IU.PHPCap.RedCapProject.html 
 
 Below is example code for importing a consent form file for a patient into the patient's record:
 ```php
