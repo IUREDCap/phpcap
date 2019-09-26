@@ -92,7 +92,7 @@ with data access group information included, you would use something like the fo
 with the exportRecords method:</p>
 <div class="description"><pre><code class="language-php"><span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecords(<span class="php-quote">'csv'</span>, <span class="php-keyword1">null</span>, <span class="php-keyword1">null</span>, <span class="php-keyword1">null</span>, <span class="php-keyword1">null</span>, <span class="php-keyword1">null</span>,
     <span class="php-keyword1">null</span>, <span class="php-keyword1">null</span>, <span class="php-keyword1">null</span>, <span class="php-keyword1">null</span>, <span class="php-keyword1">null</span>, <span class="php-keyword1">true</span>);</code></pre></div>
-<p>In this case, the order of the arguments has to match extactly with the
+<p>In this case, the order of the arguments has to match exactly with the
 order of the parameters in the method definition. And since an argument
 for the the last parameter ($exportDataAccessGroups) is being provided, arguments for all
 parameters before it need to be included.</p>

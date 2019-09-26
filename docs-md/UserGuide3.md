@@ -74,7 +74,7 @@ with the exportRecords method:
 $records = $project->exportRecords('csv', null, null, null, null, null,
     null, null, null, null, null, true);
 ```
-In this case, the order of the arguments has to match extactly with the
+In this case, the order of the arguments has to match exactly with the
 order of the parameters in the method definition. And since an argument
 for the the last parameter ($exportDataAccessGroups) is being provided, arguments for all
 parameters before it need to be included.

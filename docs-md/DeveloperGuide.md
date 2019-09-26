@@ -25,7 +25,7 @@ Setup
     git clone https://github.com/iuredcap/phpcap
     ```
     
-3. Get Composer. Composer is needed to download the development depedencies for PHPCap.
+3. Get Composer. Composer is needed to download the development dependencies for PHPCap.
    See: https://getcomposer.org/download/.
    You can either install the composer.phar file to the root directory of PHPCap (the .gitignore 
    file is set to ignore this file), or install it globally at the system or account level.
