@@ -1,5 +1,5 @@
 {
-	"name" : "iuredcap/phpcap",
+	"name" : "iu-redcap/phpcap",
 	"license" : "Apache-2.0",
 	"description" : "PHP API for REDCap",
 	"keywords" : [
