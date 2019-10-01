@@ -18,9 +18,9 @@ REDCap is a web application for building and managing online surveys and databas
 
 Developers: [Jim Mullen](https://github.com/mullen2); [Andy Arenson](https://github.com/aarenson), aarenson@iu.edu
 
-[![Packagist](https://img.shields.io/packagist/v/iu-redcap/PHPCap.svg)](https://packagist.org/packages/iu-redcap/phpcap)
+[![Packagist](https://img.shields.io/github/v/release/iuredcap/PHPCap.svg)](https://packagist.org/packages/iu-redcap/phpcap)
 [![PHP 5.6+](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg)](https://php.net/)
-[![BSD 3-Clause](https://img.shields.io/packagist/l/iu-redcap/PHPCap.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![BSD 3-Clause](https://img.shields.io/github/license/iuredcap/PHPCap.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 
 
