@@ -58,7 +58,7 @@ Create a directory for your project, and cd to that directory:
   
 If you have [Composer](https://getcomposer.org/) installed, you can get PHPCap using:
 
-    composer require phpcap/phpcap
+    composer require iu-redcap/phpcap
     
 If you have [Git](https://git-scm.com/) installed, you can use the following:
 
