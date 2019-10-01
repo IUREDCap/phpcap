@@ -20,7 +20,7 @@ Developers: [Jim Mullen](https://github.com/mullen2); [Andy Arenson](https://git
 
 [![Packagist](https://img.shields.io/packagist/v/iu-redcap/PHPCap.svg)](https://packagist.org/packages/iu-redcap/phpcap)
 [![PHP 5.6+](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg)](https://php.net/)
-[![Apache 2 License](https://img.shields.io/packagist/l/phpcap/PHPCap.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![BSD 3-Clause](https://img.shields.io/packagist/l/iu-redcap/PHPCap.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 
 

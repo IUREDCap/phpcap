@@ -1,7 +1,7 @@
 {
 	"name" : "iu-redcap/phpcap",
-	"license" : "Apache-2.0",
-	"description" : "PHP API for REDCap",
+	"license" : "BSD-3-Clause",
+	"description" : "PHP library for accessing the REDCap API",
 	"keywords" : [
 		"REDCap"
 	],
