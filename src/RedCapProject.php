@@ -418,7 +418,7 @@ class RedCapProject
     
     /**
      * Imports the file into the field of the record
-     * with the specified event and/or repeat istance, if any.
+     * with the specified event and/or repeat instance, if any.
      *
      * Example usage:
      * <code>
