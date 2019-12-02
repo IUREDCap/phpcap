@@ -908,7 +908,7 @@ class RedCapProject
      * @param array $recordIds array of strings with record id's that are to be retrieved.
      * @param array $fields array of field names to export
      * @param array $events array of event names for which fields should be exported
-     * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
+     * @param string $filterLogic logic used to restrict the records retrieved, e.g.,
      *     "[last_name] = 'Smith'".
      * @param boolean $exportSurveyFields specifies whether survey fields should be exported.
      *     <ul>
@@ -1026,7 +1026,7 @@ class RedCapProject
      * @param array $fields array of field names to export
      * @param array $forms array of form names for which fields should be exported
      * @param array $events array of event names for which fields should be exported
-     * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
+     * @param string $filterLogic logic used to restrict the records retrieved, e.g.,
      *         "[last_name] = 'Smith'".
      * @param string $rawOrLabel indicates what should be exported for options of multiple choice fields:
      *     <ul>
@@ -1790,7 +1790,7 @@ class RedCapProject
      *     The last batch may have less record IDs. For example, if you had 500
      *     record IDs and specified a batch size of 200, the first 2 batches would have
      *     200 record IDs, and the last batch would have 100.
-     * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
+     * @param string $filterLogic logic used to restrict the records retrieved, e.g.,
      *     "[last_name] = 'Smith'". This could be used for batch processing a subset
      *     of the records.
      * @param $recordIdFieldName the name of the record ID field. Specifying this is not
