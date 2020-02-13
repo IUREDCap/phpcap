@@ -65,7 +65,10 @@ class ImportAndDeleteMetadataTest extends TestCase
         
         $expectedMetadata = self::$longitudinalDataProject->exportMetadata();
         $actualMetadata   = self::$emptyProject->exportMetadata();
-        
+        /*foreach ($actualMetadata as &$str) {
+            $str = str_replace(" | ", "|", $str);
+        }*/
+
         $this->assertEquals($expectedMetadata, $actualMetadata, 'Metadata comparison.');
          
         # Call with no override specified to make sure
