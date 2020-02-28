@@ -1085,7 +1085,11 @@ class RedCapProject
         $rawOrLabelHeaders = 'raw',
         $exportCheckboxLabel = false,
         $exportSurveyFields = false,
-        $exportDataAccessGroups = false
+        $exportDataAccessGroups = false,
+        $dateRangeBegin = null,
+        $dateRangeEnd = null,
+        $csvDelimiter = ',',
+        $decimalCharacter = null
     ) {
         $data = array(
                 'token'        => $this->apiToken,
@@ -1113,6 +1117,15 @@ class RedCapProject
         
         $data['filterLogic'] = $this->processFilterLogicArgument($filterLogic);
         
+        $data['dateRangeBegin'] = $this->processDateRangeArgument($dateRangeBegin);
+        $data['dateRangeEnd'] = $this->processDateRangeArgument($dateRangeEnd);
+
+        if ($data['format'] == 'csv') {
+          $data['csvDelimiter'] = $this->processCsvDelimiterArgument($csvDelimiter, $format);
+        };
+
+        $data['decimalCharacter'] = $this->processDecimalCharacterArgument($decimalCharacter);
+
         #---------------------------------------
         # Get the records and process them
         #---------------------------------------
@@ -1494,7 +1507,8 @@ class RedCapProject
         $format = 'php',
         $rawOrLabel = 'raw',
         $rawOrLabelHeaders = 'raw',
-        $exportCheckboxLabel = false
+        $exportCheckboxLabel = false,
+        $csvDelimiter = ','
     ) {
         $data = array(
                 'token' => $this->apiToken,
@@ -1513,7 +1527,10 @@ class RedCapProject
         $data['rawOrLabel']          = $this->processRawOrLabelArgument($rawOrLabel);
         $data['rawOrLabelHeaders']   = $this->processRawOrLabelHeadersArgument($rawOrLabelHeaders);
         $data['exportCheckboxLabel'] = $this->processExportCheckboxLabelArgument($exportCheckboxLabel);
-        
+        if ($data['format'] == 'csv') {
+            $data['csvDelimiter'] = $this->processCsvDelimiterArgument($csvDelimiter, $format);
+        }
+
         #---------------------------------------------------
         # Get and process records
         #---------------------------------------------------
@@ -2737,5 +2754,79 @@ class RedCapProject
             $this->errorHandler->throwException($message, $code);
         } // @codeCoverageIgnore
         return $type;
+    }
+
+    protected function processCsvDelimiterArgument($csvDelimiter, $format)
+    {
+        $legalCsvDelimiters = array(',',';','tab','|','^');
+        if ($format == 'csv') {
+            if (!$csvDelimiter) {
+               $csvDelimiter = ',';
+            }    
+            if (gettype($csvDelimiter) !== 'string') {
+                $message = 'The csv delimiter specified has type "'.gettype($csvDelimiter)
+                    .'", but it should be a string.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
+        
+            $csvDelimiter = strtolower(trim($csvDelimiter));
+        
+            if (!in_array($csvDelimiter, $legalCsvDelimiters)) {
+                $message = 'Invalid csv delimiter "'.$csvDelimiter.'" specified.'
+                    .' Valid csv delimiter options are: "'.
+                    implode('", "', $legalCsvDelimiters).'".';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
+        }
+        return $csvDelimiter;
+    }
+
+    protected function processDateRangeArgument($dateRange)
+    {  
+        if (isset($dateRange)) { 
+            if (trim($dateRange) === '') {
+                $dateRange = null;
+            } else {
+                $legalFormat = 'Y-m-d H:i:s';
+                $err = false;
+
+                if (gettype($dateRange) === 'string') {
+
+                    $dt = \DateTime::createFromFormat($legalFormat, $dateRange);
+        
+                    if (!($dt && $dt->format($legalFormat) == $dateRange)) {
+                        $err = true;
+                    }
+                } else {
+                    $err = true;
+                }
+
+                if ($err) {
+                    $errMsg = 'Invalid date format. ';
+                    $errMsg .= "The date format for export date ranges is YYYY-MM-DD HH:MM:SS, ";
+                    $errMsg .= 'e.g., 2020-01-31 00:00:00.';
+                    $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                    $this->errorHandler->throwException($errMsg, $code);
+                } // @codeCoverageIgnore
+            }
+        }
+        return $dateRange;
+    }
+
+    protected function processDecimalCharacterArgument($decimalCharacter)
+    {
+        $legalDecimalCharacters = array(',','.');
+        if ($decimalCharacter) {
+            if (!in_array($decimalCharacter, $legalDecimalCharacters)) {
+                $message = 'Invalid decimal character of "'.$decimalCharacter.'" specified.'
+                    .' Valid decimal character options are: "'.
+                    implode('", "', $legalDecimalCharacters).'".';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
+        }
+        return $decimalCharacter;
     }
 }

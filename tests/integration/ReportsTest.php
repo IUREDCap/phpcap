@@ -146,4 +146,43 @@ class ReportsTest extends TestCase
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
+
+   public function testExportReportsWithCsvDelimiter()
+    {
+        $reportId = self::$config['longitudinal.data.report.id'];
+        if (isset($reportId) && trim($reportId) != '') {
+            $format = 'csv';
+
+            #test comma csv delimiter
+            $csvDelimiter = ',';
+            $result = self::$longitudinalDataProject->exportReports(
+                $reportId, 
+                $format,
+                'raw',
+                'raw', 
+                false, 
+                $csvDelimiter
+            );
+            $expectedHeader = 'study_id,redcap_event_name,age,ethnicity,race';
+            $expectedHeader .= ',sex,gym___0,gym___1,gym___2,gym___3,gym___4';
+            $expectedHeader .= ',aerobics___0,aerobics___1,aerobics___2';
+            $expectedHeader .= ',aerobics___3,aerobics___4';
+            $header = substr($result, 0, strlen($expectedHeader));
+            $this->assertEquals($expectedHeader, $header, 'CSV delimiter check with comma');
+
+            #test pipe csv delimiter
+            $csvDelimiter = '|';
+            $result = self::$longitudinalDataProject->exportReports(
+                $reportId, 
+                $format,
+                'raw',
+                'raw', 
+                false, 
+                $csvDelimiter
+            );
+            $expectedHeader = str_replace(',', chr(124), $expectedHeader);
+            $header = substr($result, 0, strlen($expectedHeader));
+            $this->assertEquals($expectedHeader, $header, 'CSV delimiter check with pipe');
+        }
+    }
 }

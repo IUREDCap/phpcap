@@ -1119,4 +1119,184 @@ class RecordsTest extends TestCase
     
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
+
+   public function testExportRecordsWithDateRange()
+    {
+        #create a test record to insert
+        $yesterday = new \DateTime();
+        print "\n\nnow is \n\n";
+        print_r($yesterday);
+        $yesterday->sub(new \DateInterval('P1D'));
+
+        $tomorrow = new \DateTime();
+        $tomorrow->add(new \DateInterval('P1D'));
+
+        $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import.csv');
+        $result = self::$basicDemographyProject->importRecords(
+            $records,
+            $format = 'csv',
+            $type = null,
+            $overwriteBehavior = null,
+            $dateFormat = null,
+            $returnContent = 'ids'
+        );
+  
+        #test entering a begin date in the future so that no records should be returned
+        $result = self::$basicDemographyProject->exportRecords(
+            $format='php',
+            $type='flat',
+            $recordIds = null,
+            $fields = null,
+            $forms = null,
+            $events = null,
+            $filterLogic = null,
+            $rawOrLabel = 'raw',
+            $rawOrLabelHeaders = 'raw',
+            $exportCheckboxLabel = false,
+            $exportSurveyFields = false,
+            $exportDataAccessGroups = false, 
+            $dateRangeBegin = '2100-01-01 00:00:00'
+        );
+        $this->assertEquals(0, count($result),"Date Range check with wrong begin date.");
+
+        #test entering an end date in the past so that no records should be returned
+        $result = self::$basicDemographyProject->exportRecords(
+            $format='php',
+            $type='flat',
+            $recordIds = null,
+            $fields = null,
+            $forms = null,
+            $events = null,
+            $filterLogic = null,
+            $rawOrLabel = 'raw',
+            $rawOrLabelHeaders = 'raw',
+            $exportCheckboxLabel = false,
+            $exportSurveyFields = false,
+            $exportDataAccessGroups = false, 
+            $dateRangeBegin = null,
+            $dateRangeEnd = '2000-01-01 00:00:00'
+        );
+        $this->assertEquals(0, count($result), "Date Range check with wrong end date.");
+
+        #test a valid date range
+        $result = self::$basicDemographyProject->exportRecords(
+            $format='php',
+            $type='flat',
+            $recordIds = null,
+            $fields = null,
+            $forms = null,
+            $events = null,
+            $filterLogic = null,
+            $rawOrLabel = 'raw',
+            $rawOrLabelHeaders = 'raw',
+            $exportCheckboxLabel = false,
+            $exportSurveyFields = false,
+            $exportDataAccessGroups = false, 
+            $dateRangeBegin = $yesterday->format('Y-m-d H:i:s'),
+            $dateRangeEnd = $tomorrow->format('Y-m-d H:i:s')
+        );
+        $this->assertEquals(1, count($result), 'Date Range check.');
+
+        #clean up the test by deleting the inserted test record
+        $recordIds = [1101];
+        self::$basicDemographyProject->deleteRecords($recordIds);
+    }
+
+    public function testExportRecordsWithCsvDelimiter()
+    {
+        #export records with default delimiter (comma)
+        $result = self::$basicDemographyProject->exportRecords(
+            $format='csv',
+            $type='flat',
+            $recordIds = null,
+            $fields = null,
+            $forms = null,
+            $events = null,
+            $filterLogic = "[last_name] = 'Thiel'",
+            $rawOrLabel = 'raw',
+            $rawOrLabelHeaders = 'raw',
+            $exportCheckboxLabel = false,
+            $exportSurveyFields = false,
+            $exportDataAccessGroups = false, 
+            $dateRangeBegin = null,
+            $dateRangeEnd = null,
+            $csvDelimiter = ','
+        );
+        $expected = "record_id,first_name,last_name,address,telephone,email";
+        $expected .= ",dob,age,ethnicity,race,sex,height,weight,bmi,comments";
+        $expected .= ",demographics_complete";
+        $header = substr($result, 0, strlen($expected));
+        $this->assertEquals($expected, $header, 'CSV delimiter check with comma');
+
+        #export records with pipe delimiter
+        $result = self::$basicDemographyProject->exportRecords(
+            $format='csv',
+            $type='flat',
+            $recordIds = null,
+            $fields = null,
+            $forms = null,
+            $events = null,
+            $filterLogic = "[last_name] = 'Thiel'",
+            $rawOrLabel = 'raw',
+            $rawOrLabelHeaders = 'raw',
+            $exportCheckboxLabel = false,
+            $exportSurveyFields = false,
+            $exportDataAccessGroups = false, 
+            $dateRangeBegin = null,
+            $dateRangeEnd = null,
+            $csvDelimiter = '|'
+        );
+        $expected = str_replace(',', chr(124), $expected);
+        $header = substr($result, 0, strlen($expected));
+        $this->assertEquals($expected, $header, 'CSV delimiter check with pipe');
+    }
+
+    public function testExportRecordsWithDecimalCharacter()
+    {
+        #export records with dot decimal format
+        $result = self::$basicDemographyProject->exportRecords(
+            $format='php',
+            $type='flat',
+            $recordIds = null,
+            $fields = null,
+            $forms = null,
+            $events = null,
+            $filterLogic = "[last_name] = 'Thiel'",
+            $rawOrLabel = 'raw',
+            $rawOrLabelHeaders = 'raw',
+            $exportCheckboxLabel = false,
+            $exportSurveyFields = false,
+            $exportDataAccessGroups = false, 
+            $dateRangeBegin = null,
+            $dateRangeEnd = null,
+            $csvDelimiter = ',',
+            $decimalCharacter = '.'
+        );
+        $expected = '26.8';
+        $testResult = strval($result[0]['bmi']);
+        $this->assertEquals($expected, $testResult, 'Decimal character check with dot/full stop');
+
+        #export records with comma decimal format
+        $result = self::$basicDemographyProject->exportRecords(
+            $format='php',
+            $type='flat',
+            $recordIds = null,
+            $fields = null,
+            $forms = null,
+            $events = null,
+            $filterLogic = "[last_name] = 'Thiel'",
+            $rawOrLabel = 'raw',
+            $rawOrLabelHeaders = 'raw',
+            $exportCheckboxLabel = false,
+            $exportSurveyFields = false,
+            $exportDataAccessGroups = false, 
+            $dateRangeBegin = null,
+            $dateRangeEnd = null,
+            $csvDelimiter = ',',
+            $decimalCharacter = ','
+        );
+        $expected = '26,8';
+        $testResult = strval($result[0]['bmi']);
+        $this->assertEquals($expected, $result[0]['bmi'], 'Decimal character check with comma');
+   }
 }
