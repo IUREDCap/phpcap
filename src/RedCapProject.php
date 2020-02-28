@@ -1219,6 +1219,12 @@ class RedCapProject
                 case 'exportDataAccessGroups':
                     $exportDataAccessGroups = $value;
                     break;
+                case 'dateRangeBegin':
+                    $dateRangeBegin = $value;
+                    break;
+                case 'dateRangeEnd':
+                    $dateRangeEnd = $value;
+                    break;
                 default:
                     $this->errorHandler->throwException(
                         'Unrecognized argument name "' . $name . '".',
@@ -1241,7 +1247,9 @@ class RedCapProject
             isset($rawOrLabelHeaders)      ? $rawOrLabelHeaders      : 'raw',
             isset($exportCheckboxLabel)    ? $exportCheckboxLabel    : false,
             isset($exportSurveyFields)     ? $exportSurveyFields     : false,
-            isset($exportDataAccessGroups) ? $exportDataAccessGroups : false
+            isset($exportDataAccessGroups) ? $exportDataAccessGroups : false,
+            isset($dateRangeBegin)         ? $dateRangeBegin         : null,
+            isset($dateRangeEnd)           ? $dateRangeEnd           : null
         );
         
         return $records;

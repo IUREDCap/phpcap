@@ -1122,15 +1122,19 @@ class RecordsTest extends TestCase
 
    public function testExportRecordsWithDateRange()
     {
-        #create a test record to insert
-        $yesterday = new \DateTime();
-        print "\n\nnow is \n\n";
-        print_r($yesterday);
-        $yesterday->sub(new \DateInterval('P1D'));
-
+        $fiveMinutesAgo = new \DateTime();
         $tomorrow = new \DateTime();
+ 
+        $tz = self::$config['timezone'];
+        if ($tz){
+            $fiveMinutesAgo->setTimezone(new \DateTimeZone($tz));
+            $tomorrow->setTimezone(new \DateTimeZone($tz));
+        }
+
+        $fiveMinutesAgo->sub(new \DateInterval('PT5M'));
         $tomorrow->add(new \DateInterval('P1D'));
 
+        #create a test record to insert
         $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import.csv');
         $result = self::$basicDemographyProject->importRecords(
             $records,
@@ -1192,10 +1196,45 @@ class RecordsTest extends TestCase
             $exportCheckboxLabel = false,
             $exportSurveyFields = false,
             $exportDataAccessGroups = false, 
-            $dateRangeBegin = $yesterday->format('Y-m-d H:i:s'),
+            $dateRangeBegin = $fiveMinutesAgo->format('Y-m-d H:i:s'),
             $dateRangeEnd = $tomorrow->format('Y-m-d H:i:s')
         );
         $this->assertEquals(1, count($result), 'Date Range check.');
+
+        #clean up the test by deleting the inserted test record
+        $recordIds = [1101];
+        self::$basicDemographyProject->deleteRecords($recordIds);
+    }
+
+    public function testExportRecordsApWithDateRange()
+    {
+        $tz = self::$config['timezone'];
+        $fiveMinutesAgo = new \DateTime();
+        $fiveMinutesAgo->setTimezone(new \DateTimeZone($tz));
+        $fiveMinutesAgo->sub(new \DateInterval('PT5M'));
+
+        $tomorrow = new \DateTime();
+        $tomorrow->setTimezone(new \DateTimeZone($tz));
+        $tomorrow->add(new \DateInterval('P1D'));
+
+        #create a test record to insert
+        $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import.csv');
+        $result = self::$basicDemographyProject->importRecords(
+            $records,
+            $format = 'csv',
+            $type = null,
+            $overwriteBehavior = null,
+            $dateFormat = null,
+            $returnContent = 'ids'
+        );
+ 
+        $result = self::$basicDemographyProject->exportRecordsAp(['dateRangeBegin' => '2100-01-01 00:00:00']);
+        $this->assertEquals(0, count($result),"Export Records AP Date Range check with wrong begin date.");
+
+        $result = self::$basicDemographyProject->exportRecordsAp(['dateRangeEnd' => '2000-01-01 00:00:00']);
+        $this->assertEquals(0, count($result),"Export Records AP Date Range check with wrong end date.");
+
+        $result = self::$basicDemographyProject->exportRecordsAp(['dateRangeEnd' => $fiveMinutesAgo->format('Y-m-d H:i:s'),'dateRangeEnd' => $tomorrow->format('Y-m-d H:i:s')]);
 
         #clean up the test by deleting the inserted test record
         $recordIds = [1101];
