@@ -54,6 +54,9 @@ class RedCapProject
      *    connection. If this argument is specified, the $apiUrl, $sslVerify, and
      *    $caCertificateFile arguments will be ignored, and the values for these
      *    set in the connection will be used.
+     * @param boolean $superTokenAllowed indicates if a supertoken is being used
+     *    for those project methods that allow it.
+     *    being used for me
      * @throws PhpCapException if any of the arguments are invalid
      */
     public function __construct(
@@ -62,7 +65,8 @@ class RedCapProject
         $sslVerify = false,
         $caCertificateFile = null,
         $errorHandler = null,
-        $connection = null
+        $connection = null,
+        $superTokenAllowed = false
     ) {
         # Need to set errorHandler to default to start in case there is an
         # error with the errorHandler passed as an argument
@@ -72,7 +76,7 @@ class RedCapProject
             $this->errorHandler = $this->processErrorHandlerArgument($errorHandler);
         }
         
-        $this->apiToken = $this->processApiTokenArgument($apiToken);
+        $this->apiToken = $this->processApiTokenArgument($apiToken, $superTokenAllowed);
         
         if (isset($connection)) {
             $this->connection = $this->processConnectionArgument($connection);
@@ -2002,7 +2006,7 @@ class RedCapProject
         return $allRecords;
     }
 
-    protected function processApiTokenArgument($apiToken)
+    protected function processApiTokenArgument($apiToken, $superTokenAllowed)
     {
         if (!isset($apiToken)) {
             $message = 'The REDCap API token specified for the project was null or blank.';
@@ -2018,7 +2022,16 @@ class RedCapProject
                 .' It should only contain numbers and the letters A, B, C, D, E and F.';
             $code = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
-        } elseif (strlen($apiToken) != 32) { # Note: super tokens are not valid for project methods
+        } elseif ($superTokenAllowed) { # Note: super tokens are allowed for some project methods
+            if (strlen($apiToken) != 64 && strlen($apiToken) != 32) {
+                $message = 'The REDCap API token has an invalid format.'
+                    .' It has a length of '.strlen($apiToken)
+                    .' characters, but should have a length of 32'
+                    .' or 64 (if a super Token is being used).';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            }
+        } elseif (strlen($apiToken) != 32) { # Note: super tokens are not valid for most project methods
             $message = 'The REDCap API token has an invalid format.'
                 .' It has a length of '.strlen($apiToken).' characters, but should have a length of'
                 .' 32.';
