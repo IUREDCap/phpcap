@@ -1120,22 +1120,30 @@ class RecordsTest extends TestCase
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
 
-   public function testExportRecordsWithDateRange()
+    public function testExportRecordsWithDateRange()
     {
-        $fiveMinutesAgo = new \DateTime();
-        $tomorrow = new \DateTime();
- 
-        $tz = self::$config['timezone'];
-        if ($tz){
-            $fiveMinutesAgo->setTimezone(new \DateTimeZone($tz));
-            $tomorrow->setTimezone(new \DateTimeZone($tz));
+        #clean up any records that did not get properly deleted from a prior test.
+        $oldIds = [1200, 1201];
+        $runWait = false;
+        foreach ($oldIds as $id) {
+            $exists = self::$basicDemographyProject->exportRecordsAp(['recordIds' => [$id]]);
+            if (count($exists) > 0) {
+                self::$basicDemographyProject->deleteRecords([$id]);
+                $runWait = true;
+            }
         }
+        #if records were deleted, wait three minutes so that the test doesn't
+        #pick up these log entries for the deletions as modified records
+        if ($runWait) {
+            sleep(180);
+        };
 
-        $fiveMinutesAgo->sub(new \DateInterval('PT5M'));
-        $tomorrow->add(new \DateInterval('P1D'));
+        #establish the date for dateRangeBegin
+        $twoMinutesAgo = new \DateTime();
+        $twoMinutesAgo->sub(new \DateInterval('PT2M'));
 
         #create a test record to insert
-        $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import.csv');
+        $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import2.csv');
         $result = self::$basicDemographyProject->importRecords(
             $records,
             $format = 'csv',
@@ -1144,9 +1152,19 @@ class RecordsTest extends TestCase
             $dateFormat = null,
             $returnContent = 'ids'
         );
-  
+
+        #get the timestamp after the first record was inserted.
+        $recordInsertedTs = new \DateTime();
+
+        #adjust for timezone
+        $tz = self::$config['timezone'];
+        if ($tz){
+            $twoMinutesAgo->setTimezone(new \DateTimeZone($tz));
+            $recordInsertedTs->setTimezone(new \DateTimeZone($tz));
+        }
+
         #test entering a begin date in the future so that no records should be returned
-        $result = self::$basicDemographyProject->exportRecords(
+        $result1 = self::$basicDemographyProject->exportRecords(
             $format='php',
             $type='flat',
             $recordIds = null,
@@ -1161,10 +1179,10 @@ class RecordsTest extends TestCase
             $exportDataAccessGroups = false, 
             $dateRangeBegin = '2100-01-01 00:00:00'
         );
-        $this->assertEquals(0, count($result),"Date Range check with wrong begin date.");
+        $this->assertEquals(0, count($result1),"Date Range check with wrong begin date.");
 
         #test entering an end date in the past so that no records should be returned
-        $result = self::$basicDemographyProject->exportRecords(
+        $result2 = self::$basicDemographyProject->exportRecords(
             $format='php',
             $type='flat',
             $recordIds = null,
@@ -1180,10 +1198,22 @@ class RecordsTest extends TestCase
             $dateRangeBegin = null,
             $dateRangeEnd = '2000-01-01 00:00:00'
         );
-        $this->assertEquals(0, count($result), "Date Range check with wrong end date.");
+        $this->assertEquals(0, count($result2), "Date Range check with wrong end date.");
 
-        #test a valid date range
-        $result = self::$basicDemographyProject->exportRecords(
+        #wait a minute and a half and then add another record
+        sleep(90);
+        $record2 = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import3.csv');
+        $result3 = self::$basicDemographyProject->importRecords(
+            $record2,
+            $format = 'csv',
+            $type = null,
+            $overwriteBehavior = null,
+            $dateFormat = null,
+            $returnContent = 'ids'
+        );
+
+        #retrieve only the first record that was imported 
+        $result4 = self::$basicDemographyProject->exportRecords(
             $format='php',
             $type='flat',
             $recordIds = null,
@@ -1196,49 +1226,125 @@ class RecordsTest extends TestCase
             $exportCheckboxLabel = false,
             $exportSurveyFields = false,
             $exportDataAccessGroups = false, 
-            $dateRangeBegin = $fiveMinutesAgo->format('Y-m-d H:i:s'),
+            $dateRangeBegin = $twoMinutesAgo->format('Y-m-d H:i:s'),
+            $dateRangeEnd = $recordInsertedTs->format('Y-m-d H:i:s')
+        );
+        $this->assertEquals(1, count($result4), 'Date Range check, first record, with dateRangeBegin='.$twoMinutesAgo->format('Y-m-d H:i:s').' and dateRangeEnd='.$recordInsertedTs->format('Y-m-d H:i:s'));
+
+
+        #retrieve both records that were imported
+        #use tomorrow as the dateRangeEnd value to retrieve both records.
+        $tomorrow = new \DateTime();
+        $tomorrow->add(new \DateInterval('P1D'));
+        if ($tz) {
+            $tomorrow->setTimezone(new \DateTimeZone($tz));
+        }
+
+        $result5 = self::$basicDemographyProject->exportRecords(
+            $format='php',
+            $type='flat',
+            $recordIds = null,
+            $fields = null,
+            $forms = null,
+            $events = null,
+            $filterLogic = null,
+            $rawOrLabel = 'raw',
+            $rawOrLabelHeaders = 'raw',
+            $exportCheckboxLabel = false,
+            $exportSurveyFields = false,
+            $exportDataAccessGroups = false, 
+            $dateRangeBegin = $twoMinutesAgo->format('Y-m-d H:i:s'),
             $dateRangeEnd = $tomorrow->format('Y-m-d H:i:s')
         );
-        $this->assertEquals(1, count($result), 'Date Range check.');
+        $this->assertEquals(2, count($result5),'Date Range check, second record, with dateRangeBegin='.$twoMinutesAgo->format('Y-m-d H:i:s').' and dateRangeEnd='.$tomorrow->format('Y-m-d H:i:s'));
 
         #clean up the test by deleting the inserted test record
-        $recordIds = [1101];
-        self::$basicDemographyProject->deleteRecords($recordIds);
+        #print "\n\nend of test. deleting these records";
+        #print_r($oldIds);
+        self::$basicDemographyProject->deleteRecords([1200, 1201]);
     }
 
     public function testExportRecordsApWithDateRange()
     {
-        $tz = self::$config['timezone'];
-        $fiveMinutesAgo = new \DateTime();
-        $fiveMinutesAgo->setTimezone(new \DateTimeZone($tz));
-        $fiveMinutesAgo->sub(new \DateInterval('PT5M'));
+        #clean up any records that did not get properly deleted from a prior test.
+        $oldIds = [1202,1203];
+        $runWait = false;
+        foreach ($oldIds as $id) {
+            $exists = self::$basicDemographyProject->exportRecordsAp(['recordIds' => [$id]]);
+            if (count($exists) > 0) {
+                self::$basicDemographyProject->deleteRecords([$id]);
+                $runWait = true;
+            };
+        }
+        #if records were deleted, wait three minutes so that the test doesn't
+        #pick up these log entries for the deletions as modified records
+        if ($runWait) {
+            sleep(180);
+        };
 
-        $tomorrow = new \DateTime();
-        $tomorrow->setTimezone(new \DateTimeZone($tz));
-        $tomorrow->add(new \DateInterval('P1D'));
+        #establish the date for dateRangeBegin    
+        $twoMinutesAgo = new \DateTime();
+        $twoMinutesAgo->sub(new \DateInterval('PT2M'));
 
         #create a test record to insert
-        $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import.csv');
+        $record = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import4.csv');
+        
         $result = self::$basicDemographyProject->importRecords(
-            $records,
+            $record,
             $format = 'csv',
             $type = null,
             $overwriteBehavior = null,
             $dateFormat = null,
             $returnContent = 'ids'
         );
- 
-        $result = self::$basicDemographyProject->exportRecordsAp(['dateRangeBegin' => '2100-01-01 00:00:00']);
-        $this->assertEquals(0, count($result),"Export Records AP Date Range check with wrong begin date.");
 
-        $result = self::$basicDemographyProject->exportRecordsAp(['dateRangeEnd' => '2000-01-01 00:00:00']);
-        $this->assertEquals(0, count($result),"Export Records AP Date Range check with wrong end date.");
+        #get the timestamp after the first record was inserted.
+        $recordInsertedTs = new \DateTime();
 
-        $result = self::$basicDemographyProject->exportRecordsAp(['dateRangeEnd' => $fiveMinutesAgo->format('Y-m-d H:i:s'),'dateRangeEnd' => $tomorrow->format('Y-m-d H:i:s')]);
+        #adjust for the timezone 
+        $tz = self::$config['timezone'];
+        if ($tz) {
+            $twoMinutesAgo->setTimezone(new \DateTimeZone($tz));
+            $recordInsertedTs->setTimezone(new \DateTimeZone($tz));
+        }
+
+        #test entering a begin date in the future so that no records should be returned
+        $result1 = self::$basicDemographyProject->exportRecordsAp(['dateRangeBegin' => '2100-01-01 00:00:00']);
+        $this->assertEquals(0, count($result1),"Export Records AP Date Range check with wrong begin date.");
+
+        #test entering an end date in the past so that no records should be returned
+        $result2 = self::$basicDemographyProject->exportRecordsAp(['dateRangeEnd' => '2000-01-01 00:00:00']);
+        $this->assertEquals(0, count($result2),"Export Records AP Date Range check with wrong end date.");
+        
+        #wait a minute and a half and then add another record
+        sleep(90);
+        $record2 = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import5.csv');
+        $result = self::$basicDemographyProject->importRecords(
+            $record2,
+            $format = 'csv',
+            $type = null,
+            $overwriteBehavior = null,
+            $dateFormat = null,
+            $returnContent = 'ids'
+        );
+
+        #retrieve only the first record that was imported 
+        $result3 = self::$basicDemographyProject->exportRecordsAp(['dateRangeBegin' => $twoMinutesAgo->format('Y-m-d H:i:s'),'dateRangeEnd' => $recordInsertedTs->format('Y-m-d H:i:s')]);
+        $this->assertEquals(1, count($result3),"Export Records AP Date Range, test for first record, dateRangeEnd = " . $twoMinutesAgo->format('Y-m-d H:i:s'));
+
+        #retrieve both records that were imported
+        #use tomorrow as the dateRangeEnd value to retrieve both records.
+        $tomorrow = new \DateTime();
+        $tomorrow->add(new \DateInterval('P1D'));
+        if ($tz) {
+            $tomorrow->setTimezone(new \DateTimeZone($tz));
+        }
+
+        $result = self::$basicDemographyProject->exportRecordsAp(['dateRangeBegin' => $twoMinutesAgo->format('Y-m-d H:i:s'),'dateRangeEnd' => $tomorrow->format('Y-m-d H:i:s')]);
+        $this->assertEquals(2, count($result),"Export Records AP Date Range, both records");
 
         #clean up the test by deleting the inserted test record
-        $recordIds = [1101];
-        self::$basicDemographyProject->deleteRecords($recordIds);
+        self::$basicDemographyProject->deleteRecords([1202, 1203]);
     }
 
     public function testExportRecordsWithCsvDelimiter()
@@ -1290,6 +1396,24 @@ class RecordsTest extends TestCase
         $this->assertEquals($expected, $header, 'CSV delimiter check with pipe');
     }
 
+    public function testExportRecordsApWithCsvDelimiter()
+    {
+        #export records with default delimiter (comma)
+        $result = self::$basicDemographyProject->exportRecordsAp(['format' => 'csv', 'type' => 'flat', 'csvDelimiter' => ',']);
+ 
+        $expected = "record_id,first_name,last_name,address,telephone,email";
+        $expected .= ",dob,age,ethnicity,race,sex,height,weight,bmi,comments";
+        $expected .= ",demographics_complete";
+        $header = substr($result, 0, strlen($expected));
+        $this->assertEquals($expected, $header, 'Export records AP CSV delimiter check with comma');
+
+        #export records with pipe delimiter
+        $result = self::$basicDemographyProject->exportRecordsAp(['format' => 'csv', 'type' => 'flat', 'csvDelimiter' => '|']);
+        $expected = str_replace(',', chr(124), $expected);
+        $header = substr($result, 0, strlen($expected));
+        $this->assertEquals($expected, $header, 'Export records AP CSV delimiter check with pipe');
+    }
+
     public function testExportRecordsWithDecimalCharacter()
     {
         #export records with dot decimal format
@@ -1300,7 +1424,7 @@ class RecordsTest extends TestCase
             $fields = null,
             $forms = null,
             $events = null,
-            $filterLogic = "[last_name] = 'Thiel'",
+            $filterLogic = "[last_name] = 'Kerluke'",
             $rawOrLabel = 'raw',
             $rawOrLabelHeaders = 'raw',
             $exportCheckboxLabel = false,
@@ -1323,7 +1447,7 @@ class RecordsTest extends TestCase
             $fields = null,
             $forms = null,
             $events = null,
-            $filterLogic = "[last_name] = 'Thiel'",
+            $filterLogic = "[last_name] = 'Kerluke'",
             $rawOrLabel = 'raw',
             $rawOrLabelHeaders = 'raw',
             $exportCheckboxLabel = false,
@@ -1336,6 +1460,21 @@ class RecordsTest extends TestCase
         );
         $expected = '26,8';
         $testResult = strval($result[0]['bmi']);
-        $this->assertEquals($expected, $result[0]['bmi'], 'Decimal character check with comma');
+        $this->assertEquals($expected, $testResult, 'Decimal character check with comma');
+    }
+
+    public function testExportRecordsApWithDecimalCharacter()
+    {
+        #export records with dot decimal format
+        $result = self::$basicDemographyProject->exportRecordsAp(['decimalCharacter' => '.']);
+        $expected = '28.7';
+        $testResult = strval($result[1]['bmi']);
+        $this->assertEquals($expected, $testResult, 'Export records AP decimal character check with dot/full stop');
+
+        #export records with comma decimal format
+        $result = self::$basicDemographyProject->exportRecordsAp(['decimalCharacter' => ',']);
+        $expected = '28,7';
+        $testResult = strval($result[1]['bmi']);
+        $this->assertEquals($expected, $testResult, 'Export records AP decimal character check with comma');
    }
 }

@@ -161,14 +161,15 @@ class ReportsTest extends TestCase
                 'raw',
                 'raw', 
                 false, 
-                $csvDelimiter
+                ',',
+                '.'
             );
             $expectedHeader = 'study_id,redcap_event_name,age,ethnicity,race';
             $expectedHeader .= ',sex,gym___0,gym___1,gym___2,gym___3,gym___4';
             $expectedHeader .= ',aerobics___0,aerobics___1,aerobics___2';
             $expectedHeader .= ',aerobics___3,aerobics___4';
             $header = substr($result, 0, strlen($expectedHeader));
-            $this->assertEquals($expectedHeader, $header, 'CSV delimiter check with comma');
+            $this->assertEquals($expectedHeader, $header, 'Export reports CSV delimiter check with comma');
 
             #test pipe csv delimiter
             $csvDelimiter = '|';
@@ -182,7 +183,49 @@ class ReportsTest extends TestCase
             );
             $expectedHeader = str_replace(',', chr(124), $expectedHeader);
             $header = substr($result, 0, strlen($expectedHeader));
-            $this->assertEquals($expectedHeader, $header, 'CSV delimiter check with pipe');
+            $this->assertEquals($expectedHeader, $header, 'Export reports CSV delimiter check with pipe');
+        }
+    }
+
+    public function testExportReportsWithDecimalCharacter()
+    {
+        $reportId = self::$config['basicdemograph.data.report.id'];
+        print "\n\nreport id is $reportId\n\n";
+
+        if (isset($reportId) && trim($reportId) != '') {
+            $format = 'php';
+
+            #test full-stop/dot decimal character
+            $decimalCharacter = '.';
+            $result = self::$basicDemographyProject->exportReports(
+                $reportId, 
+                $format,
+                'raw',
+                'raw', 
+                false, 
+                ',',
+                $decimalCharacter
+            );
+
+            $expected = '28.7';
+            $testResult = strval($result[1]['bmi']);
+            $this->assertEquals($expected, $testResult, 'Export reports decimal character check with dot/full stop');
+
+            #test comma decimal character
+            $decimalCharacter = ',';
+            $result = self::$basicDemographyProject->exportReports(
+                $reportId, 
+                $format,
+                'raw',
+                'raw', 
+                false, 
+                ',',
+                $decimalCharacter
+            );
+
+            $expected = '28,7';
+            $testResult = strval($result[1]['bmi']);
+            $this->assertEquals($expected, $testResult, 'Export reports decimal character check with comma');
         }
     }
 }
