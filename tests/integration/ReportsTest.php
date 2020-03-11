@@ -147,7 +147,7 @@ class ReportsTest extends TestCase
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
 
-   public function testExportReportsWithCsvDelimiter()
+    public function testExportReportsWithCsvDelimiter()
     {
         $reportId = self::$config['longitudinal.data.report.id'];
         if (isset($reportId) && trim($reportId) != '') {
@@ -156,11 +156,11 @@ class ReportsTest extends TestCase
             #test comma csv delimiter
             $csvDelimiter = ',';
             $result = self::$longitudinalDataProject->exportReports(
-                $reportId, 
+                $reportId,
                 $format,
                 'raw',
-                'raw', 
-                false, 
+                'raw',
+                false,
                 ',',
                 '.'
             );
@@ -174,11 +174,11 @@ class ReportsTest extends TestCase
             #test pipe csv delimiter
             $csvDelimiter = '|';
             $result = self::$longitudinalDataProject->exportReports(
-                $reportId, 
+                $reportId,
                 $format,
                 'raw',
-                'raw', 
-                false, 
+                'raw',
+                false,
                 $csvDelimiter
             );
             $expectedHeader = str_replace(',', chr(124), $expectedHeader);
@@ -198,11 +198,11 @@ class ReportsTest extends TestCase
             #test full-stop/dot decimal character
             $decimalCharacter = '.';
             $result = self::$basicDemographyProject->exportReports(
-                $reportId, 
+                $reportId,
                 $format,
                 'raw',
-                'raw', 
-                false, 
+                'raw',
+                false,
                 ',',
                 $decimalCharacter
             );
@@ -214,11 +214,11 @@ class ReportsTest extends TestCase
             #test comma decimal character
             $decimalCharacter = ',';
             $result = self::$basicDemographyProject->exportReports(
-                $reportId, 
+                $reportId,
                 $format,
                 'raw',
-                'raw', 
-                false, 
+                'raw',
+                false,
                 ',',
                 $decimalCharacter
             );

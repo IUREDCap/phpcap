@@ -1068,10 +1068,10 @@ class RedCapProject
      *                   in a data access group.</li>
      *       <li> false - [default] don't export the data access group field.</li>
      *     </ul>
-     * @param string $dateRangeBegin specifies to return only those records 
+     * @param string $dateRangeBegin specifies to return only those records
      *      have been created or modified after the date entered. Date needs to be
      *      in YYYY_MM-DD HH:MM:SS, e.g., '2020-01-31 00:00:00'.
-     * @param string $dateRangeEnd specifies to return only those records 
+     * @param string $dateRangeEnd specifies to return only those records
      *      have been created or modified before the date entered. Date needs to be
      *      in YYYY_MM-DD HH:MM:SS, e.g., '2020-01-31 00:00:00'.
      * @param string $csvDelimiter specifies what delimiter is used to separate
@@ -1143,7 +1143,7 @@ class RedCapProject
         $data['dateRangeEnd'] = $this->processDateRangeArgument($dateRangeEnd);
 
         if ($data['format'] == 'csv') {
-          $data['csvDelimiter'] = $this->processCsvDelimiterArgument($csvDelimiter, $format);
+            $data['csvDelimiter'] = $this->processCsvDelimiterArgument($csvDelimiter, $format);
         };
 
         $data['decimalCharacter'] = $this->processDecimalCharacterArgument($decimalCharacter);
@@ -1247,7 +1247,7 @@ class RedCapProject
                 case 'dateRangeEnd':
                     $dateRangeEnd = $value;
                     break;
-               case 'csvDelimiter':
+                case 'csvDelimiter':
                     $csvDelimiter = $value;
                     break;
                 case 'decimalCharacter':
@@ -2817,8 +2817,8 @@ class RedCapProject
         $legalCsvDelimiters = array(',',';','tab','|','^');
         if ($format == 'csv') {
             if (!$csvDelimiter) {
-               $csvDelimiter = ',';
-            }    
+                $csvDelimiter = ',';
+            }
             if (gettype($csvDelimiter) !== 'string') {
                 $message = 'The csv delimiter specified has type "'.gettype($csvDelimiter)
                     .'", but it should be a string.';
@@ -2840,8 +2840,8 @@ class RedCapProject
     }
 
     protected function processDateRangeArgument($dateRange)
-    {  
-        if (isset($dateRange)) { 
+    {
+        if (isset($dateRange)) {
             if (trim($dateRange) === '') {
                 $dateRange = null;
             } else {
@@ -2849,7 +2849,6 @@ class RedCapProject
                 $err = false;
 
                 if (gettype($dateRange) === 'string') {
-
                     $dt = \DateTime::createFromFormat($legalFormat, $dateRange);
         
                     if (!($dt && $dt->format($legalFormat) == $dateRange)) {
