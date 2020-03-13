@@ -31,7 +31,7 @@ class RepeatingTest extends TestCase
                     self::$config['api.url'],
                     self::$config['repeatable.survey.api.token']
                 );
-            }   
+            }
         }
 
         if (array_key_exists('repeating.forms.api.token', self::$config)) {
@@ -40,7 +40,7 @@ class RepeatingTest extends TestCase
                     self::$config['api.url'],
                     self::$config['repeating.forms.api.token']
                 );
-            }   
+            }
         }
 
         if (array_key_exists('super.token', self::$config)) {
@@ -92,12 +92,13 @@ class RepeatingTest extends TestCase
     public function testImportRepeatingIntrumentsAndEventsWithApiToken()
     {
         if (self::$repeatingForms) {
-            $records = FileUtil::fileToString(__DIR__.'/../data/repeatable-survey-forms-events.csv'); 
+            $records = FileUtil::fileToString(__DIR__.'/../data/repeatable-survey-forms-events.csv');
             $count = self::$repeatingForms->importRepeatingInstrumentsAndEvents(
                 $records,
                 $format = 'csv'
             );
-            $this->assertEquals(1,
+            $this->assertEquals(
+                1,
                 $count,
                 'Import Repeating Instruments and Events record count.'
             );
@@ -105,7 +106,8 @@ class RepeatingTest extends TestCase
             $result = self::$repeatingForms->exportRepeatingInstrumentsAndEvents($format = 'csv');
             $expected = 'form_name,custom_form_label';
             $expected .= chr(10) . 'weight,[weight_date] [weight_time]' . chr(10);
-            $this->assertEquals($expected,
+            $this->assertEquals(
+                $expected,
                 $result,
                 'Import Repeating Instruments and Events form now repeatable check.'
             );

@@ -1485,14 +1485,14 @@ class RedCapProject
         $this->processExportResult($result, $format);
         
         return $result;
-    }  
+    }
 
 
     /**
      * Imports the repeating instruments and events.
      *
-     * @param mixed $formsEvents for 'php' format or if no format is specified, 
-     *     this will be a PHP array of associative arrays. For other formats, 
+     * @param mixed $formsEvents for 'php' format or if no format is specified,
+     *     this will be a PHP array of associative arrays. For other formats,
      *     this will be a string formatted in the specified format (e.g. json).
      *
      * @param string $format the format in which to export the records:

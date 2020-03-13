@@ -27,7 +27,7 @@ class RedCapIntegrationTest extends TestCase
         self::$config = parse_ini_file(__DIR__.'/../config.ini');
         self::$apiUrl     = self::$config['api.url'];
         
-       if (array_key_exists('super.token', self::$config)) {
+        if (array_key_exists('super.token', self::$config)) {
             self::$superToken = self::$config['super.token'];
             if (self::$superToken) {
                 self::$redCap = new RedCap(self::$config['api.url'], self::$superToken);
@@ -342,17 +342,16 @@ class RedCapIntegrationTest extends TestCase
 
     public function testImportRepeatingIntrumentsAndEventsWithSuperToken()
     {
-         if (isset(self::$superToken)) {
-
+        if (isset(self::$superToken)) {
             #create a new project with no a repeatable forms
             $projectTitle = 'PHPCap Created Project for Repeating Forms Test';
             $purpose = 1;
             $purposeOther = 'PHPCap project creation for testing Import Repeating Instruments and Events';
             $projectData = '[{'
-                .'"project_title": "'.$projectTitle.'",'
-                .'"purpose": "1",'
-                .'"purpose_other": "'.$purposeOther.'"'
-                .'}]';
+               .'"project_title": "'.$projectTitle.'",'
+               .'"purpose": "1",'
+               .'"purpose_other": "'.$purposeOther.'"'
+               .'}]';
             $odmFile = __DIR__.'/../projects/PHPCapRepeatingForms.REDCap.xml';
             $projectOdmData = FileUtil::fileToString($odmFile);
             
@@ -360,12 +359,13 @@ class RedCapIntegrationTest extends TestCase
 
             #use the Import Repeating Instruments and Events to make the
             #weight form repeatable
-            $records = FileUtil::fileToString(__DIR__.'/../data/repeatable-survey-forms-events.csv'); 
+            $records = FileUtil::fileToString(__DIR__.'/../data/repeatable-survey-forms-events.csv');
             $count = $project->importRepeatingInstrumentsAndEvents(
                 $records,
                 $format = 'csv'
             );
-            $this->assertEquals(1,
+            $this->assertEquals(
+                1,
                 $count,
                 'Integration test, Import Repeating Instruments and Events record count.'
             );
@@ -373,7 +373,8 @@ class RedCapIntegrationTest extends TestCase
             $result = $project->exportRepeatingInstrumentsAndEvents($format = 'csv');
             $expected = 'form_name,custom_form_label';
             $expected .= chr(10) . 'weight,[weight_date] [weight_time]' . chr(10);
-            $this->assertEquals($expected,
+            $this->assertEquals(
+                $expected,
                 $result,
                 'Integration test, Import Repeating Instruments and Events form now repeatable check.'
             );
