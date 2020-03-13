@@ -29,22 +29,25 @@ class RedCapVersionTest extends TestCase
             self::$config['api.url'],
             self::$config['basic.demography.api.token']
         );
+
         if (array_key_exists('super.token', self::$config)) {
             self::$superToken = self::$config['super.token'];
-            self::$testProject = new RedCapProject(
-                self::$config['api.url'],
-                self::$config['super.token'],
-                false,
-                null,
-                null,
-                null,
-                true
-            );
-        } else {
-            self::$superToken = null;
+            if (self::$superToken) {
+                self::$testProject = new RedCapProject(
+                    self::$config['api.url'],
+                    self::$config['super.token'],
+                    false,
+                    null,
+                    null,
+                    null,
+                    true
+                );
+            } else {
+                self::$superToken = null;
+            }
         }
     }
-    
+
     public function testExportRedcapVersion()
     {
         $result = self::$basicDemographyProject->exportRedcapVersion();

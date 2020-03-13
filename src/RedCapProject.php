@@ -1485,9 +1485,59 @@ class RedCapProject
         $this->processExportResult($result, $format);
         
         return $result;
+    }  
+
+
+    /**
+     * Imports the repeating instruments and events.
+     *
+     * @param mixed $formsEvents for 'php' format or if no format is specified, 
+     *     this will be a PHP array of associative arrays. For other formats, 
+     *     this will be a string formatted in the specified format (e.g. json).
+     *
+     * @param string $format the format in which to export the records:
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @return integer the number of repeated instruments or repeated events imported.
+     *
+     * Note: Super API tokens can also be used for this method. Users can be granted
+     *    a super token only by a REDCap administrator.
+     */
+    public function importRepeatingInstrumentsAndEvents($formsEvents, $format = 'php')
+    {
+        $data = array(
+            'token' => $this->apiToken,
+            'content' => 'repeatingFormsEvents',
+            'returnFormat' => 'json'
+        );
+
+        #---------------------------------------
+        # Process the arguments
+        #---------------------------------------
+        $data['data'] = $this->processImportDataArgument(
+            $formsEvents,
+            'repeating instruments/events',
+            $format
+        );
+        $legalFormats = array('php', 'csv', 'json', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        #---------------------------------------
+        # Process the data
+        #---------------------------------------
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
     }
 
-    
+
     /**
      * Gets the REDCap version number of the REDCap instance being used by the project.
      *
