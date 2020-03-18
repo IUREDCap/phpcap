@@ -591,7 +591,8 @@ class RedCapProject
         $recordId = null,
         $event = null,
         $form = null,
-        $allRecords = null
+        $allRecords = null,
+        $compactDisplay = null
     ) {
         $data = array(
                 'token'       => $this->apiToken,
@@ -605,7 +606,8 @@ class RedCapProject
         $data['event']      = $this->processEventArgument($event);
         $data['instrument'] = $this->processFormArgument($form);
         $data['allRecords'] = $this->processAllRecordsArgument($allRecords);
-        
+        $data['compactDisplay'] = $this->processCompactDisplayArgument($compactDisplay);
+
         $result = $this->connection->callWithArray($data);
         
         if (isset($file)) {
@@ -2947,4 +2949,17 @@ class RedCapProject
         }
         return $decimalCharacter;
     }
+
+    protected function processCompactDisplayArgument($compactDisplay)
+    {
+        if (!isset($compactDisplay) || $compactDisplay === null) {
+            ;  // That's OK
+        } elseif (!is_bool($compactDisplay)) {
+            $message = 'The compact display argument has type "'.gettype($compactDisplay).
+            '", but it should be a boolean (true/false).';
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+        }
+        return $compactDisplay;
+    }
+
 }
