@@ -190,7 +190,7 @@ class ReportsTest extends TestCase
     public function testExportReportsWithDecimalCharacter()
     {
         $reportId = self::$config['basicdemograph.data.report.id'];
-        print "\n\nreport id is $reportId\n\n";
+        #print "\n\nreport id is $reportId\n\n";
 
         if (isset($reportId) && trim($reportId) != '') {
             $format = 'php';
