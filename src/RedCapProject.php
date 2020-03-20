@@ -56,7 +56,7 @@ class RedCapProject
      *    set in the connection will be used.
      * @param boolean $superTokenAllowed indicates if a supertoken is being used
      *    for those project methods that allow it.
-     *    
+     *
      * @throws PhpCapException if any of the arguments are invalid
      */
     public function __construct(
@@ -2961,5 +2961,4 @@ class RedCapProject
         }
         return $compactDisplay;
     }
-
 }

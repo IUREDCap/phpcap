@@ -129,12 +129,16 @@ class PdfFormsTest extends TestCase
 
     public function testPdfFormsToFileCompactInvalidCompactValue()
     {
-       $exceptionCaught = false;
+        $exceptionCaught = false;
         try {
             $result = self::$longitudinalDataProject->exportPdfFileOfInstruments(null, null, null, null, 1);
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Compacted PDF file Exception code check.');
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $code,
+                'Compacted PDF file Exception code check.'
+            );
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
