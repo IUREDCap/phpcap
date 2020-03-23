@@ -145,9 +145,9 @@ To run the survey tests, use the following steps:
 18. In your project window in REDCap, click on the "API" link on the left and request (or create if you are an admin) an API token with at least API Export rights
 19. Once you have your API token, use it and the e-mail and identifier entered earlier to set the following properties in the config.ini file in the tests directory:
 
-    repeatable.survey.api.token
-    survey.participant.email
-    survey.participant.identifier
+        repeatable.survey.api.token
+        survey.participant.email
+        survey.participant.identifier
     
 
 #### Setup for the Optional Repeating Forms Tests
@@ -158,7 +158,7 @@ To run the repeating forms tests, use the following steps:
 2. In your project window in REDCap, click on the "API" link on the left and request (or create if you are an admin) an API token with at least API Export rights
 3. Once you have your API token, use it to set the following property in the config.ini file in the tests directory:
 
-    repeating.forms.api.token
+        repeating.forms.api.token
 
 
 #### Setup for Optional Project Creation Tests
