@@ -131,7 +131,7 @@ class PdfFormsTest extends TestCase
     {
         $exceptionCaught = false;
         try {
-            $result = self::$longitudinalDataProject->exportPdfFileOfInstruments(null, null, null, null, 1);
+            $result = self::$longitudinalDataProject->exportPdfFileOfInstruments(null, null, null, null, null, 1);
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
             $this->assertEquals(

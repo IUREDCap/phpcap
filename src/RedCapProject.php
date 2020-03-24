@@ -54,8 +54,6 @@ class RedCapProject
      *    connection. If this argument is specified, the $apiUrl, $sslVerify, and
      *    $caCertificateFile arguments will be ignored, and the values for these
      *    set in the connection will be used.
-     * @param boolean $superTokenAllowed indicates if a supertoken is being used
-     *    for those project methods that allow it.
      *
      * @throws PhpCapException if any of the arguments are invalid
      */
@@ -65,8 +63,7 @@ class RedCapProject
         $sslVerify = false,
         $caCertificateFile = null,
         $errorHandler = null,
-        $connection = null,
-        $superTokenAllowed = false
+        $connection = null
     ) {
         # Need to set errorHandler to default to start in case there is an
         # error with the errorHandler passed as an argument
@@ -76,7 +73,7 @@ class RedCapProject
             $this->errorHandler = $this->processErrorHandlerArgument($errorHandler);
         }
         
-        $this->apiToken = $this->processApiTokenArgument($apiToken, $superTokenAllowed);
+        $this->apiToken = $this->processApiTokenArgument($apiToken);
         
         if (isset($connection)) {
             $this->connection = $this->processConnectionArgument($connection);
@@ -1506,9 +1503,6 @@ class RedCapProject
      *     </ul>
      *
      * @return integer the number of repeated instruments or repeated events imported.
-     *
-     * Note: Super API tokens can also be used for this method. Users can be granted
-     *    a super token only by a REDCap administrator.
      */
     public function importRepeatingInstrumentsAndEvents($formsEvents, $format = 'php')
     {
@@ -2058,7 +2052,7 @@ class RedCapProject
         return $allRecords;
     }
 
-    protected function processApiTokenArgument($apiToken, $superTokenAllowed)
+    protected function processApiTokenArgument($apiToken)
     {
         if (!isset($apiToken)) {
             $message = 'The REDCap API token specified for the project was null or blank.';
@@ -2074,16 +2068,7 @@ class RedCapProject
                 .' It should only contain numbers and the letters A, B, C, D, E and F.';
             $code = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
-        } elseif ($superTokenAllowed) { # Note: super tokens are allowed for some project methods
-            if (strlen($apiToken) != 64 && strlen($apiToken) != 32) {
-                $message = 'The REDCap API token has an invalid format.'
-                    .' It has a length of '.strlen($apiToken)
-                    .' characters, but should have a length of 32'
-                    .' or 64 (if a super Token is being used).';
-                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-            }
-        } elseif (strlen($apiToken) != 32) { # Note: super tokens are not valid for most project methods
+        } elseif (strlen($apiToken) != 32) { # Note: super tokens are not valid for project methods
             $message = 'The REDCap API token has an invalid format.'
                 .' It has a length of '.strlen($apiToken).' characters, but should have a length of'
                 .' 32.';

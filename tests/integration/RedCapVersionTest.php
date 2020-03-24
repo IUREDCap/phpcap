@@ -21,6 +21,7 @@ class RedCapVersionTest extends TestCase
     private static $longitudinalDataProject;
     private static $testProject;
     private static $superToken;
+    private static $redcap;
     
     public static function setUpBeforeClass()
     {
@@ -32,19 +33,11 @@ class RedCapVersionTest extends TestCase
 
         if (array_key_exists('super.token', self::$config)) {
             self::$superToken = self::$config['super.token'];
-            if (self::$superToken) {
-                self::$testProject = new RedCapProject(
-                    self::$config['api.url'],
-                    self::$config['super.token'],
-                    false,
-                    null,
-                    null,
-                    null,
-                    true
-                );
-            } else {
-                self::$superToken = null;
-            }
+
+            self::$redcap = new RedCap(self::$config['api.url'], self::$superToken);
+        } else {
+            self::$superToken = null;
+            self::$redcap     = null;
         }
     }
 
@@ -56,8 +49,8 @@ class RedCapVersionTest extends TestCase
 
     public function testExportRedcapVersionWithSuperToken()
     {
-        if (self::$superToken) {
-            $result = self::$testProject->exportRedcapVersion();
+        if (self::$redcap) {
+            $result = self::$redcap->exportRedcapVersion();
             $this->assertRegExp('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'REDCap version super token format test.');
         }
     }

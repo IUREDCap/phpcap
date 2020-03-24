@@ -16,13 +16,19 @@ use IU\PHPCap\PhpCapException;
  */
 class RecordsTest extends TestCase
 {
+    # Wait times in seconds to give time for REDCap log the be updated.
+    # (REDCap gets last updated information for records from its event log.)
+    const DELETE_WAIT_TIME = 60;
+    const INSERT_WAIT_TIME = 90;
+
+    private static $configFile = __DIR__.'/../config.ini';
     private static $config;
     private static $basicDemographyProject;
     private static $longitudinalDataProject;
     
     public static function setUpBeforeClass()
     {
-        self::$config = parse_ini_file(__DIR__.'/../config.ini');
+        self::$config = parse_ini_file(self::$configFile);
         self::$basicDemographyProject = new RedCapProject(
             self::$config['api.url'],
             self::$config['basic.demography.api.token']
@@ -31,6 +37,14 @@ class RecordsTest extends TestCase
             self::$config['api.url'],
             self::$config['longitudinal.data.api.token']
         );
+
+        $oldIds = [1101, 1200, 1201, 1202, 1203];
+        foreach ($oldIds as $id) {
+            $exists = self::$basicDemographyProject->exportRecordsAp(['recordIds' => [$id]]);
+            if (count($exists) > 0) {
+                self::$basicDemographyProject->deleteRecords([$id]);
+            }
+        }
     }
     
 
@@ -418,11 +432,11 @@ class RecordsTest extends TestCase
         $this->assertEquals(6, count($result), 'Correct number of records.');
         
         $expectedResult = [
-            ['record' => 1001, 'field_name' => 'age', 'value' => 50],
+            ['record' => 1001, 'field_name' => 'age', 'value' => 48],
             ['record' => 1001, 'field_name' => 'bmi', 'value' => 27.7],
-            ['record' => 1010, 'field_name' => 'age', 'value' => 35],
+            ['record' => 1010, 'field_name' => 'age', 'value' => 32],
             ['record' => 1010, 'field_name' => 'bmi', 'value' => 18.3],
-            ['record' => 1100, 'field_name' => 'age', 'value' => 74],
+            ['record' => 1100, 'field_name' => 'age', 'value' => 71],
             ['record' => 1100, 'field_name' => 'bmi', 'value' => 18.6]
         ];
         
@@ -1132,17 +1146,18 @@ class RecordsTest extends TestCase
                 $runWait = true;
             }
         }
-        #if records were deleted, wait three minutes so that the test doesn't
-        #pick up these log entries for the deletions as modified records
+
+        # If records were deleted, wait three minutes so that the test doesn't
+        # pick up these log entries for the deletions as modified records
         if ($runWait) {
-            sleep(180);
+            sleep(self::DELETE_WAIT_TIME);
         };
 
-        #establish the date for dateRangeBegin
+        # Establish the date for dateRangeBegin
         $twoMinutesAgo = new \DateTime();
         $twoMinutesAgo->sub(new \DateInterval('PT2M'));
 
-        #create a test record to insert
+        # Create a test record to insert
         $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import2.csv');
         $result = self::$basicDemographyProject->importRecords(
             $records,
@@ -1157,7 +1172,13 @@ class RecordsTest extends TestCase
         $recordInsertedTs = new \DateTime();
 
         #adjust for timezone
-        $tz = self::$config['timezone'];
+        if (array_key_exists('timezone', self::$config)) {
+            $tz = self::$config['timezone'];
+        } else {
+            $message = 'No timezone defined in configuration file "'.realpath(self::$configFile).'"';
+            throw new \Exception($message);
+        }
+
         if ($tz) {
             $twoMinutesAgo->setTimezone(new \DateTimeZone($tz));
             $recordInsertedTs->setTimezone(new \DateTimeZone($tz));
@@ -1200,8 +1221,8 @@ class RecordsTest extends TestCase
         );
         $this->assertEquals(0, count($result2), "Date Range check with wrong end date.");
 
-        #wait a minute and a half and then add another record
-        sleep(90);
+        # wait a minute and a half and then add another record
+        sleep(self::INSERT_WAIT_TIME);
         $record2 = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import3.csv');
         $result3 = self::$basicDemographyProject->importRecords(
             $record2,
@@ -1271,15 +1292,13 @@ class RecordsTest extends TestCase
             .$tomorrow->format('Y-m-d H:i:s')
         );
 
-        #clean up the test by deleting the inserted test record
-        #print "\n\nend of test. deleting these records";
-        #print_r($oldIds);
+        # Clean up the test by deleting the inserted test record
         self::$basicDemographyProject->deleteRecords([1200, 1201]);
     }
 
     public function testExportRecordsApWithDateRange()
     {
-        #clean up any records that did not get properly deleted from a prior test.
+        # Clean up any records that did not get properly deleted from a prior test.
         $oldIds = [1202,1203];
         $runWait = false;
         foreach ($oldIds as $id) {
@@ -1289,10 +1308,11 @@ class RecordsTest extends TestCase
                 $runWait = true;
             };
         }
-        #if records were deleted, wait three minutes so that the test doesn't
-        #pick up these log entries for the deletions as modified records
+
+        # If records were deleted, wait three minutes so that the test doesn't
+        # pick up these log entries for the deletions as modified records
         if ($runWait) {
-            sleep(180);
+            sleep(self::DELETE_WAIT_TIME);
         };
 
         #establish the date for dateRangeBegin
@@ -1315,7 +1335,13 @@ class RecordsTest extends TestCase
         $recordInsertedTs = new \DateTime();
 
         #adjust for the timezone
-        $tz = self::$config['timezone'];
+        if (array_key_exists('timezone', self::$config)) {
+            $tz = self::$config['timezone'];
+        } else {
+            $message = 'No timezone defined in configuration file "'.realpath(self::$configFile).'"';
+            throw new \Exception($message);
+        }
+
         if ($tz) {
             $twoMinutesAgo->setTimezone(new \DateTimeZone($tz));
             $recordInsertedTs->setTimezone(new \DateTimeZone($tz));
@@ -1329,8 +1355,8 @@ class RecordsTest extends TestCase
         $result2 = self::$basicDemographyProject->exportRecordsAp(['dateRangeEnd' => '2000-01-01 00:00:00']);
         $this->assertEquals(0, count($result2), "Export Records AP Date Range check with wrong end date.");
         
-        #wait a minute and a half and then add another record
-        sleep(90);
+        # wait a minute and a half and then add another record
+        sleep(self::INSERT_WAIT_TIME);
         $record2 = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import5.csv');
         $result = self::$basicDemographyProject->importRecords(
             $record2,

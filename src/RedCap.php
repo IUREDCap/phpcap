@@ -187,7 +187,27 @@ class RedCap
         
         return $project;
     }
-    
+
+
+   /**
+     * Gets the REDCap version number of the REDCap instance being used by the project.
+     *
+     * @return string the REDCap version number of the REDCap instance being used by the project.
+     */
+    public function exportRedcapVersion()
+    {
+        $data = array(
+            'token' => $this->superToken,
+            'content' => 'version'
+        );
+
+        $redcapVersion = $this->connection->callWithArray($data);
+        # ideally should have export processing here
+
+        return $redcapVersion;
+    }
+
+
     /**
      * Gets the REDCap project for the specified API token.
      *
