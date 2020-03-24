@@ -120,7 +120,7 @@ following setup steps are completed:</p>
 <ol>
 <li>Log in to your REDCap site.</li>
 <li>Create an empty project in REDCap.</li>
-<li>Create a project in REDCap for the &quot;Basic Demography&quot;, &quot;Longitudinal Data&quot;, and &quot;Repeating Forms&quot; test projects in directory <strong>tests/projects/</strong>, and import each of those test project files into the REDCap project created for it.</li>
+<li>Create a project in REDCap for the &quot;Basic Demography&quot; and &quot;Longitudinal Data&quot; test projects in directory <strong>tests/projects/</strong>, and import each of those test project files into the REDCap project created for it.</li>
 <li>In REDCap, request API tokens for the empty project and the projects imported in the step above.</li>
 <li>Once you have your tokens, copy the &quot;config-example.ini&quot; file to a file
 named &quot;config.ini&quot; and then set the URL in that file to be the
@@ -188,9 +188,19 @@ as follows:</p>
 <li>In your project window in REDCap, click on the &quot;API&quot; link on the left and request (or create if you are an admin) an API token with at least API Export rights</li>
 <li>
 <p>Once you have your API token, use it and the e-mail and identifier entered earlier to set the following properties in the config.ini file in the tests directory:</p>
-<div class="description"><pre><code>        repeatable.survey.api.token=
-        survey.participant.email=
-        survey.participant.identifier=</code></pre></div>
+<div class="description"><pre><code>repeatable.survey.api.token
+survey.participant.email
+survey.participant.identifier</code></pre></div>
+</li>
+</ol>
+<h4>Setup for the Optional Repeating Forms Tests</h4>
+<p>To run the repeating forms tests, use the following steps:</p>
+<ol>
+<li>In REDCap, create a project for the &quot;Repeating Forms&quot; project test file in the <strong>tests/projects</strong> directory, and import the project test file into that project.</li>
+<li>In your project window in REDCap, click on the &quot;API&quot; link on the left and request (or create if you are an admin) an API token with at least API Export rights</li>
+<li>
+<p>Once you have your API token, use it to set the following property in the config.ini file in the tests directory:</p>
+<div class="description"><pre><code>repeating.forms.api.token</code></pre></div>
 </li>
 </ol>
 <h4>Setup for Optional Project Creation Tests</h4>
@@ -200,8 +210,6 @@ have no way to delete the projects that are created, so they will need to be del
 manually.</p>
 <p>Note: the .gitignore file in PHPCap is set to ignore the <strong>tests/config.ini</strong> file, so that your
 personal API tokens will not be committed to Git. </p>
-<h4>Setup for Optional Super Token Tests</h4>
-<p>To test the super-token option of the REDCap Version method and the Import Repeating Instruments and Events method, enter a super token in the <strong>tests/config.ini</strong> file.</p>
 <h4>Running the Automated Tests</h4>
 <p>To run the automated tests, execute the following command in the top-level directory of your downloaded version of PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpunit</code></pre></div>
