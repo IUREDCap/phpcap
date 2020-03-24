@@ -123,7 +123,7 @@
 		<b>Namespace:</b> <a href="namespace-IU.html">IU</a>\<a href="namespace-IU.PHPCap.html">PHPCap</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapProject.html#12-2949" title="Go to source code">RedCapProject.php</a>
+			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapProject.html#12-2952" title="Go to source code">RedCapProject.php</a>
 		<br>
 	</div>
 
@@ -1423,7 +1423,7 @@ This method is intended for use with projects that have record-autonumbering ena
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportRecords">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1001-1161" title="Go to source code">exportRecords</a>( <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>array <var>$recordIds</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$fields</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$forms</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$events</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$filterLogic</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$rawOrLabel</var> = <span class="php-quote">'raw'</span></span>, <span>string <var>$rawOrLabelHeaders</var> = <span class="php-quote">'raw'</span></span>, <span>boolean <var>$exportCheckboxLabel</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$exportSurveyFields</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$exportDataAccessGroups</var> = <span class="php-keyword1">false</span></span>, <span>string <var>$dateRangeBegin</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$dateRangeEnd</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$csvDelimiter</var> = <span class="php-quote">','</span></span>, <span>string <var>$decimalCharacter</var> = <span class="php-keyword1">null</span> </span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1001-1164" title="Go to source code">exportRecords</a>( <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>array <var>$recordIds</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$fields</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$forms</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$events</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$filterLogic</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$rawOrLabel</var> = <span class="php-quote">'raw'</span></span>, <span>string <var>$rawOrLabelHeaders</var> = <span class="php-quote">'raw'</span></span>, <span>boolean <var>$exportCheckboxLabel</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$exportSurveyFields</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$exportDataAccessGroups</var> = <span class="php-keyword1">false</span></span>, <span>string <var>$dateRangeBegin</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$dateRangeEnd</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$csvDelimiter</var> = <span class="php-quote">','</span></span>, <span>string <var>$decimalCharacter</var> = <span class="php-keyword1">null</span> </span> )</code>
 
 		<div class="description short">
 			<p>Exports the specified records.</p>
@@ -1437,6 +1437,9 @@ This method is intended for use with projects that have record-autonumbering ena
 <pre><span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecords(<span class="php-var">$format</span> = <span class="php-quote">'csv'</span>, <span class="php-var">$type</span> = <span class="php-quote">'flat'</span>);
 <span class="php-var">$recordIds</span> = [<span class="php-num">1001</span>, <span class="php-num">1002</span>, <span class="php-num">1003</span>];
 <span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecords(<span class="php-quote">'xml'</span>, <span class="php-quote">'eav'</span>, <span class="php-var">$recordIds</span>);</pre>
+
+<p>Note: date ranges do not work for records that were imported at
+the time the project was created.</p>
 
 
 				<h4>Parameters</h4>
@@ -1582,7 +1585,7 @@ numeric values being returned. Options are:</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportRecordsAp">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1163-1289" title="Go to source code">exportRecordsAp</a>( <span>array <var>$arrayParameter</var> = []</span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1166-1292" title="Go to source code">exportRecordsAp</a>( <span>array <var>$arrayParameter</var> = []</span> )</code>
 
 		<div class="description short">
 			<p>Export records using an array parameter, where the keys of the array
@@ -1646,7 +1649,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_importRecords">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1292-1409" title="Go to source code">importRecords</a>( <span>mixed <var>$records</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>boolean <var>$forceAutoNumber</var> = <span class="php-keyword1">false</span> </span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1295-1412" title="Go to source code">importRecords</a>( <span>mixed <var>$records</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>boolean <var>$forceAutoNumber</var> = <span class="php-keyword1">false</span> </span> )</code>
 
 		<div class="description short">
 			<p>Imports the specified records into the project.</p>
@@ -1740,7 +1743,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_deleteRecords">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1412-1445" title="Go to source code">deleteRecords</a>( <span>array <var>$recordIds</var></span>, <span>string <var>$arm</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1415-1448" title="Go to source code">deleteRecords</a>( <span>array <var>$recordIds</var></span>, <span>string <var>$arm</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Deletes the specified records from the project.</p>
@@ -1795,7 +1798,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportRepeatingInstrumentsAndEvents">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1448-1487" title="Go to source code">exportRepeatingInstrumentsAndEvents</a>( <span>string <var>$format</var> = <span class="php-quote">'php'</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1451-1490" title="Go to source code">exportRepeatingInstrumentsAndEvents</a>( <span>string <var>$format</var> = <span class="php-quote">'php'</span></span> )</code>
 
 		<div class="description short">
 			<p>Exports the repeating instruments and events.</p>
@@ -1852,7 +1855,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_importRepeatingInstrumentsAndEvents">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1490-1534" title="Go to source code">importRepeatingInstrumentsAndEvents</a>( <span>mixed <var>$formsEvents</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1493-1537" title="Go to source code">importRepeatingInstrumentsAndEvents</a>( <span>mixed <var>$formsEvents</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span> )</code>
 
 		<div class="description short">
 			<p>Imports the repeating instruments and events.</p>
@@ -1906,7 +1909,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportRedcapVersion">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1537-1553" title="Go to source code">exportRedcapVersion</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1540-1556" title="Go to source code">exportRedcapVersion</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the REDCap version number of the REDCap instance being used by the project.</p>
@@ -1944,7 +1947,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportReports">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1557-1647" title="Go to source code">exportReports</a>( <span>mixed <var>$reportId</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$rawOrLabel</var> = <span class="php-quote">'raw'</span></span>, <span>string <var>$rawOrLabelHeaders</var> = <span class="php-quote">'raw'</span></span>, <span>boolean <var>$exportCheckboxLabel</var> = <span class="php-keyword1">false</span></span>, <span>string <var>$csvDelimiter</var> = <span class="php-quote">','</span></span>, <span>string <var>$decimalCharacter</var> = <span class="php-keyword1">null</span> </span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1560-1650" title="Go to source code">exportReports</a>( <span>mixed <var>$reportId</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$rawOrLabel</var> = <span class="php-quote">'raw'</span></span>, <span>string <var>$rawOrLabelHeaders</var> = <span class="php-quote">'raw'</span></span>, <span>boolean <var>$exportCheckboxLabel</var> = <span class="php-keyword1">false</span></span>, <span>string <var>$csvDelimiter</var> = <span class="php-quote">','</span></span>, <span>string <var>$decimalCharacter</var> = <span class="php-keyword1">null</span> </span> )</code>
 
 		<div class="description short">
 			<p>Exports the records produced by the specified report.</p>
@@ -2044,7 +2047,7 @@ numeric values being returned. Options are:</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportSurveyLink">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1650-1681" title="Go to source code">exportSurveyLink</a>( <span>string <var>$recordId</var></span>, <span>string <var>$form</var></span>, <span>string <var>$event</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$repeatInstance</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1653-1684" title="Go to source code">exportSurveyLink</a>( <span>string <var>$recordId</var></span>, <span>string <var>$form</var></span>, <span>string <var>$event</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$repeatInstance</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Exports the survey link for the specified inputs.</p>
@@ -2094,7 +2097,7 @@ numeric values being returned. Options are:</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportSurveyParticipants">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1683-1722" title="Go to source code">exportSurveyParticipants</a>( <span>string <var>$form</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$event</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1686-1725" title="Go to source code">exportSurveyParticipants</a>( <span>string <var>$form</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$event</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Exports the list of survey participants for the specified form and, for
@@ -2153,7 +2156,7 @@ longitudinal studies, event.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportSurveyQueueLink">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1724-1748" title="Go to source code">exportSurveyQueueLink</a>( <span>string <var>$recordId</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1727-1751" title="Go to source code">exportSurveyQueueLink</a>( <span>string <var>$recordId</var></span> )</code>
 
 		<div class="description short">
 			<p>Exports the survey queue link for the specified record ID.</p>
@@ -2196,7 +2199,7 @@ longitudinal studies, event.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportSurveyReturnCode">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1750-1780" title="Go to source code">exportSurveyReturnCode</a>( <span>string <var>$recordId</var></span>, <span>string <var>$form</var></span>, <span>string <var>$event</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$repeatInstance</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1753-1783" title="Go to source code">exportSurveyReturnCode</a>( <span>string <var>$recordId</var></span>, <span>string <var>$form</var></span>, <span>string <var>$event</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$repeatInstance</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Exports the code for returning to a survey that was not completed.</p>
@@ -2246,7 +2249,7 @@ longitudinal studies, event.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportUsers">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1783-1817" title="Go to source code">exportUsers</a>( <span>string <var>$format</var> = <span class="php-quote">'php'</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1786-1820" title="Go to source code">exportUsers</a>( <span>string <var>$format</var> = <span class="php-quote">'php'</span></span> )</code>
 
 		<div class="description short">
 			<p>Exports the users of the project.</p>
@@ -2299,7 +2302,7 @@ longitudinal studies, event.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_importUsers">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1819-1886" title="Go to source code">importUsers</a>( <span>mixed <var>$users</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1822-1889" title="Go to source code">importUsers</a>( <span>mixed <var>$users</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span> )</code>
 
 		<div class="description short">
 			<p>Imports the specified users into the project. This method
@@ -2380,7 +2383,7 @@ of PHPCap's exportUsers method to see what the data looks like for the current u
 		<!-- <a class="anchor" title="expand/collapse" href="#_getPhpCapVersion">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1888-1894" title="Go to source code">getPhpCapVersion</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1891-1897" title="Go to source code">getPhpCapVersion</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the PHPCap version number.</p>
@@ -2414,7 +2417,7 @@ of PHPCap's exportUsers method to see what the data looks like for the current u
 		<!-- <a class="anchor" title="expand/collapse" href="#_getRecordIdBatches">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1896-1967" title="Go to source code">getRecordIdBatches</a>( <span>integer <var>$batchSize</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$filterLogic</var> = <span class="php-keyword1">null</span></span>, <span> <var>$recordIdFieldName</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1899-1970" title="Go to source code">getRecordIdBatches</a>( <span>integer <var>$batchSize</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$filterLogic</var> = <span class="php-keyword1">null</span></span>, <span> <var>$recordIdFieldName</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Gets an array of record ID batches.</p>
@@ -2482,7 +2485,7 @@ processing of records exports to lessen memory requirements, for example:</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getRecordIdFieldName">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1971-1981" title="Go to source code">getRecordIdFieldName</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1974-1984" title="Go to source code">getRecordIdFieldName</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the record ID field name for the project.</p>
@@ -2520,7 +2523,7 @@ processing of records exports to lessen memory requirements, for example:</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getApiToken">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1983-1991" title="Go to source code">getApiToken</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1986-1994" title="Go to source code">getApiToken</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the API token for the project.</p>
@@ -2558,7 +2561,7 @@ processing of records exports to lessen memory requirements, for example:</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getConnection">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1994-2005" title="Go to source code">getConnection</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#1997-2008" title="Go to source code">getConnection</a>( )</code>
 
 		<div class="description short">
 			<p>Returns the underlying REDCap API connection being used by the project.
@@ -2601,7 +2604,7 @@ not supported by PHPCap.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setConnection">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#2007-2016" title="Go to source code">setConnection</a>( <span><code><a href="class-IU.PHPCap.RedCapApiConnectionInterface.html">IU\PHPCap\RedCapApiConnectionInterface</a></code> <var>$connection</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#2010-2019" title="Go to source code">setConnection</a>( <span><code><a href="class-IU.PHPCap.RedCapApiConnectionInterface.html">IU\PHPCap\RedCapApiConnectionInterface</a></code> <var>$connection</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the connection used for calling the REDCap API.</p>
@@ -2641,7 +2644,7 @@ not supported by PHPCap.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getErrorHandler">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#2018-2026" title="Go to source code">getErrorHandler</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#2021-2029" title="Go to source code">getErrorHandler</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the error handler.</p>
@@ -2679,7 +2682,7 @@ not supported by PHPCap.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setErrorHandler">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#2028-2036" title="Go to source code">setErrorHandler</a>( <span><code><a href="class-IU.PHPCap.ErrorHandlerInterface.html">IU\PHPCap\ErrorHandlerInterface</a></code> <var>$errorHandler</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#2031-2039" title="Go to source code">setErrorHandler</a>( <span><code><a href="class-IU.PHPCap.ErrorHandlerInterface.html">IU\PHPCap\ErrorHandlerInterface</a></code> <var>$errorHandler</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the error handler used by the project.</p>

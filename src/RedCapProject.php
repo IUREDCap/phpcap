@@ -1008,6 +1008,9 @@ class RedCapProject
      * $records = $project->exportRecords('xml', 'eav', $recordIds);
      * </code>
      *
+     * Note: date ranges do not work for records that were imported at
+     * the time the project was created.
+     *
      * @param string $format the format in which to export the records:
      *     <ul>
      *       <li> 'php' - [default] array of maps of values</li>
