@@ -2866,7 +2866,7 @@ class RedCapProject
     {
         $legalCsvDelimiters = array(',',';','tab','|','^');
         if ($format == 'csv') {
-            if (!$csvDelimiter) {
+            if (empty($csvDelimiter)) {
                 $csvDelimiter = ',';
             }
             if (gettype($csvDelimiter) !== 'string') {

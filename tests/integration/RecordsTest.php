@@ -460,8 +460,62 @@ class RecordsTest extends TestCase
           
         $this->assertEquals($recordIds[0], $csvRecordId, 'Correct record ID returned test.');
     }
-        
+
+    public function testExportRecordsApAsCsvWithBlankCsvDelimiter()
+    {
+        $recordIds = array ('1001');
     
+        $records = self::$basicDemographyProject->exportRecordsAp(
+            ['format' => 'csv', 'recordIds' => $recordIds, 'csvDelimiter' => '']
+        );
+
+        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        $csv = $parser->parse();
+        $this->assertEquals(2, count($csv), 'Correct number of records returned test.');
+
+        $firstDataRow = $csv[1];
+        
+        $csvRecordId = $firstDataRow[0];
+          
+        $this->assertEquals($recordIds[0], $csvRecordId, 'Correct record ID returned test.');
+    }
+
+    public function testExportRecordsApAsCsvWithCsvDelimiterWithInvalidType()
+    {
+        $recordIds = array ('1001');
+    
+        $exceptionCaught = false;
+        try {
+            $records = self::$basicDemographyProject->exportRecordsAp(
+                ['format' => 'csv', 'recordIds' => $recordIds, 'csvDelimiter' => true]
+            );
+        } catch (\Exception $exception) {
+            $exceptionCaught = true;
+            $expectedCode = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->assertEquals($expectedCode, $exception->getCode(), 'Exception code check');
+        }
+
+        $this->assertTrue($exceptionCaught, 'Exception caught check');
+    }
+
+    public function testExportRecordsApAsCsvWithInvalidCsvDelimiter()
+    {
+        $recordIds = array ('1001');
+    
+        $exceptionCaught = false;
+        try {
+            $records = self::$basicDemographyProject->exportRecordsAp(
+                ['format' => 'csv', 'recordIds' => $recordIds, 'csvDelimiter' => 'X']
+            );
+        } catch (\Exception $exception) {
+            $exceptionCaught = true;
+            $expectedCode = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->assertEquals($expectedCode, $exception->getCode(), 'Exception code check');
+        }
+
+        $this->assertTrue($exceptionCaught, 'Exception caught check');
+    }
+
     public function testExportRecordsAsOdm()
     {
         $recordIds = array ('1001');
@@ -1397,6 +1451,36 @@ class RecordsTest extends TestCase
         self::$basicDemographyProject->deleteRecords([1202, 1203]);
     }
 
+    public function testExportRecordsApWithBlankDateRange()
+    {
+        $result = self::$basicDemographyProject->exportRecordsAp(['dateRangeBegin' => '']);
+    
+        $this->assertEquals(count($result), 100, 'Number of records test.');
+    
+        $recordIds = array_column($result, 'record_id');
+        $this->assertEquals(min($recordIds), 1001, 'Min record_id test.');
+        $this->assertEquals(max($recordIds), 1100, 'Max record_id test.');
+    
+        $lastNameMap = array_flip(array_column($result, 'last_name'));
+        $this->assertArrayHasKey('Braun', $lastNameMap, 'Has last name test.');
+        $this->assertArrayHasKey('Carter', $lastNameMap, 'Has last name test.');
+        $this->assertArrayHasKey('Hayes', $lastNameMap, 'Has last name test.');
+    }
+    
+    public function testExportRecordsApWithNonStringDateRange()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['dateRangeBegin' => 123]);
+        } catch (\Exception $exception) {
+            $exceptionCaught = true;
+            $expectedCode = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->assertEquals($expectedCode, $exception->getCode(), 'Exception code check');
+        }
+
+        $this->assertTrue($exceptionCaught, 'Exception caught check');
+    }
+    
     public function testExportRecordsWithCsvDelimiter()
     {
         #export records with default delimiter (comma)
@@ -1523,16 +1607,31 @@ class RecordsTest extends TestCase
 
     public function testExportRecordsApWithDecimalCharacter()
     {
-        #export records with dot decimal format
+        # export records with dot decimal format
         $result = self::$basicDemographyProject->exportRecordsAp(['decimalCharacter' => '.']);
         $expected = '28.7';
         $testResult = strval($result[1]['bmi']);
         $this->assertEquals($expected, $testResult, 'Export records AP decimal character check with dot/full stop');
 
-        #export records with comma decimal format
+        # export records with comma decimal format
         $result = self::$basicDemographyProject->exportRecordsAp(['decimalCharacter' => ',']);
         $expected = '28,7';
         $testResult = strval($result[1]['bmi']);
         $this->assertEquals($expected, $testResult, 'Export records AP decimal character check with comma');
+    }
+
+    public function testExportRecordsApWithInvalidDecimalCharacter()
+    {
+        $exceptionCaught = false;
+
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['decimalCharacter' => '%']);
+        } catch (\Exception $exception) {
+            $exceptionCaught = true;
+            $expectedCode = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->assertEquals($expectedCode, $exception->getCode());
+        }
+
+        $this->assertTrue($exceptionCaught, 'Exception caught check');
     }
 }
