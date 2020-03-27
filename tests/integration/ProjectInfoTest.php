@@ -28,11 +28,6 @@ class ProjectInfoTest extends TestCase
             self::$config['api.url'],
             self::$config['basic.demography.api.token']
         );
-
-        self::$repeatingFormsProject = new RedCapProject(
-            self::$config['api.url'],
-            self::$config['repeating.forms.api.token']
-        );
     }
   
     public function testExportProjectInfo()
@@ -46,7 +41,7 @@ class ProjectInfoTest extends TestCase
     public function testExportProjectInfoExternalModules()
     {
         $dateCalculateField = 'vanderbilt_datecalculatedfields';
-        $result = self::$repeatingFormsProject->exportProjectInfo();
+        $result = self::$basicDemographyProject->exportProjectInfo();
 
         $this->assertContains(
             $dateCalculateField,
