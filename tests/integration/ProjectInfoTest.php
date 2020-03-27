@@ -19,6 +19,7 @@ class ProjectInfoTest extends TestCase
     private static $config;
     private static $basicDemographyProject;
     private static $longitudinalDataProject;
+    private static $repeatingFormsProject;
     
     public static function setUpBeforeClass()
     {
@@ -26,6 +27,11 @@ class ProjectInfoTest extends TestCase
         self::$basicDemographyProject = new RedCapProject(
             self::$config['api.url'],
             self::$config['basic.demography.api.token']
+        );
+
+        self::$repeatingFormsProject = new RedCapProject(
+            self::$config['api.url'],
+            self::$config['repeating.forms.api.token']
         );
     }
   
@@ -35,5 +41,17 @@ class ProjectInfoTest extends TestCase
         $result = self::$basicDemographyProject->exportProjectInfo();
         
         $this->assertEquals($result['project_language'], 'English', 'Project info "project_language" test.');
+    }
+ 
+    public function testExportProjectInfoExternalModules()
+    {
+        $dateCalculateField = 'vanderbilt_datecalculatedfields';
+        $result = self::$repeatingFormsProject->exportProjectInfo();
+
+        $this->assertContains(
+            $dateCalculateField,
+            $result['external_modules'],
+            'Project info "external modules" test.'
+        );
     }
 }
