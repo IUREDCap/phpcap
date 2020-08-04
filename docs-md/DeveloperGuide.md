@@ -92,7 +92,8 @@ following setup steps are completed:
    named "config.ini" and then set the URL in that file to be the
    URL for the API of your REDCap instance, and set the tokens to be
    the tokens requested in the previous step.
-   
+6. In REDCap, enable the "Date Calculated Fields" external module for the "Basic Demography" project.
+ 
 #### Setup for Optional CA Certificate File Integration Tests
 To run the optional tests involving the CA certificate file, you will need to set up
 a valid CA certificate file, and set the __ca.certificate.file__ property

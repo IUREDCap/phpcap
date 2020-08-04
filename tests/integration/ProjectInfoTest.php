@@ -19,6 +19,7 @@ class ProjectInfoTest extends TestCase
     private static $config;
     private static $basicDemographyProject;
     private static $longitudinalDataProject;
+    private static $repeatingFormsProject;
     
     public static function setUpBeforeClass()
     {
@@ -35,5 +36,17 @@ class ProjectInfoTest extends TestCase
         $result = self::$basicDemographyProject->exportProjectInfo();
         
         $this->assertEquals($result['project_language'], 'English', 'Project info "project_language" test.');
+    }
+ 
+    public function testExportProjectInfoExternalModules()
+    {
+        $dateCalculateField = 'vanderbilt_datecalculatedfields';
+        $result = self::$basicDemographyProject->exportProjectInfo();
+
+        $this->assertContains(
+            $dateCalculateField,
+            $result['external_modules'],
+            'Project info "external modules" test.'
+        );
     }
 }
