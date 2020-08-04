@@ -103,8 +103,20 @@ See [CA Certificate File Info](CACertificateFile.md) for more information on how
 do this.
 
 #### Setup for Optional Report Integration Tests
-To run all of the optional report tests, you will need to manually set up a report for the
-longitudinal data project and then set the 
+To run all of the optional report tests, you will need to manually set up 2 reports.
+
+You need to set up a report for the
+basic demography project.
+and then set the 
+__basic.emography.report.id__ property in your __tests/config.ini__ file
+to the ID of the report. If the ID property is not set, then the tests
+that use the report will not be run. You need to set up an "Exercise" report
+as follows:
+    * Include these fields in this order: record_id, bmi
+
+You need to set up a report for the
+longitudinal data project
+and then set the 
 __longitudinal.data.report.id__ property in your __tests/config.ini__ file
 to the ID of the report. If the ID property is not set, then the tests
 that use the report will not be run. You need to set up an "Exercise" report
@@ -130,8 +142,8 @@ To run the survey tests, use the following steps:
     2. Check "When the following survey is completed:"
     3. In the selection below "When the following survey is completed:", select "Basic Information"
     4. Click on the __Save__ button
-8. Click on the "Manage Survey Participants" link on the left
-9. In the "Manage Survey Participants" panel, go to the "Participant List" tab
+8. Click on the "Manage Survey Participants" or "Survey Distribution Tools" link on the left (depending on your REDCap version)
+9. Go to the "Participant List" tab
 10. Click on the __Add participants__ button
 11. Add an e-mail that you have access to and click on the __Add participants__ button
 12. Click on the __Enable__ button for participant identifiers, and confirm this action
