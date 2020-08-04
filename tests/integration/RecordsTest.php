@@ -432,11 +432,11 @@ class RecordsTest extends TestCase
         $this->assertEquals(6, count($result), 'Correct number of records.');
         
         $expectedResult = [
-            ['record' => 1001, 'field_name' => 'age', 'value' => 48],
+            ['record' => 1001, 'field_name' => 'age', 'value' => 51],
             ['record' => 1001, 'field_name' => 'bmi', 'value' => 27.7],
-            ['record' => 1010, 'field_name' => 'age', 'value' => 32],
+            ['record' => 1010, 'field_name' => 'age', 'value' => 36],
             ['record' => 1010, 'field_name' => 'bmi', 'value' => 18.3],
-            ['record' => 1100, 'field_name' => 'age', 'value' => 71],
+            ['record' => 1100, 'field_name' => 'age', 'value' => 75],
             ['record' => 1100, 'field_name' => 'bmi', 'value' => 18.6]
         ];
         
