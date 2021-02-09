@@ -11,6 +11,7 @@ user guides.
 
 Setup
 --------------------------------------------------------
+
 1. Install PHP 5.6 or greater with the following extensions:
     * cURL
     * DOM/XML
@@ -21,9 +22,9 @@ Setup
    See: https://git-scm.com/downloads
 2. Get PHPCap:
      
-    ```shell
-    git clone https://github.com/iuredcap/phpcap
-    ```
+```shell
+git clone https://github.com/iuredcap/phpcap
+```
     
 3. Get Composer. Composer is needed to download the development dependencies for PHPCap.
    See: https://getcomposer.org/download/.
@@ -31,16 +32,16 @@ Setup
    file is set to ignore this file), or install it globally at the system or account level.
 4. Install PHPCap's development dependencies:
 
-    ```shell
-    # If you installed the composer.phar file in PHPCap's root directory:
-    php composer.phar install
+```shell
+# If you installed the composer.phar file in PHPCap's root directory:
+php composer.phar install
     
-    # If you installed composer globally:
-    composer install
+# If you installed composer globally:
+composer install
     
-    # The dependencies should be installed into a "vendor" directory
-    # (which will be ignored by Git).    
-    ```
+# The dependencies should be installed into a "vendor" directory
+# (which will be ignored by Git).    
+```
 
 ### Example Setup on Ubuntu 16
 To set up PHPCap for development on Ubuntu 16, execute the following commands:
@@ -62,6 +63,7 @@ Development
 
 PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency for your PHPCap project when you run the "composer install" command.
 PHPCap has the following types of automated tests:
+
 1. __unit tests__
     * in directory __tests/unit__
     * don't require a REDCap instance to run
@@ -84,6 +86,7 @@ when you try to run them.
 #### Setup for Non-Optional Integration Tests
 Running all the automated tests, or all the integration tests, will fail unless the
 following setup steps are completed:
+
 1. Log in to your REDCap site.
 2. Create an empty project in REDCap.
 3. Create a project in REDCap for the "Basic Demography" and "Longitudinal Data" test projects in directory __tests/projects/__, and import each of those test project files into the REDCap project created for it.
@@ -126,9 +129,10 @@ as follows:
     
 #### Setup for Optional Survey Integration Tests
 To run the survey tests, use the following steps:
+
 1. In REDCap, create a project for the "Repeatable Survey" project test file in the __tests/projects__ directory, and import the project test file into that project.
-2. In the "Project Setup" tab for the project created in the step above, click on the __Enable__ button for "User surveys for this project?"
-3. In the "Project Setup" tab, click on the __Online Designer__ button
+2. In the "Project Setup" tab for the project created in the step above, click on the __Enable__ button for "Use surveys for this project?"
+3. In the "Project Setup" tab, click on the __Designer__ button
 4. In the "Online Designer" tab, click on the __Enable__ button for instrument "Basic Information", and then:
     1. Select "Yes" for "Allow 'Save & Return Later' option for respondents?"
     2. Click on the __Save Changes__ button
@@ -228,6 +232,7 @@ ignore the tests/coverage directory.
 Note that when writing code, it is sometimes necessary to use the __@codeCoverageIgnore__ annotation
 to reach 100% line coverage. The one problem that has come up is that the code coverage check will
 mark the closing bracket after a method that throws an exception as a line that was not covered. To avoid this, you can add the @codeCoverageIgnore annotation as shown in the example below. 
+
 ```php
 if ($required) {
     $message = 'No field was specified.';
@@ -241,6 +246,7 @@ This directory is intended as a place for developers to places tests for changes
 
 ### Coding Standard Compliance
 PHPCap follows the PSR-1 and PSR-2 coding standards. See:
+
 * http://www.php-fig.org/psr/psr-1/
 * http://www.php-fig.org/psr/psr-2/
 
