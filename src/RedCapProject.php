@@ -2332,7 +2332,7 @@ class RedCapProject
      * @param string $format
      * @throws PhpCapException
      */
-    protected function processExportResult(& $result, $format)
+    protected function processExportResult(&$result, $format)
     {
         if ($format == 'php') {
             $phpResult = json_decode($result, true); // true => return as array instead of object
@@ -2518,7 +2518,7 @@ class RedCapProject
         return $form;
     }
     
-    protected function processFormatArgument(& $format, $legalFormats)
+    protected function processFormatArgument(&$format, $legalFormats)
     {
         if (!isset($format)) {
             $format = 'php';
@@ -2623,7 +2623,7 @@ class RedCapProject
      * @param string $result a result returned from the REDCap API, which
      *     should be for a non-export method.
      */
-    protected function processNonExportResult(& $result)
+    protected function processNonExportResult(&$result)
     {
         $matches = array();
         #$hasMatch = preg_match('/^[\s]*{"error":[\s]*"(.*)"}[\s]*$/', $result, $matches);
