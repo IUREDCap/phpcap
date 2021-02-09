@@ -20,6 +20,7 @@ composer.phar
 
 # certificate files
 *.crt
+*.pem
 
 # tests configuration file
 /tests/config.ini
