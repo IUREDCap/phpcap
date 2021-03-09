@@ -65,7 +65,7 @@ class PdfFormsTest extends TestCase
         if (file_exists($file)) {
             unlink($file);
         }
-        $this->assertFileNotExists($file, 'PDF file deleted check.');
+        $this->assertFileDoesNotExist($file, 'PDF file deleted check.');
         
         $result = self::$longitudinalDataProject->exportPdfFileOfInstruments($file);
         

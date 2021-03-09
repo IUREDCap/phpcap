@@ -583,7 +583,7 @@ class RecordsTest extends TestCase
         for ($index = 1; $index <= 100; $index++) {
             $row = $csv[$index];
             $this->assertEquals(1, count($row), 'Column count check for row '.$index.'.');
-            $this->assertContains($row[0], [0,1,2,3,4,5,6], 'Column value check for row '.$index.'.');
+            $this->assertContains($row[0], ['0','1','2','3','4','5','6'], 'Column value check for row '.$index.'.');
         }
     }
     

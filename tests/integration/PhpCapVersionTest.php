@@ -32,6 +32,6 @@ class PhpCapVersionTest extends TestCase
     public function testGetPhpCapVersion()
     {
         $result = self::$basicDemographyProject->getPhpCapVersion();
-        $this->assertRegExp('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'PHPCap version format test.');
+        $this->assertMatchesRegularExpression('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'PHPCap version format test.');
     }
 }

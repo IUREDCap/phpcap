@@ -44,14 +44,18 @@ class RedCapVersionTest extends TestCase
     public function testExportRedcapVersion()
     {
         $result = self::$basicDemographyProject->exportRedcapVersion();
-        $this->assertRegExp('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'REDCap version format test.');
+        $this->assertMatchesRegularExpression('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'REDCap version format test.');
     }
 
     public function testExportRedcapVersionWithSuperToken()
     {
         if (self::$redcap) {
             $result = self::$redcap->exportRedcapVersion();
-            $this->assertRegExp('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'REDCap version super token format test.');
+            $this->assertMatchesRegularExpression(
+                '/^[0-9]+\.[0-9]+\.[0-9]+$/',
+                $result,
+                'REDCap version super token format test.'
+            );
         }
     }
 }
