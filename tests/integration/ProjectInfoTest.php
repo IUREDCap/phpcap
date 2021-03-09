@@ -21,7 +21,7 @@ class ProjectInfoTest extends TestCase
     private static $longitudinalDataProject;
     private static $repeatingFormsProject;
     
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$config = parse_ini_file(__DIR__.'/../config.ini');
         self::$basicDemographyProject = new RedCapProject(
@@ -43,7 +43,7 @@ class ProjectInfoTest extends TestCase
         $dateCalculateField = 'vanderbilt_datecalculatedfields';
         $result = self::$basicDemographyProject->exportProjectInfo();
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             $dateCalculateField,
             $result['external_modules'],
             'Project info "external modules" test.'

@@ -22,7 +22,7 @@ class ImportAndDeleteMetadataTest extends TestCase
     private static $emptyProject;
     private static $longitudinalDataProject;
     
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$config = parse_ini_file(__DIR__.'/../config.ini');
         self::$emptyProject = new RedCapProject(

@@ -13,7 +13,7 @@ class RedCapTest extends TestCase
 {
     private $redCap;
     
-    public function setUp()
+    public function setUp(): void
     {
         $apiUrl = 'https://redcap.somplace.edu/api/';
         $apiToken = '12345678901234567890123456789012';
@@ -149,7 +149,7 @@ class RedCapTest extends TestCase
                 $exception->getCode(),
                 'Exception code check.'
             );
-            $this->assertContains('integer', $exception->getMessage(), 'Message content check.');
+            $this->assertStringContainsString('integer', $exception->getMessage(), 'Message content check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }

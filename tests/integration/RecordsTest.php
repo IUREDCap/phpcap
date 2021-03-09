@@ -26,7 +26,7 @@ class RecordsTest extends TestCase
     private static $basicDemographyProject;
     private static $longitudinalDataProject;
     
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$config = parse_ini_file(self::$configFile);
         self::$basicDemographyProject = new RedCapProject(
