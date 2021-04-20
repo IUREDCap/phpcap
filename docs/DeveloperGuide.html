@@ -53,23 +53,31 @@ SPDX-License-Identifier: BSD-3-Clause
 user guides.</p>
 <h2 id="Setup">Setup</h2>
 <ol>
-<li>Install PHP 5.6 or greater with the following extensions:
+<li>
+<p>Install PHP 5.6 or greater with the following extensions:</p>
 <ul>
 <li>cURL</li>
 <li>DOM/XML</li>
 <li>mbstring</li>
 <li>OpenSSL</li>
-</ul></li>
-<li>(Optional) Install XDebug. This is needed for PHPUnit code coverage analysis.</li>
-<li>Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development. See: <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></li>
+</ul>
+</li>
+<li>
+<p>(Optional) Install XDebug. This is needed for PHPUnit code coverage analysis.</p>
+</li>
+<li>
+<p>Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development. See: <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></p>
+</li>
 <li>
 <p>Get PHPCap:</p>
 <div class="description"><pre><code>git clone https://github.com/iuredcap/phpcap</code></pre></div>
 </li>
-<li>Get Composer. Composer is needed to download the development dependencies for PHPCap.
+<li>
+<p>Get Composer. Composer is needed to download the development dependencies for PHPCap.
 See: <a href="https://getcomposer.org/download/">https://getcomposer.org/download/</a>.
 You can either install the composer.phar file to the root directory of PHPCap (the .gitignore
-file is set to ignore this file), or install it globally at the system or account level.</li>
+file is set to ignore this file), or install it globally at the system or account level.</p>
+</li>
 <li>
 <p>Install PHPCap's development dependencies:</p>
 <div class="description"><pre><code># If you installed the composer.phar file in PHPCap's root directory:
@@ -261,10 +269,10 @@ ignore the tests/coverage directory.</p>
 <p>Note that when writing code, it is sometimes necessary to use the <strong>@codeCoverageIgnore</strong> annotation
 to reach 100% line coverage. The one problem that has come up is that the code coverage check will
 mark the closing bracket after a method that throws an exception as a line that was not covered. To avoid this, you can add the @codeCoverageIgnore annotation as shown in the example below. </p>
-<div class="description"><pre><code class="language-php"><span class="php-keyword1">if</span> (<span class="php-var">$required</span>) {
-    <span class="php-var">$message</span> = <span class="php-quote">'No field was specified.'</span>;
-    <span class="php-var">$this</span>-&gt;errorHandler-&gt;throwException(<span class="php-var">$message</span>, ErrorHandlerInterface::INVALID_ARGUMENT);
-} <span class="php-comment">// @codeCoverageIgnore</span></code></pre></div>
+<div class="description"><pre><code class="language-php">if ($required) {
+    $message = 'No field was specified.';
+    $this-&gt;errorHandler-&gt;throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+} // @codeCoverageIgnore</code></pre></div>
 <h3 id="Local Tests">Local Tests</h3>
 <p>The directory <strong>tests/local/</strong> has been set up so that all files in it, except for the README file, will be ignored by Git.
 This directory is intended as a place for developers to places tests for changes they are working on.</p>
