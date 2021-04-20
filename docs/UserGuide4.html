@@ -47,9 +47,8 @@ SPDX-License-Identifier: BSD-3-Clause
 <li><strong>importFile</strong> - method for importing a file (e.g., a document or image) into an existing REDCap record.</li>
 </ol>
 <h2 id="importRecords">importRecords</h2>
-<p>Detailed documentation for the importRecords method can be found in
-the PHPCap API documentation:
-<a href="https://iuredcap.github.io/phpcap/api/class-IU.PHPCap.RedCapProject.html">https://iuredcap.github.io/phpcap/api/class-IU.PHPCap.RedCapProject.html</a></p>
+<p>This method is used to import records into a REDCap project.</p>
+<p>API documentation: <a href="api/classes/IU-PHPCap-RedCapProject.html#method_importRecords">importRecords()</a></p>
 <p>Since this method corresponds very closely to the REDCap API Import Records method, the
 REDCap API documentation can also be checked for more information. And the REDCap
 API Playground can be used to get a sense of the functionality provided by this method.</p>
@@ -84,9 +83,7 @@ but the subsequent imports would fail.</p>
 <h2 id="importFile">importFile</h2>
 <p>The importFile method is used for importing a file, such as a consent form for a patient,
 into an existing REDCap record.</p>
-<p>Detailed documentation for the importRecords method can be found in
-the PHPCap API documentation:
-<a href="https://iuredcap.github.io/phpcap/api/class-IU.PHPCap.RedCapProject.html">https://iuredcap.github.io/phpcap/api/class-IU.PHPCap.RedCapProject.html</a> </p>
+<p>API documentation: <a href="api/classes/IU-PHPCap-RedCapProject.html#method_importFile">importFile()</a></p>
 <p>Below is example code for importing a consent form file for a patient into the patient's record:</p>
 <div class="description"><pre><code class="language-php">project-&gt;importFile(<span class="php-quote">'consent1001.pdf'</span>,<span class="php-quote">'1001'</span>,<span class="php-quote">'patient_consent'</span>);</code></pre></div>
 <p>Or, using variables to indicate what the arguments represent:</p>

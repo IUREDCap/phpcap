@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>PHPCap API</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <base href="../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -72,25 +72,57 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <h2>Documentation</h2>
+                    <ul class="phpdocumentor-breadcrumbs">
+    </ul>
 
-    
-    
-<h3 id="namespaces">
-    Namespaces
-    <a href="#namespaces" class="headerlink"><i class="fas fa-link"></i></a>
+    <article class="phpdocumentor-element -package">
+        <h2 class="phpdocumentor-content__title">Default</h2>
+
+        
+
+<h3 id="interfaces_class_traits">
+    Interfaces, Classes and Traits
+    <a href="#interfaces_class_traits" class="headerlink"><i class="fas fa-link"></i></a>
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/iu.html"><abbr title="\IU">IU</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/IU-PHPCap-ErrorHandlerInterface.html"><abbr title="\IU\PHPCap\ErrorHandlerInterface">ErrorHandlerInterface</abbr></a></dt>
+        <dd>Interface for error handlers for PHPCap.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/IU-PHPCap-RedCapApiConnectionInterface.html"><abbr title="\IU\PHPCap\RedCapApiConnectionInterface">RedCapApiConnectionInterface</abbr></a></dt>
+        <dd>Interface for connection to the API of a REDCap instance.</dd>
+    
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/IU-PHPCap-ErrorHandler.html"><abbr title="\IU\PHPCap\ErrorHandler">ErrorHandler</abbr></a></dt>
+        <dd>Default error handler for PHPCap. PHPCap will call
+the throwException method of this class when
+an error occurs.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/IU-PHPCap-FileUtil.html"><abbr title="\IU\PHPCap\FileUtil">FileUtil</abbr></a></dt>
+        <dd>File utility class for dealing with files.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/IU-PHPCap-PhpCapException.html"><abbr title="\IU\PHPCap\PhpCapException">PhpCapException</abbr></a></dt>
+        <dd>Exception class for PHPCap exceptions. This is the exception that PHPCap will
+throw when it encounters an error.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/IU-PHPCap-RedCap.html"><abbr title="\IU\PHPCap\RedCap">RedCap</abbr></a></dt>
+        <dd>REDCap class used to represent a REDCap instance/site. This class
+is typically only useful if your progam needs to create
+REDCap projects and/or needs to access more than one
+REDCap project.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/IU-PHPCap-RedCapApiConnection.html"><abbr title="\IU\PHPCap\RedCapApiConnection">RedCapApiConnection</abbr></a></dt>
+        <dd>A connection to the API of a REDCap instance. This class provides a low-level
+interface to the REDCap API, and is primarily intended for internal use by PHPCap,
+but could be used directly by a user to access REDCap functionality not provided
+by PHPCap.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/IU-PHPCap-RedCapProject.html"><abbr title="\IU\PHPCap\RedCapProject">RedCapProject</abbr></a></dt>
+        <dd>REDCap project class used to retrieve data from, and modify, REDCap projects.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/IU-PHPCap-Version.html"><abbr title="\IU\PHPCap\Version">Version</abbr></a></dt>
+        <dd>Class for storing software version information.</dd>
+    
     </dl>
 
 
 
+        
 
-    
-
-    
+        
+    </article>
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
@@ -104,7 +136,7 @@
 </section>
             </div>
         </div>
-        <a href="index.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="packages/Default.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

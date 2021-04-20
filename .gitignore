@@ -2,6 +2,9 @@
 # Files to be ignored by Git
 #-------------------------------------------------
 
+# phpDocumentor build and cache files
+src/.phpdoc
+
 # Eclipse project file and settings directory
 .project
 .settings/

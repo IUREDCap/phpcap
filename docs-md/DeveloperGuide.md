@@ -17,44 +17,48 @@ Setup
     * DOM/XML
     * mbstring
     * OpenSSL
-1. (Optional) Install XDebug. This is needed for PHPUnit code coverage analysis.
-1. Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development.
-   See: https://git-scm.com/downloads
-2. Get PHPCap:
-     
-```shell
-git clone https://github.com/iuredcap/phpcap
-```
-    
-3. Get Composer. Composer is needed to download the development dependencies for PHPCap.
+2. (Optional) Install XDebug. This is needed for PHPUnit code coverage analysis.
+3. Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development. See: https://git-scm.com/downloads
+4. Get PHPCap:
+
+        git clone https://github.com/iuredcap/phpcap
+
+5. Get Composer. Composer is needed to download the development dependencies for PHPCap.
    See: https://getcomposer.org/download/.
    You can either install the composer.phar file to the root directory of PHPCap (the .gitignore 
    file is set to ignore this file), or install it globally at the system or account level.
-4. Install PHPCap's development dependencies:
+6. Install PHPCap's development dependencies:
 
-```shell
-# If you installed the composer.phar file in PHPCap's root directory:
-php composer.phar install
+        # If you installed the composer.phar file in PHPCap's root directory:
+        php composer.phar install
     
-# If you installed composer globally:
-composer install
+        # If you installed composer globally:
+        composer install
     
-# The dependencies should be installed into a "vendor" directory
-# (which will be ignored by Git).    
-```
+        # The dependencies should be installed into a "vendor" directory
+        # (which will be ignored by Git).    
+
+7. Install [phpDocumentor](https://phpdoc.org/), which is used for
+    generating API documentation from PHPDoc comments in the code.
+    It should be set up so that it can be run from the command line using:
+
+        phpdoc
 
 ### Example Setup on Ubuntu 16
 To set up PHPCap for development on Ubuntu 16, execute the following commands:
-    
-```shell
-sudo apt-get install php php-curl php-xml php-mbstring
-sudo apt-get install php-xdebug
-sudo apt-get install git
-git clone https://github.com/iuredcap/phpcap
-sudo apt-get install composer
-cd PHPCap
-composer install
-```
+
+    sudo apt-get install php php-curl php-xml php-mbstring
+    sudo apt-get install php-xdebug
+    sudo apt-get install git
+    git clone https://github.com/iuredcap/phpcap
+    sudo apt-get install composer
+    cd phpcap
+    composer install
+    # Install phpDocumentor:
+    wget https://phpdoc.org/phpDocumentor.phar
+    chmod +x phpDocumentor.phar
+    sudo mv phpDocumentor.phar /usr/local/bin/phpdoc
+
 
 Development
 -----------------------------------------
@@ -288,20 +292,25 @@ Documentation consists of the following:
 * Top-level README.md file
 * Markdown documents that have been manually created in the __docs-md/__ directory
 * HTML API documentation generated from the PHPDoc comments in the code, which are stored in the __docs/api/__ directory
-* HTML versions of the Markdown documentation in the docs-md/ directory, which are generated programmatically, stored in the __docs/__ directory, and use the same style as the API documentation.
+* HTML versions of the Markdown documentation in the docs-md/ directory, which are generated programmatically, stored in the __docs/__ directory.
 
+Since all documentation in the __docs/__ directory (except for the README.md file) is automatically
+generated, these files should not be editied manaully.
 
 #### API Document Generation
 To generate the API documentation (stored in **./docs/api**), execute the following command in PHPCap's root directory:
 
-    ./vendor/bin/apigen generate
+    phpdoc
     
-Note: ApiGen uses the **apigen.neon** configuration file in the root directory of PHPCap.
+Note: For this command to work, phpDocumentor needs to have been installed as command "phpdoc".
+The configuration file used by this command is **phpdoc.xml** in the root directory of PHPCap.
 
-The API documentation is stored in Git to eliminate the need for non-developer users to install Composer and the developer dependencies.
+The API documentation _is_ stored in Git to eliminate the need for non-developer users
+to install Composer and the developer dependencies.
 
 #### HTML Document Generation
-To generate an HTML version for the Markdown documents in the __docs-md/__ directory, execute the following command in PHPCap's root directory:
+To generate an HTML version for the Markdown documents in the __docs-md/__ directory,
+execute the following command in PHPCap's root directory:
 
     php generate-html-docs.php
 
@@ -309,4 +318,15 @@ To generate an HTML version for the Markdown documents in the __docs-md/__ direc
 
 Releases should be tagged in accordance with semantic versioning: 
 http://semver.org/
+
+### Developer Dependencies
+
+PHPCap uses a few development dependencies.
+
+To check for out of date dependencies, use:
+
+    composer outdated --direct
+
+The "--direct" option above only checks dependencies directly used by PHPCap (i.e., specified in the
+composer.json file).
 

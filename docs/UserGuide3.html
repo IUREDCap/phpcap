@@ -47,6 +47,8 @@ SPDX-License-Identifier: BSD-3-Clause
 <li><strong>exportReports</strong> - method that exports the records produced by a report that
 is defined for the project in REDCap.</li>
 </ol>
+<p>The detailed documentation for the RedCapProject class can be found in the PHPCap API documentation:
+<a href="api/classes/IU-PHPCap-RedCapProject.html">RedCapProject Class</a></p>
 <p><strong>Batch Processing</strong>. The methods above return all of their records at once, but
 the method <strong>getRecordIdBatches</strong> can be used with the first 2 methods above
 to export records in batches. This will cut down on the memory requirements of the export, which
@@ -54,8 +56,8 @@ can be useful for exporting the records from very large projects.</p>
 <h2 id="exportRecords">exportRecords</h2>
 <p>The exportRecords method is a standard PHP method that has 12 parameters that can
 be set to modify the records that are exported and their format.</p>
-<p>The complete documentation for this method can be found in the PHPCap API documentation:
-<a href="https://iuredcap.github.io/phpcap/api/class-IU.PHPCap.RedCapProject.html">https://iuredcap.github.io/phpcap/api/class-IU.PHPCap.RedCapProject.html</a></p>
+<p>The detailed documentation for this method can be found in the PHPCap API documentation here:
+<a href="api/classes/IU-PHPCap-RedCapProject.html#method_exportRecords">exportRecords()</a></p>
 <p>Since this method corresponds very closely to the REDCap API Export Records method, the
 REDCap API documentation can also be checked for more information. And the REDCap
 API Playground can be used to get a sense of the functionality provided by this method.</p>
@@ -101,12 +103,15 @@ parameters before it need to be included.</p>
 <p>In this case, only the arguments with non-default values need to be specified. And, the order
 doesn't matter, so the above export could also be specified as:</p>
 <div class="description"><pre><code class="language-php"><span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecordsAp([<span class="php-quote">'exportDataAccessGroups'</span> =&gt; <span class="php-keyword1">true</span>, <span class="php-quote">'format'</span> =&gt; <span class="php-quote">'csv'</span>]);</code></pre></div>
+<p>The detailed documentation for this method can be found in the PHPCap API documentation here:
+<a href="api/classes/IU-PHPCap-RedCapProject.html#method_exportRecordsAp">exportRecordsAp()</a></p>
 <h2 id="exportReports">exportReports</h2>
 <p>To use the exportReports method, you first need to define one or more reports in REDCap
 for the project you are using.</p>
 <p>For example, if you had previously defined a report in REDCap that had an ID of 18999,
 you could export the records for that report in CSV format using the following:</p>
 <div class="description"><pre><code class="language-php"><span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportReports(<span class="php-quote">'18999'</span>, <span class="php-quote">'csv'</span>);</code></pre></div>
+<p>API documentation: <a href="api/classes/IU-PHPCap-RedCapProject.html#method_exportReports">exportReports()</a></p>
 <h2 id="getRecordIdBatches">getRecordIdBatches</h2>
 <p>The getRecordIdBatches method retrieves batches of record IDs from a project that can then
 be used as input to the exportRecords and exportRecordsAp methods to export records in batches,
@@ -132,7 +137,8 @@ above might return, for example:</p>
     [<span class="php-num">1071</span>, <span class="php-num">1072</span>, <span class="php-num">1073</span>, <span class="php-num">1074</span>, <span class="php-num">1075</span>, <span class="php-num">1076</span>, <span class="php-num">1077</span>, <span class="php-num">1078</span>, <span class="php-num">1079</span>, <span class="php-num">1080</span>],
     [<span class="php-num">1081</span>, <span class="php-num">1082</span>, <span class="php-num">1083</span>, <span class="php-num">1084</span>, <span class="php-num">1085</span>, <span class="php-num">1086</span>, <span class="php-num">1087</span>, <span class="php-num">1088</span>, <span class="php-num">1089</span>, <span class="php-num">1090</span>],
     [<span class="php-num">1091</span>, <span class="php-num">1092</span>, <span class="php-num">1093</span>, <span class="php-num">1094</span>, <span class="php-num">1095</span>, <span class="php-num">1096</span>, <span class="php-num">1097</span>, <span class="php-num">1098</span>, <span class="php-num">1099</span>, <span class="php-num">1100</span>]
-]</code></pre></div></div>
+]</code></pre></div>
+<p>API documentation: <a href="api/classes/IU-PHPCap-RedCapProject.html#method_getRecordIdBatches">getRecorIdBatches()</a></p></div>
 <div id="footer">
 PHPCap documentation
 </div>
