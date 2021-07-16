@@ -1355,6 +1355,16 @@ class RedCapProject
      *         If this is set to true, and auto-numbering for records is enabled for the project,
      *         auto-numbering of imported records will be enabled.
      *
+     * @param string $csvDelimiter specifies which delimiter separates the values in the CSV
+     *         data file (for CSV format only).
+     *         <ul>
+     *           <li> ',' - comman [default] </li>
+     *           <li> 'tab' </li>
+     *           <li> ';' - semi-colon </li>
+     *           <li> '|' - pipe </li>
+     *           <li> '^' - caret </li>
+     *         </ul>
+     *
      * @return mixed if 'count' was specified for 'returnContent', then an integer will
      *         be returned that is the number of records imported.
      *         If 'ids' was specified, then an array of record IDs that were imported will
@@ -1368,7 +1378,8 @@ class RedCapProject
         $overwriteBehavior = 'normal',
         $dateFormat = 'YMD',
         $returnContent = 'count',
-        $forceAutoNumber = false
+        $forceAutoNumber = false,
+        $csvDelimiter = ','
     ) {
             
         $data = array (
@@ -1382,6 +1393,9 @@ class RedCapProject
         #---------------------------------------
         $legalFormats = array('csv', 'json', 'odm', 'php', 'xml');
         $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        if ($data['format'] == 'csv') {
+            $data['csvDelimiter'] = $this->processCsvDelimiterArgument($csvDelimiter, $format);
+        }
         $data['data']   = $this->processImportDataArgument($records, 'records', $format);
         $data['type']   = $this->processTypeArgument($type);
             
