@@ -3021,7 +3021,7 @@ class RedCapProject
     
      /**
      * Imports the specified dags into the project. Allows import of new DAGs or update of the
-     * data_access_group_name of any existing DAGs. DAGs can be renamed by changing 
+     * data_access_group_name of any existing DAGs. DAGs can be renamed by changing
      * the data_access_group_name. A DAG can be created by providing group name value with
      *  unique group name set to blank.
      *
@@ -3065,7 +3065,7 @@ class RedCapProject
     
     protected function processDagsArgument($dags, $required = true)
     {
-         if (!isset($dags)) {
+        if (!isset($dags)) {
             if ($required === true) {
                 $this->errorHandler->throwException(
                     'The dags argument was not set.',
@@ -3163,8 +3163,8 @@ class RedCapProject
      /**
      * Imports User-DAG assignments, allowing you to assign users to any
      * data access group.o the project. If you wish to modify an existing
-     * mapping, you must provide its unique username and group name. 
-     * If the 'redcap_data_access_group' column is not provided, user 
+     * mapping, you must provide its unique username and group name.
+     * If the 'redcap_data_access_group' column is not provided, user
      * will not be assigned to any group. There should be only one record
      * per username.
      *
@@ -3172,7 +3172,7 @@ class RedCapProject
      * This will be a PHP array of associative arrays if no format, or 'php'
      * format was specified, and a string otherwise. The field names (keys)
      * used in both cases are: username, recap_data_access_group
-     * 
+     *
      * @param string $format the format for the export.
      *     <ul>
      *       <li> 'php' - [default] array of maps of values</li>

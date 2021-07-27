@@ -31,10 +31,10 @@ class DagsTest extends TestCase
         $result = self::$dagsProject->exportDags($format='php');
         $dagNames = array_column($result, 'unique_group_name');
         if (in_array('group3', $dagNames)) {
-           self::$dagsProject->deleteDags(array('group3'));
+            self::$dagsProject->deleteDags(array('group3'));
         }
         if (in_array('group4', $dagNames)) {
-           self::$dagsProject->deleteDags(array('group4'));
+            self::$dagsProject->deleteDags(array('group4'));
         }
     }
     
@@ -51,7 +51,7 @@ class DagsTest extends TestCase
     public function testImportAndDeleteDag()
     {
         # add the new DAG
-	    $newDag = [
+        $newDag = [
             'data_access_group_name'  => 'group3',
             'unique_group_name' => ""
         ];
@@ -95,15 +95,15 @@ class DagsTest extends TestCase
         $username = array_column($result, 'username')[0];
 
         #create a new dag
-       	$newDag = [
+        $newDag = [
             'data_access_group_name'  => 'group4',
             'unique_group_name' => ""
         ];
         $newDags = [$newDag];
-        self::$dagsProject->importDags($newDags, $format='php'); 
+        self::$dagsProject->importDags($newDags, $format='php');
 
         #map the user to the new dag
-	    $newDagAssignment = [
+        $newDagAssignment = [
             'username'  => $username,
             'redcap_data_access_group'  => 'group4'
         ];
@@ -121,5 +121,4 @@ class DagsTest extends TestCase
         $deleteUniqueDags = array('group4');
         $result = self::$dagsProject->deleteDags($deleteUniqueDags);
     }
-
 }

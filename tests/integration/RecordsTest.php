@@ -1657,15 +1657,30 @@ class RecordsTest extends TestCase
                 $forceAutoNumber = false,
                 $csvDelimiter = $delimiter
             );
-            $this->assertEquals(1, count($result), 'testImportRecordsWithCsvDelimiter Record count for delimiter: ' . $delimiter . '.');
-            $this->assertEquals($recordIds, $result, 'testImportRecordsWithCsvDelimiter Import IDs check for delimiter: ' . $delimiter . '.');
+            $this->assertEquals(1, count($result), 'testImportRecordsWithCsvDelimiter Record count for delimiter: '
+                . $delimiter . '.');
+            $this->assertEquals(
+                $recordIds,
+                $result,
+                'testImportRecordsWithCsvDelimiter Import IDs check for delimiter: '
+                . $delimiter . '.'
+            );
 
             $result = self::$basicDemographyProject->exportRecords();
-            $this->assertEquals(101, count($result), 'testImportRecordsWithCsvDelimiter Record count after import for delimiter: ' . $delimiter . '.');
+            $this->assertEquals(
+                101,
+                count($result),
+                'testImportRecordsWithCsvDelimiter Record count after import for delimiter: '
+                . $delimiter . '.'
+            );
 
             $key = array_search($recordIds[0], array_column($result, 'record_id'));
             $email = $result[$key]['email'];
-            $this->assertEquals('joe.schmidt@mailinator.com', $email, 'testImportRecordsWithCsvDelimiter record-value check for delimiter: ' . $delimiter . '.');
+            $this->assertEquals(
+                'joe.schmidt@mailinator.com',
+                $email,
+                'testImportRecordsWithCsvDelimiter record-value check for delimiter: ' . $delimiter . '.'
+            );
 
             #clear out the record for the next delimiter test
             $result = self::$basicDemographyProject->deleteRecords($recordIds);
