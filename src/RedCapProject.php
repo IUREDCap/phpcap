@@ -3071,8 +3071,10 @@ class RedCapProject
                     'The dags argument was not set.',
                     ErrorHandlerInterface::INVALID_ARGUMENT
                 );
-            } // @codeCoverageIgnore
+            }
+            // @codeCoverageIgnoreStart
             $dags = array();
+            // @codeCoverageIgnoreEnd
         } else {
             if (!is_array($dags)) {
                 $this->errorHandler->throwException(
@@ -3084,7 +3086,7 @@ class RedCapProject
                     'No dags were specified in the dags argument; at least one must be specified.',
                     ErrorHandlerInterface::INVALID_ARGUMENT
                 );
-            } // @codeCoverageIgnore
+            }
         }
         
         foreach ($dags as $dag) {
@@ -3094,7 +3096,7 @@ class RedCapProject
                     ' Dags should be strings.';
                 $code = ErrorHandlerInterface::INVALID_ARGUMENT;
                 $this->errorHandler->throwException($message, $code);
-            } // @codeCoverageIgnore
+            }
         }
         
         return $dags;

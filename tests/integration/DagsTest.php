@@ -121,4 +121,84 @@ class DagsTest extends TestCase
         $deleteUniqueDags = array('group4');
         $result = self::$dagsProject->deleteDags($deleteUniqueDags);
     }
+    
+    public function testDagsArgumentNotSet()
+    {
+        $dagsArgument = null;
+        $exceptionCaught = false;
+        try {
+            $result = self::$dagsProject->deleteDags($dagsArgument);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $code,
+                'Exception code check.',
+                'testDagsArgumentNotSet'
+            );
+        }
+    
+        $this->assertTrue($exceptionCaught, 'Exception caught.', 'testDagsArgumentNotSet');
+    }
+    
+    public function testDagsArgumentNull()
+    {
+        $dagsArgument = array();
+        $exceptionCaught = false;
+        try {
+            $result = self::$dagsProject->deleteDags($dagsArgument);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $code,
+                'Exception code check.',
+                'testDagsArgumentNull'
+            );
+        }
+    
+        $this->assertTrue($exceptionCaught, 'Exception caught.', 'testDagsArgumentNull');
+    }
+    
+    public function testDagsArgumentNotArray()
+    {
+        $dagsArgument = 'hello';
+        $exceptionCaught = false;
+        try {
+            $result = self::$dagsProject->deleteDags($dagsArgument);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $code,
+                'Exception code check.',
+                'testDagsArugmentNotArray'
+            );
+        }
+    
+        $this->assertTrue($exceptionCaught, 'Exception caught.', 'testDagsArgumentNotArray');
+    }
+    
+    public function testDagsArgumentElementNotString()
+    {
+        $dagsArgument = array(true);
+        $exceptionCaught = false;
+        try {
+            $result = self::$dagsProject->deleteDags($dagsArgument);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $code,
+                'Exception code check.',
+                'testDagsArugmentElementNotString'
+            );
+        }
+    
+        $this->assertTrue($exceptionCaught, 'Exception caught.', 'testDagsArgumentElementNotString');
+    }
 }
