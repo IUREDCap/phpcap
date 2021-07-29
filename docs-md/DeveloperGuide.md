@@ -116,7 +116,7 @@ To run all of the optional report tests, you will need to manually set up 2 repo
 You need to set up a report for the
 basic demography project.
 and then set the 
-__basic.emography.report.id__ property in your __tests/config.ini__ file
+__basic.demography.report.id__ property in your __tests/config.ini__ file
 to the ID of the report. If the ID property is not set, then the tests
 that use the report will not be run. You need to set up an "Exercise" report
 as follows:
