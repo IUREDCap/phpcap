@@ -27,7 +27,7 @@ class DagsTest extends TestCase
             self::$config['dags.api.token']
         );
         
-        #clean up in case a prior test failed7yy
+        #clean up in case a prior test failed
         $result = self::$dagsProject->exportDags($format='php');
         $dagNames = array_column($result, 'unique_group_name');
         if (in_array('group3', $dagNames)) {

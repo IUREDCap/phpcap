@@ -2927,19 +2927,19 @@ class RedCapProject
         return $csvDelimiter;
     }
 
-    protected function processDateRangeArgument($dateRange)
+    protected function processDateRangeArgument($date)
     {
-        if (isset($dateRange)) {
-            if (trim($dateRange) === '') {
-                $dateRange = null;
+        if (isset($date)) {
+            if (trim($date) === '') {
+                $date = null;
             } else {
                 $legalFormat = 'Y-m-d H:i:s';
                 $err = false;
 
-                if (gettype($dateRange) === 'string') {
-                    $dt = \DateTime::createFromFormat($legalFormat, $dateRange);
+                if (gettype($date) === 'string') {
+                    $dt = \DateTime::createFromFormat($legalFormat, $date);
         
-                    if (!($dt && $dt->format($legalFormat) == $dateRange)) {
+                    if (!($dt && $dt->format($legalFormat) == $date)) {
                         $err = true;
                     }
                 } else {
@@ -2948,14 +2948,14 @@ class RedCapProject
 
                 if ($err) {
                     $errMsg = 'Invalid date format. ';
-                    $errMsg .= "The date format for export date ranges is YYYY-MM-DD HH:MM:SS, ";
+                    $errMsg .= "The date format for export dates is YYYY-MM-DD HH:MM:SS, ";
                     $errMsg .= 'e.g., 2020-01-31 00:00:00.';
                     $code = ErrorHandlerInterface::INVALID_ARGUMENT;
                     $this->errorHandler->throwException($errMsg, $code);
                 } // @codeCoverageIgnore
             }
         }
-        return $dateRange;
+        return $date;
     }
 
     protected function processDecimalCharacterArgument($decimalCharacter)
@@ -3208,4 +3208,128 @@ class RedCapProject
         
         return (integer) $result;
     }
+
+     /**
+     * Imports the logging (audit trail) of all changes made to this project,
+     * including data exports, data changes, project metadata changes,
+     * modification of user rights, etc.
+     *
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param string $logType type of logging to return. Defaults to NULL
+     *     to return all types.
+     * @param string $username returns only the events belong to specific
+     *     username. If not specified, it will assume all users.
+     * @param string $recordId the record ID for the file to be exported.
+     * @param string $dag returns only the events belong to specific DAG
+     *     (referring to group_id), provide a dag. If not specified, it will
+     *     assume all dags.
+     * @param string $beginTime specifies to return only those records
+     *     *after* a given date/time, provide a timestamp in the format
+     *     YYYY-MM-DD HH:MM (e.g., '2017-01-01 17:00' for January 1, 2017
+     *     at 5:00 PM server time). If not specified, it will assume no
+     *     begin time.
+     * @param string $endTime returns only records that have been logged
+     *     *before* a given date/time, provide a timestamp in the format
+     *     YYYY-MM-DD HH:MM (e.g., '2017-01-01 17:00' for January 1, 2017
+     *     at 5:00 PM server time). If not specified, it will use the current
+     *     server time. 
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return array information, filtered by event (logtype), listing all
+     *     changes made to thise project. Each element of the array is an
+     *     associative array with the following keys: 
+     *     'timestamp', 'username', 'action', 'details'
+     */
+    public function exportLogging(
+        $format = 'php',
+        $logType = null, 
+        $username = null, 
+        $recordId = null, 
+        $dag = null, 
+        $beginTime = null, 
+        $endTime = null
+    ){
+		$required = false;
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'log',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format']    = $this->processFormatArgument($format, $legalFormats);
+
+        $data['logtype']   = $this->processLogTypeArgument($logType);
+        $data['user']      = $this->processUserArgument($recordId);
+        $data['record']    = $this->processRecordIdArgument($recordId, $required);
+        $data['dag']       = $this->processDagArgument($dag);
+        $data['beginTime'] = $this->processDateRangeArgument($beginTime);
+        $data['endTime']   = $this->processDateRangeArgument($endTime);
+
+        $logs = $this->connection->callWithArray($data);
+        $logs = $this->processExportResult($logs, $format);
+        
+        return $logs;
+    }
+
+   protected function processLogTypeArgument($logType)
+    {
+        $legalLogTypes = array(
+            'export',
+            'manage',
+            'user',
+            'record',
+            'record_add', 
+            'record_edit', 
+            'record_delete', 
+            'lock_record', 
+            'page_view' 
+        );
+        if ($logType) {
+            if (!in_array($logType, $legalLogTypes)) {
+                $message = 'Invalid log type of "'.$logType.'" specified.'
+                    .' Valid log types are: "'.
+                    implode('", "', $legalLogTypes).'".';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } 
+        }
+        return $logType;
+    }
+
+    protected function processDagArgument($dag)
+    {
+        if ($dag) {
+            if (!is_string($dag)) {
+                $message = 'The dag argument has invalid type "'.gettype($dag)
+                    .'"; it should be a string.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            }
+        } 
+        return $dag;
+    }
+
+    protected function processUserArgument($username)
+    {
+        if ($username) {
+            if (!is_string($username)) {
+                $message = 'The user argument has invalid type "'.gettype($dag)
+                    .'"; it should be a string.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            }
+        } 
+        return $username;
+    }
+
 }
