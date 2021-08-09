@@ -3269,7 +3269,7 @@ class RedCapProject
         $data['format']    = $this->processFormatArgument($format, $legalFormats);
 
         $data['logtype']   = $this->processLogTypeArgument($logType);
-        $data['user']      = $this->processUserArgument($recordId);
+        $data['user']      = $this->processUserArgument($username);
         $data['record']    = $this->processRecordIdArgument($recordId, $required);
         $data['dag']       = $this->processDagArgument($dag);
         $data['beginTime'] = $this->processDateRangeArgument($beginTime);

@@ -18,8 +18,10 @@ class LoggingTest extends TestCase
 {
     private static $config;
     private static $basicDemographyProject;
+    private static $dagsProject;
     
     const DELETE_WAIT_TIME = 60;
+    const INSERT_WAIT_TIME = 90;
 
     public static function setUpBeforeClass(): void
     {
@@ -27,6 +29,11 @@ class LoggingTest extends TestCase
         self::$basicDemographyProject = new RedCapProject(
             self::$config['api.url'],
             self::$config['basic.demography.api.token']
+        );
+
+        self::$dagsProject = new RedCapProject(
+            self::$config['api.url'],
+            self::$config['dags.api.token']
         );
         
         #clean up any records that did not get properly deleted from a prior test.
@@ -148,7 +155,136 @@ class LoggingTest extends TestCase
     
     public function testExportLoggingUser() 
     {
-#you are here
+		# do something that creates a log entry (i.e., an export) and get the user for that log entry
+        $result = self::$basicDemographyProject->exportRecords($format = null);
+        $logType = 'export';
+        $logs = self::$basicDemographyProject->exportLogging(
+            $format='php',
+            $logType = $logType,
+            $username = null, 
+            $recordId = null, 
+            $dag = null, 
+            $beginTime = null,
+            $endTime = null
+        );
+
+        # get the username and query the logs for that username
+        $username = $logs[0]['username'];
+        $result = self::$basicDemographyProject->exportLogging(
+            $format='php',
+            $logType = null,
+            $username = $username,
+            $recordId = null, 
+            $dag = null, 
+            $beginTime = null,
+            $endTime = null
+        );
+        $users = array_unique(array_column($result, 'username'));
+        $this->assertEquals(1, count($users), "Export logging: user count check.");
+        $this->assertEquals($username, $users[0], "Export logging: username check.");
+    }
+
+    public function testExportLoggingRecordId() 
+    {
+        # Create a test record to insert
+        $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import2.csv');
+        $result = self::$basicDemographyProject->importRecords(
+            $records,
+            $format = 'csv',
+            $type = null,
+            $overwriteBehavior = null,
+            $dateFormat = null,
+            $returnContent = null
+        );
+        
+        sleep(self::INSERT_WAIT_TIME);
+
+        # Establish the begin date
+        $fiveMinutesAgo = new \DateTime();
+        $fiveMinutesAgo->sub(new \DateInterval('PT5M'));
+
+        #adjust for timezone
+        if (array_key_exists('timezone', self::$config)) {
+            $tz = self::$config['timezone'];
+            $fiveMinutesAgo->setTimezone(new \DateTimeZone($tz));
+        } else {
+            $message = 'No timezone defined in configuration file "'.realpath(self::$configFile).'"';
+            throw new \Exception($message);
+        }
+
+
+        # get the log records for that record id
+        $recordId = 1200;
+        $result = self::$basicDemographyProject->exportLogging(
+            $format='php',
+            $logType = null,
+            $username = null,
+            $recordId = '1200',
+            $dag = null, 
+            $beginTime = $fiveMinutesAgo->format('Y-m-d H:i:s'),
+            $endTime = null
+        );
+        $this->assertGreaterThan(0, count($result), 'Export logging Record id count check.');
+
+        # Clean up the test by deleting the inserted test record
+        self::$basicDemographyProject->deleteRecords([1200]);
     }
     
+    public function testExportLoggingDag() 
+    {
+        #This test assumes that the project was set up with a test user as specified in
+        #the setup instructions.
+
+        #get a user and an assigned dag
+        $result = self::$dagsProject->exportUserDagAssignment($format='php');
+        foreach ($result as $key=>$dag) {
+			if ($dag['redcap_data_access_group']) {
+                $originalUsername = $dag['username'];
+                $originalDag = $dag['redcap_data_access_group'];
+                break;
+            }
+        }
+
+        if (!$originalDag) {
+			$this->markTestSkipped('testExportLoggingDag: No dag assignments found.');
+		}
+
+        #map the user to the same dag to create a log entry
+        $dagAssignment = [
+            'username'  => $originalUsername,
+            'redcap_data_access_group'  => $originalDag
+        ];
+        $dagAssignments = [$dagAssignment];
+        self::$dagsProject->importUserDagAssignment($dagAssignments, $format='php');
+
+        # Establish the begin date
+        $sevenMinutesAgo = new \DateTime();
+        $sevenMinutesAgo->sub(new \DateInterval('PT7M'));
+        #adjust for timezone
+        if (array_key_exists('timezone', self::$config)) {
+            $tz = self::$config['timezone'];
+            $sevenMinutesAgo->setTimezone(new \DateTimeZone($tz));
+        } else {
+            $message = 'No timezone defined in configuration file "'.realpath(self::$configFile).'"';
+            throw new \Exception($message);
+        }
+
+        sleep(self::INSERT_WAIT_TIME);
+
+        # run the test
+        $dags = self::$dagsProject->exportLogging(
+            $format='php',
+            $logType = null,
+            $username = null,
+            $recordId = null,
+            $dag = null,
+            $beginTime = $sevenMinutesAgo->format('Y-m-d H:i:s'),
+            $endTime = null
+        );
+        
+        $expected = 'Import User-DAG Assignments (API)';
+        $details = array_unique(array_column($dags, 'details'));
+        $this->assertContains($expected, $details, 'Delete DAGs name check.');
+	}
+
 }
