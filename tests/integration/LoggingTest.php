@@ -52,13 +52,12 @@ class LoggingTest extends TestCase
         if ($runWait) {
             sleep(self::DELETE_WAIT_TIME);
         };
-
     }
     
     public function testExportLoggingWithDateRange()
     {
         
-        # Establish the begin date 
+        # Establish the begin date
         $twoMinutesAgo = new \DateTime();
         $twoMinutesAgo->sub(new \DateInterval('PT2M'));
 
@@ -73,7 +72,7 @@ class LoggingTest extends TestCase
             $returnContent = null
         );
 
-        # Establish the end date 
+        # Establish the end date
         $fiveMinutesFromNow = new \DateTime();
         $fiveMinutesFromNow->add(new \DateInterval('PT5M'));
 
@@ -92,12 +91,12 @@ class LoggingTest extends TestCase
         
         $result = self::$basicDemographyProject->exportLogging(
             $format='php',
-            $logType = null, 
-            $username = null, 
-            $recordId = null, 
-            $dag = null, 
-            $beginTime = $twoMinutesAgo->format('Y-m-d H:i:s'), 
-            $endTime = $fiveMinutesFromNow->format('Y-m-d H:i:s') 
+            $logType = null,
+            $username = null,
+            $recordId = null,
+            $dag = null,
+            $beginTime = $twoMinutesAgo->format('Y-m-d H:i:s'),
+            $endTime = $fiveMinutesFromNow->format('Y-m-d H:i:s')
         );
  
         $this->assertGreaterThan(0, count($result), 'Export logging count check.');
@@ -108,10 +107,10 @@ class LoggingTest extends TestCase
         #test entering a begin date in the future so that no records should be returned
         $result1 = self::$basicDemographyProject->exportLogging(
             $format='php',
-            $logType = null, 
-            $username = null, 
-            $recordId = null, 
-            $dag = null, 
+            $logType = null,
+            $username = null,
+            $recordId = null,
+            $dag = null,
             $beginTime = '2100-01-01 00:00:00',
             $endTime = null
         );
@@ -120,10 +119,10 @@ class LoggingTest extends TestCase
         #test entering an end date in the past so that no records should be returned
         $result2 = self::$basicDemographyProject->exportLogging(
             $format='php',
-            $logType = null, 
-            $username = null, 
-            $recordId = null, 
-            $dag = null, 
+            $logType = null,
+            $username = null,
+            $recordId = null,
+            $dag = null,
             $beginTime = null,
             $dateRangeEnd = '1901-01-01 00:00:00'
         );
@@ -131,7 +130,6 @@ class LoggingTest extends TestCase
 
         # Clean up the test by deleting the inserted test record
         self::$basicDemographyProject->deleteRecords([1200]);
-
     }
       
     public function testExportLoggingLogType()
@@ -141,9 +139,9 @@ class LoggingTest extends TestCase
         $logs = self::$basicDemographyProject->exportLogging(
             $format='php',
             $logType = $logType,
-            $username = null, 
-            $recordId = null, 
-            $dag = null, 
+            $username = null,
+            $recordId = null,
+            $dag = null,
             $beginTime = null,
             $endTime = null
         );
@@ -153,17 +151,17 @@ class LoggingTest extends TestCase
         $this->assertEquals($expected, $result, "Export logging: log type check.");
     }
     
-    public function testExportLoggingUser() 
+    public function testExportLoggingUser()
     {
-		# do something that creates a log entry (i.e., an export) and get the user for that log entry
+        # do something that creates a log entry (i.e., an export) and get the user for that log entry
         $result = self::$basicDemographyProject->exportRecords($format = null);
         $logType = 'export';
         $logs = self::$basicDemographyProject->exportLogging(
             $format='php',
             $logType = $logType,
-            $username = null, 
-            $recordId = null, 
-            $dag = null, 
+            $username = null,
+            $recordId = null,
+            $dag = null,
             $beginTime = null,
             $endTime = null
         );
@@ -174,8 +172,8 @@ class LoggingTest extends TestCase
             $format='php',
             $logType = null,
             $username = $username,
-            $recordId = null, 
-            $dag = null, 
+            $recordId = null,
+            $dag = null,
             $beginTime = null,
             $endTime = null
         );
@@ -184,7 +182,7 @@ class LoggingTest extends TestCase
         $this->assertEquals($username, $users[0], "Export logging: username check.");
     }
 
-    public function testExportLoggingRecordId() 
+    public function testExportLoggingRecordId()
     {
         # Create a test record to insert
         $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import2.csv');
@@ -220,7 +218,7 @@ class LoggingTest extends TestCase
             $logType = null,
             $username = null,
             $recordId = '1200',
-            $dag = null, 
+            $dag = null,
             $beginTime = $fiveMinutesAgo->format('Y-m-d H:i:s'),
             $endTime = null
         );
@@ -230,15 +228,15 @@ class LoggingTest extends TestCase
         self::$basicDemographyProject->deleteRecords([1200]);
     }
     
-    public function testExportLoggingDag() 
+    public function testExportLoggingDag()
     {
         #This test assumes that the project was set up with a test user as specified in
         #the setup instructions.
 
         #get a user and an assigned dag
         $result = self::$dagsProject->exportUserDagAssignment($format='php');
-        foreach ($result as $key=>$dag) {
-			if ($dag['redcap_data_access_group']) {
+        foreach ($result as $key => $dag) {
+            if ($dag['redcap_data_access_group']) {
                 $originalUsername = $dag['username'];
                 $originalDag = $dag['redcap_data_access_group'];
                 break;
@@ -246,8 +244,8 @@ class LoggingTest extends TestCase
         }
 
         if (!$originalDag) {
-			$this->markTestSkipped('testExportLoggingDag: No dag assignments found.');
-		}
+            $this->markTestSkipped('testExportLoggingDag: No dag assignments found.');
+        }
 
         #map the user to the same dag to create a log entry
         $dagAssignment = [
@@ -285,6 +283,5 @@ class LoggingTest extends TestCase
         $expected = 'Import User-DAG Assignments (API)';
         $details = array_unique(array_column($dags, 'details'));
         $this->assertContains($expected, $details, 'Delete DAGs name check.');
-	}
-
+    }
 }

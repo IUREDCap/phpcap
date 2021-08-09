@@ -3238,24 +3238,24 @@ class RedCapProject
      *     *before* a given date/time, provide a timestamp in the format
      *     YYYY-MM-DD HH:MM (e.g., '2017-01-01 17:00' for January 1, 2017
      *     at 5:00 PM server time). If not specified, it will use the current
-     *     server time. 
+     *     server time.
      * @throws PhpCapException if an error occurs.
      *
      * @return array information, filtered by event (logtype), listing all
      *     changes made to thise project. Each element of the array is an
-     *     associative array with the following keys: 
+     *     associative array with the following keys:
      *     'timestamp', 'username', 'action', 'details'
      */
     public function exportLogging(
         $format = 'php',
-        $logType = null, 
-        $username = null, 
-        $recordId = null, 
-        $dag = null, 
-        $beginTime = null, 
+        $logType = null,
+        $username = null,
+        $recordId = null,
+        $dag = null,
+        $beginTime = null,
         $endTime = null
-    ){
-		$required = false;
+    ) {
+        $required = false;
         $data = array(
                 'token'        => $this->apiToken,
                 'content'      => 'log',
@@ -3281,18 +3281,18 @@ class RedCapProject
         return $logs;
     }
 
-   protected function processLogTypeArgument($logType)
+    protected function processLogTypeArgument($logType)
     {
         $legalLogTypes = array(
             'export',
             'manage',
             'user',
             'record',
-            'record_add', 
-            'record_edit', 
-            'record_delete', 
-            'lock_record', 
-            'page_view' 
+            'record_add',
+            'record_edit',
+            'record_delete',
+            'lock_record',
+            'page_view'
         );
         if ($logType) {
             if (!in_array($logType, $legalLogTypes)) {
@@ -3301,7 +3301,7 @@ class RedCapProject
                     implode('", "', $legalLogTypes).'".';
                 $code = ErrorHandlerInterface::INVALID_ARGUMENT;
                 $this->errorHandler->throwException($message, $code);
-            } 
+            }
         }
         return $logType;
     }
@@ -3315,7 +3315,7 @@ class RedCapProject
                 $code = ErrorHandlerInterface::INVALID_ARGUMENT;
                 $this->errorHandler->throwException($message, $code);
             }
-        } 
+        }
         return $dag;
     }
 
@@ -3328,8 +3328,7 @@ class RedCapProject
                 $code = ErrorHandlerInterface::INVALID_ARGUMENT;
                 $this->errorHandler->throwException($message, $code);
             }
-        } 
+        }
         return $username;
     }
-
 }
