@@ -135,10 +135,10 @@ class LoggingTest extends TestCase
     public function testExportLoggingLogType()
     {
         $result = self::$basicDemographyProject->exportRecords($format = null);
-        $logType = 'export';
+        $exportLogType = 'export';
         $logs = self::$basicDemographyProject->exportLogging(
             $format='php',
-            $logType = $logType,
+            $logType = $exportLogType,
             $username = null,
             $recordId = null,
             $dag = null,
@@ -149,6 +149,28 @@ class LoggingTest extends TestCase
         $expected = 'Data Export (API) ';
         $result = $logs[0]['action'];
         $this->assertEquals($expected, $result, "Export logging: log type check.");
+
+        $badLogType = 'nonsense';
+        $exceptionCaught = false;
+        try {
+            $logs = self::$basicDemographyProject->exportLogging(
+                $format='php',
+                $logType = $badLogType,
+                $username = null,
+                $recordId = null,
+                $dag = null,
+                $beginTime = null,
+                $endTime = null
+            );
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Invalid error handler check.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'Invalid error handler exception caught.');
     }
     
     public function testExportLoggingUser()
@@ -180,6 +202,27 @@ class LoggingTest extends TestCase
         $users = array_unique(array_column($result, 'username'));
         $this->assertEquals(1, count($users), "Export logging: user count check.");
         $this->assertEquals($username, $users[0], "Export logging: username check.");
+
+        $badUsername = true;
+        try {
+            $logs = self::$basicDemographyProject->exportLogging(
+                $format='php',
+                $logType = null,
+                $username = $badUsername,
+                $recordId = null,
+                $dag = null,
+                $beginTime = null,
+                $endTime = null
+            );
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Invalid error handler check.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'Invalid error handler exception caught.');
     }
 
     public function testExportLoggingRecordId()
@@ -210,9 +253,7 @@ class LoggingTest extends TestCase
             throw new \Exception($message);
         }
 
-
         # get the log records for that record id
-        $recordId = 1200;
         $result = self::$basicDemographyProject->exportLogging(
             $format='php',
             $logType = null,
@@ -275,13 +316,34 @@ class LoggingTest extends TestCase
             $logType = null,
             $username = null,
             $recordId = null,
-            $dag = null,
+            $dag = $originalDag,
             $beginTime = $sevenMinutesAgo->format('Y-m-d H:i:s'),
             $endTime = null
         );
         
         $expected = 'Import User-DAG Assignments (API)';
         $details = array_unique(array_column($dags, 'details'));
-        $this->assertContains($expected, $details, 'Delete DAGs name check.');
+        $this->assertContains($expected, $details, 'Export logging DAG check.');
+
+        $badDag = true;
+        try {
+            $logs = self::$basicDemographyProject->exportLogging(
+                $format='php',
+                $logType = null,
+                $username = null,
+                $recordId = null,
+                $dag = $badDag,
+                $beginTime = null,
+                $endTime = null
+            );
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Invalid error handler check.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'Invalid error handler exception caught.');
     }
 }

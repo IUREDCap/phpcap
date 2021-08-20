@@ -3323,7 +3323,7 @@ class RedCapProject
     {
         if ($username) {
             if (!is_string($username)) {
-                $message = 'The user argument has invalid type "'.gettype($dag)
+                $message = 'The user argument has invalid type "'.gettype($username)
                     .'"; it should be a string.';
                 $code = ErrorHandlerInterface::INVALID_ARGUMENT;
                 $this->errorHandler->throwException($message, $code);
