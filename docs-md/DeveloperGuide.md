@@ -296,7 +296,7 @@ Documentation consists of the following:
 * HTML versions of the Markdown documentation in the docs-md/ directory, which are generated programmatically, stored in the __docs/__ directory.
 
 Since all documentation in the __docs/__ directory (except for the README.md file) is automatically
-generated, these files should not be editied manually.
+generated, these files should not be edited manually.
 
 #### API Document Generation
 To generate the API documentation (stored in **./docs/api**), execute the following command in PHPCap's root directory:
