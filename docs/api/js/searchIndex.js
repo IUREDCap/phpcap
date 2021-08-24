@@ -626,6 +626,11 @@ Search.appendIndex(
             "summary": "Imports\u0020User\u002DDAG\u0020assignments,\u0020allowing\u0020you\u0020to\u0020assign\u0020users\u0020to\u0020any\ndata\u0020access\u0020group.o\u0020the\u0020project.\u0020If\u0020you\u0020wish\u0020to\u0020modify\u0020an\u0020existing\nmapping,\u0020you\u0020must\u0020provide\u0020its\u0020unique\u0020username\u0020and\u0020group\u0020name.",
             "url": "classes/IU-PHPCap-RedCapProject.html#method_importUserDagAssignment"
         },                {
+            "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AexportLogging\u0028\u0029",
+            "name": "exportLogging",
+            "summary": "Imports\u0020the\u0020logging\u0020\u0028audit\u0020trail\u0029\u0020of\u0020all\u0020changes\u0020made\u0020to\u0020this\u0020project,\nincluding\u0020data\u0020exports,\u0020data\u0020changes,\u0020project\u0020metadata\u0020changes,\nmodification\u0020of\u0020user\u0020rights,\u0020etc.",
+            "url": "classes/IU-PHPCap-RedCapProject.html#method_exportLogging"
+        },                {
             "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AJSON_RESULT_ERROR_PATTERN",
             "name": "JSON_RESULT_ERROR_PATTERN",
             "summary": "",
