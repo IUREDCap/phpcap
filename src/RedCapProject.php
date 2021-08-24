@@ -3210,7 +3210,7 @@ class RedCapProject
     }
 
      /**
-     * Imports the logging (audit trail) of all changes made to this project,
+     * Exports the logging (audit trail) of all changes made to this project,
      * including data exports, data changes, project metadata changes,
      * modification of user rights, etc.
      *

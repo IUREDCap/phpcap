@@ -628,7 +628,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AexportLogging\u0028\u0029",
             "name": "exportLogging",
-            "summary": "Imports\u0020the\u0020logging\u0020\u0028audit\u0020trail\u0029\u0020of\u0020all\u0020changes\u0020made\u0020to\u0020this\u0020project,\nincluding\u0020data\u0020exports,\u0020data\u0020changes,\u0020project\u0020metadata\u0020changes,\nmodification\u0020of\u0020user\u0020rights,\u0020etc.",
+            "summary": "Exports\u0020the\u0020logging\u0020\u0028audit\u0020trail\u0029\u0020of\u0020all\u0020changes\u0020made\u0020to\u0020this\u0020project,\nincluding\u0020data\u0020exports,\u0020data\u0020changes,\u0020project\u0020metadata\u0020changes,\nmodification\u0020of\u0020user\u0020rights,\u0020etc.",
             "url": "classes/IU-PHPCap-RedCapProject.html#method_exportLogging"
         },                {
             "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AJSON_RESULT_ERROR_PATTERN",
