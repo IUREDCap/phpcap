@@ -1128,12 +1128,12 @@ class RecordsTest extends TestCase
         
         $this->assertEquals(102, count($records), 'Record count check after import.');
         
-        # delete the records that were just added that are in arm 1,
+        # delete the records that were just added that are in arm 1,$array = array_map('strtolower', $array);
         # which should be only records with ID 1102
-        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1101,1102], $arm = 1);
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1102], $arm = 1);
         
         # Note: as of May 10, 2017, this assertion fails (apparently) because of a REDCap API bug
-        #$this->assertEquals(1, $recordsDeleted, 'Records deleted check after first delete.');
+        $this->assertEquals(1, $recordsDeleted, 'Records deleted check after first delete.');
         
         $records = self::$longitudinalDataProject->exportRecordsAp(
             ['events' => ['enrollment_arm_1', 'enrollment_arm_2']]

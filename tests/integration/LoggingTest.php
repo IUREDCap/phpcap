@@ -1,4 +1,5 @@
 <?php
+
 #-------------------------------------------------------
 # Copyright (C) 2019 The Trustees of Indiana University
 # SPDX-License-Identifier: BSD-3-Clause
@@ -19,6 +20,8 @@ class LoggingTest extends TestCase
     private static $config;
     private static $basicDemographyProject;
     private static $dagsProject;
+    private static $redCapVersion;
+    private static $redCapMajorVersion;
     
     const DELETE_WAIT_TIME = 60;
     const INSERT_WAIT_TIME = 90;
@@ -52,6 +55,9 @@ class LoggingTest extends TestCase
         if ($runWait) {
             sleep(self::DELETE_WAIT_TIME);
         };
+
+        self::$redCapVersion = self::$basicDemographyProject->exportRedCapVersion();
+        self::$redCapMajorVersion = intval(explode(".", self::$redCapVersion)[0]);
     }
     
     public function testExportLoggingWithDateRange()
@@ -98,11 +104,17 @@ class LoggingTest extends TestCase
             $beginTime = $twoMinutesAgo->format('Y-m-d H:i:s'),
             $endTime = $fiveMinutesFromNow->format('Y-m-d H:i:s')
         );
- 
+
         $this->assertGreaterThan(0, count($result), 'Export logging count check.');
         
+        // It appears that from version 11 to 12 of REDCap, the messages generated changed a bit.
         $actions = array_column($result, 'action');
-        $this->assertContains('Created Record (API) 1200', $actions, 'Export logging begin date-action check.');
+        if (self::$redCapMajorVersion <= 11) {
+            $expected = 'Created Record (API) 1200';
+        } else {
+            $expected = 'Create record (API) 1200';
+        }
+        $this->assertContains($expected, $actions, 'Export logging begin date-action check.');
 
         #test entering a begin date in the future so that no records should be returned
         $result1 = self::$basicDemographyProject->exportLogging(
@@ -148,7 +160,7 @@ class LoggingTest extends TestCase
 
         $expected = 'Data Export (API) ';
         $result = $logs[0]['action'];
-        $this->assertEquals($expected, $result, "Export logging: log type check.");
+        $this->assertEqualsIgnoringCase($expected, $result, "Export logging: log type check.");
 
         $badLogType = 'nonsense';
         $exceptionCaught = false;
@@ -321,7 +333,12 @@ class LoggingTest extends TestCase
             $endTime = null
         );
         
-        $expected = 'Import User-DAG Assignments (API)';
+        // It appears that from version 11 to 12 of REDCap, the messages generated changed a bit.
+        if (self::$redCapMajorVersion <= 11) {
+            $expected = 'Import User-DAG Assignments (API)';
+        } else {
+            $expected = 'Import User-DAG assignments (API)';
+        }
         $details = array_unique(array_column($dags, 'details'));
         $this->assertContains($expected, $details, 'Export logging DAG check.');
 
