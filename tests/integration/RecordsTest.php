@@ -425,19 +425,19 @@ class RecordsTest extends TestCase
     public function testExportRecordsApRecordIdsAsEav()
     {
         $result = self::$basicDemographyProject->exportRecordsAp(
-            ['recordIds' => [1001, 1010, 1100], 'fields' => ['age', 'bmi'], 'type' => 'eav']
+            ['recordIds' => [1001, 1010, 1100], 'fields' => ['bmi', 'weight'], 'type' => 'eav']
         );
         
         # 3 rows X 2 fields = 6 records (since EAV type is being used).
         $this->assertEquals(6, count($result), 'Correct number of records.');
         
         $expectedResult = [
-            ['record' => 1001, 'field_name' => 'age', 'value' => 51],
             ['record' => 1001, 'field_name' => 'bmi', 'value' => 27.7],
-            ['record' => 1010, 'field_name' => 'age', 'value' => 36],
+            ['record' => 1001, 'field_name' => 'weight', 'value' => 83],
             ['record' => 1010, 'field_name' => 'bmi', 'value' => 18.3],
-            ['record' => 1100, 'field_name' => 'age', 'value' => 75],
-            ['record' => 1100, 'field_name' => 'bmi', 'value' => 18.6]
+            ['record' => 1010, 'field_name' => 'weight', 'value' => 62],
+            ['record' => 1100, 'field_name' => 'bmi', 'value' => 18.6],
+            ['record' => 1100, 'field_name' => 'weight', 'value' => 68]
         ];
         
         $this->assertEquals($expectedResult, $result, 'Results check.');
