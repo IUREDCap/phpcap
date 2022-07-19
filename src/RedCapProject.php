@@ -383,18 +383,41 @@ class RedCapProject
     }
 
     /**
-     * Exports the specified file.
+     * Exports the specified file. If the $fileInfo argument is used and set to an array before
+     * the call to this method, the method will set it to contain information about the exported file.
+     * Note that if a file does not have an event and/or repeat instance, do not include
+     * these arguments or set them to null if you need to specify an argument that comes after them.
+     *
+     * Example usage:
+     * <pre>
+     * <code class="phpdocumentor-code">
+     * ...
+     * $recordId       = '1001';
+     * $field          = 'patient_document';
+     * $event          = 'enrollment_arm_1';
+     * $repeatInstance = 1;
+     * $fileInfo       = array();
+     * $fileContents = $project->exportFile($recordId, $field, $event, $repeatInstance, $fileInfo);
+     * ...
+     * </code>
+     * </pre>
+
      *
      * @param string $recordId the record ID for the file to be exported.
      * @param string $field the name of the field containing the file to export.
      * @param string $event name of event for file export (for longitudinal studies).
-     * @param integer $repeatInstance
+     * @param integer $repeatInstance the instance (if repeating) of the record
+     * @param array $fileInfo output array for getting file information. $fileInfo must be set
+     *     to an array before calling this method, and on successful return it will include
+     *     elements with the following keys:
+     *     'name', 'mime_type', and 'charset' (if the file is a text file).
+     *
      *
      * @throws PhpCapException if an error occurs.
      *
      * @return string the contents of the file that was exported.
      */
-    public function exportFile($recordId, $field, $event = null, $repeatInstance = null)
+    public function exportFile($recordId, $field, $event = null, $repeatInstance = null, &$fileInfo = null)
     {
         $data = array(
                 'token'        => $this->apiToken,
@@ -416,6 +439,30 @@ class RedCapProject
         #-------------------------------
         $file = $this->connection->callWithArray($data);
         $file = $this->processExportResult($file, $format = 'file');
+
+        if (is_array($fileInfo)) {
+            $fileInfo = array();
+            $callInfo = $this->connection->getCallInfo();
+            if (isset($callInfo) && is_array($callInfo) && array_key_exists('content_type', $callInfo)) {
+                if (!empty($callInfo)) {
+                    $contentType = $callInfo = explode(';', $callInfo['content_type']);
+                    if (count($contentType) >= 1) {
+                        $fileInfo['mime_type'] = trim($contentType[0]);
+                    }
+                    if (count($contentType) >= 2) {
+                        $fileName = trim($contentType[1]);
+                        # remove starting 'name="' and ending '"'
+                        $fileName = substr($fileName, 6, strlen($fileName) - 7);
+                        $fileInfo['name'] = $fileName;
+                    }
+                    if (count($contentType) >= 3) {
+                        $charset = trim($contentType[2]);
+                        $charset = substr($charset, 8);
+                        $fileInfo['charset'] = $charset;
+                    }
+                }
+            }
+        }
         
         return $file;
     }
@@ -2347,8 +2394,8 @@ class RedCapProject
     
     protected function processExportFilesArgument($exportFiles)
     {
-        if ($exportFiles== null) {
-            $exportFiles= false;
+        if ($exportFiles == null) {
+            $exportFiles = false;
         } else {
             if (gettype($exportFiles) !== 'boolean') {
                 $message = 'Invalid type for exportFiles. It should be a boolean (true or false),'
