@@ -398,6 +398,7 @@ class RedCapProject
      * $repeatInstance = 1;
      * $fileInfo       = array();
      * $fileContents = $project->exportFile($recordId, $field, $event, $repeatInstance, $fileInfo);
+     * print("File name: {$fileInfo['name']}, file MIME type: {$fileInfo['mime_type']}\n");
      * ...
      * </code>
      * </pre>
