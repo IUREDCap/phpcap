@@ -383,7 +383,8 @@ class RedCapProject
     }
 
     /**
-     * Exports the specified file. If the $fileInfo argument is used and set to an array before
+     * Exports the specified file. The contents of the file are returned by the method.
+     * If the $fileInfo argument is used and set to an array before
      * the call to this method, the method will set it to contain information about the exported file.
      * Note that if a file does not have an event and/or repeat instance, do not include
      * these arguments or set them to null if you need to specify an argument that comes after them.

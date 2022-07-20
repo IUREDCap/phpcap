@@ -428,7 +428,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AexportFile\u0028\u0029",
             "name": "exportFile",
-            "summary": "Exports\u0020the\u0020specified\u0020file.\u0020If\u0020the\u0020\u0024fileInfo\u0020argument\u0020is\u0020used\u0020and\u0020set\u0020to\u0020an\u0020array\u0020before\nthe\u0020call\u0020to\u0020this\u0020method,\u0020the\u0020method\u0020will\u0020set\u0020it\u0020to\u0020contain\u0020information\u0020about\u0020the\u0020exported\u0020file.",
+            "summary": "Exports\u0020the\u0020specified\u0020file.\u0020The\u0020contents\u0020of\u0020the\u0020file\u0020are\u0020returned\u0020by\u0020the\u0020method.",
             "url": "classes/IU-PHPCap-RedCapProject.html#method_exportFile"
         },                {
             "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AimportFile\u0028\u0029",
