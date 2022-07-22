@@ -75,7 +75,6 @@ class UsersTest extends TestCase
         
         $this->assertNotNull($newUser, 'New user found in export check.');
         $this->assertEquals($newUser['design'], 1, 'Design check 1.');
-        $this->assertEquals($newUser['data_export'], 1, 'Data export check 1.');
         $this->assertEquals($newUser['record_create'], 1, 'Record create check 1.');
         
         #------------------------------------------------------
@@ -100,7 +99,6 @@ class UsersTest extends TestCase
         
         $this->assertNotNull($newUser, 'New user found in export check.');
         $this->assertEquals($newUser['design'], 0, 'Design check 2.');
-        $this->assertEquals($newUser['data_export'], 0, 'Data export check 2.');
         $this->assertEquals($newUser['record_create'], 0, 'Record create check 2.');
         
         # There's no way (as of June 2017) to delete the user that was added.
