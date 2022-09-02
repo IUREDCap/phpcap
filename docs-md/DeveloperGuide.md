@@ -313,6 +313,10 @@ The configuration file used by this command is **phpdoc.xml** in the root direct
 The API documentation _is_ stored in Git to eliminate the need for non-developer users
 to install Composer and the developer dependencies.
 
+Unfortunately, phpDocumentor creates 2 files with the same name that only differ in how they are capitalized. This
+causes issues when a zip file download of PHPCap is done on some systems. Running the HTML document generation
+script below will fix this issue, so it should always be run after the phpdoc command is run.
+
 #### HTML Document Generation
 To generate an HTML version for the Markdown documents in the __docs-md/__ directory,
 execute the following command in PHPCap's root directory:
