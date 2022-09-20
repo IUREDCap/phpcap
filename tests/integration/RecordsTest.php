@@ -38,6 +38,8 @@ class RecordsTest extends TestCase
             self::$config['longitudinal.data.api.token']
         );
 
+        # Make sure that all the records that can be added by this class are deleted,
+        # in case the test failed the last time it was run.
         $oldIds = [1101, 1200, 1201, 1202, 1203];
         foreach ($oldIds as $id) {
             $exists = self::$basicDemographyProject->exportRecordsAp(['recordIds' => [$id]]);
@@ -1145,6 +1147,55 @@ class RecordsTest extends TestCase
         $this->assertEquals(1, $recordsDeleted, 'Records deleted check after first delete.');
     }
     
+    /** WORK IN PROGRESS */
+    public function testDeleteRecordsWithForm()
+    {
+        $records = FileUtil::fileToString(__DIR__.'/../data/longitudinal-data-import.csv');
+         
+        # Import the test records
+        $result = self::$longitudinalDataProject->importRecords(
+            $records,
+            $format = 'csv',
+            null,
+            null,
+            $dateFormat = 'MDY'
+        );
+        
+        $records = self::$longitudinalDataProject->exportRecordsAp(
+            ['events' => ['enrollment_arm_1', 'enrollment_arm_2']]
+        );
+
+        $this->assertEquals(102, count($records), 'Record count check after import.');
+        
+
+        $records = self::$longitudinalDataProject->exportRecordsAp(
+            ['format' => 'csv', 'recordIds' => [1101, 1102]]
+        );
+        $countBeforeDelete = count(preg_split("/\n/", $records));
+
+        # Delete the records for the forms for the visit event for 1102
+        $arm = null;
+        $form = 'lab_data';
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1102], $arm, $form, $event = 'visit_1_arm_1');
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1102], $arm, $form, $event = 'visit_2_arm_1');
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1102], $arm, $form, $event = 'visit_3_arm_1');
+        $form = 'patient_morale_questionnaire';
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1102], $arm, $form, $event = 'visit_1_arm_1');
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1102], $arm, $form, $event = 'visit_2_arm_1');
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1102], $arm, $form, $event = 'visit_3_arm_1');
+
+        $records = self::$longitudinalDataProject->exportRecordsAp(
+            ['format' => 'csv', 'recordIds' => [1101, 1102]]
+        );
+        $countAfterDelete = count(preg_split("/\n/", $records));
+
+        $this->assertEquals($countBeforeDelete - 3, $countAfterDelete, 'Record count after visit form delete for 1102');
+        
+        # delete remaining parts of records
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1101, 1102]);
+        $this->assertEquals(2, $recordsDeleted, 'Records deleted check after first delete.');
+    }
+    
     public function testDeleteRecordsWithNonNumericStringArm()
     {
         $exceptionCaught = false;
@@ -1187,6 +1238,31 @@ class RecordsTest extends TestCase
     
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
+
+
+    /** WORK IN PROGRESS */
+    public function testRenameRecord()
+    {
+        $records = FileUtil::fileToString(__DIR__.'/../data/longitudinal-data-import.csv');
+         
+        # Import the test records
+        $result = self::$longitudinalDataProject->importRecords(
+            $records,
+            $format = 'csv',
+            null,
+            null,
+            $dateFormat = 'MDY'
+        );
+
+        $this->assertEquals(2, $result, 'Record import results check.');
+
+        $result = self::$longitudinalDataProject->renameRecord('1101', '1201');
+
+        # delete test records
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1201, 1102]);
+        $this->assertEquals(2, $recordsDeleted, 'Test record delete check.');
+    }
+
 
     public function testExportRecordsWithDateRange()
     {

@@ -1499,6 +1499,12 @@ class RedCapProject
      * @param string $arm if an arm is specified, only records that have
      *     one of the specified record IDs that are in that arm will
      *     be deleted.
+     * @param string $form form for which fields should be deleted
+     *     (only these field will be deleted).
+     * @param string $event event for which fields should be deleted
+     *     (must be spefied for longitudinal studies if an event is spcified).
+     * @param integer $repeatInstance for repeatable forms, the instance for
+     *     which fields should be deleted.
      *
      * @throws PhpCapException
      *
@@ -1508,7 +1514,7 @@ class RedCapProject
      *     is specified and some of the record IDs specified are
      *     not in that arm.
      */
-    public function deleteRecords($recordIds, $arm = null)
+    public function deleteRecords($recordIds, $arm = null, $form = null, $event = null, $repeatInstance = null)
     {
         $data = array (
                 'token'        => $this->apiToken,
@@ -1519,10 +1525,47 @@ class RedCapProject
         
         $data['records'] = $this->processRecordIdsArgument($recordIds);
         $data['arm']     = $this->processArmArgument($arm);
+
+        $data['instrument']      = $this->ProcessFormArgument($form, $required = false);
+        $data['event']           = $this->ProcessEventArgument($event);
+        $data['repeat_instance'] = $this->ProcessRepeatInstanceArgument($repeatInstance);
+
         
         $result = $this->connection->callWithArray($data);
         
         $this->processNonExportResult($result);
+        
+        return $result;
+    }
+
+
+    /**
+     * Renames the specified record with the new specified record ID.
+     *
+     * @param string $recordId the record ID of the record to rename.
+     * @param string $newRecordId the new record ID to set for the specified records.
+     * @param string $arm if specified, the rename will only be done for the redcord ID
+     *     in that arm.
+     */
+    public function renameRecord($recordId, $newRecordId, $arm = null)
+    {
+        $data = array (
+                'token'        => $this->apiToken,
+                'content'      => 'record',
+                'action'       => 'rename',
+                'returnFormat' => 'json'
+        );
+
+        $data['record']          = $this->processRecordIdArgument($recordId);
+        $data['new_record_name'] = $this->processRecordIdArgument($newRecordId);
+        $data['arm']             = $this->processArmArgument($arm);
+
+        $result = $this->connection->callWithArray($data);
+
+        if ($result != 1) {
+            $message = "Error renaming record '{$recordId}': {$result}.";
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+        }
         
         return $result;
     }
