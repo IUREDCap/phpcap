@@ -38,13 +38,18 @@ class RecordsTest extends TestCase
             self::$config['longitudinal.data.api.token']
         );
 
-        # Make sure that all the records that can be added by this class are deleted,
+        # Make sure that all the test records that can be added by this class are deleted,
         # in case the test failed the last time it was run.
-        $oldIds = [1101, 1200, 1201, 1202, 1203];
-        foreach ($oldIds as $id) {
+        $testIds = [1101, 1200, 1201, 1202, 1203];
+        foreach ($testIds as $id) {
             $exists = self::$basicDemographyProject->exportRecordsAp(['recordIds' => [$id]]);
             if (count($exists) > 0) {
                 self::$basicDemographyProject->deleteRecords([$id]);
+            }
+
+            $exists = self::$longitudinalDataProject->exportRecordsAp(['recordIds' => [$id]]);
+            if (count($exists) > 0) {
+                self::$longitudinalDataProject->deleteRecords([$id]);
             }
         }
     }
@@ -1256,7 +1261,13 @@ class RecordsTest extends TestCase
 
         $this->assertEquals(2, $result, 'Record import results check.');
 
-        $result = self::$longitudinalDataProject->renameRecord('1101', '1201');
+        $result1101 = self::$longitudinalDataProject->exportRecordsAp(['recordIds' => ['1101']]);
+
+        self::$longitudinalDataProject->renameRecord('1101', '1201');
+
+        $result1201 = self::$longitudinalDataProject->exportRecordsAp(['recordIds' => ['1201']]);
+        $this->assertNotNull($result1201, 'Renamed record not null.');
+        $this->assertEquals(count($result1101), count($result1201), 'Renamed record matches original.');
 
         # delete test records
         $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1201, 1102]);

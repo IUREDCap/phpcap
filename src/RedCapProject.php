@@ -203,6 +203,194 @@ class RedCapProject
     }
 
 
+     /**
+     * Exports the Data Access Groups for a project.
+     *
+     * @param $format string the format used to export the data.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @return mixed For 'php' format, array of arrays that have the following keys:
+     *     <ul>
+     *       <li>'data_access_group_name'</li>
+             <li>'unique_group_name'</li>
+     *     </ul>
+     */
+    public function exportDags($format = 'php')
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'dag',
+                'returnFormat' => 'json'
+        );
+        
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        $dags = $this->connection->callWithArray($data);
+        $dags = $this->processExportResult($dags, $format);
+        
+        return $dags;
+    }
+    
+     /**
+     * Imports the specified dags into the project. Allows import of new DAGs or update of the
+     * data_access_group_name of any existing DAGs. DAGs can be renamed by changing
+     * the data_access_group_name. A DAG can be created by providing group name value with
+     *  unique group name set to blank.
+     *
+     * @param mixed $dags the DAGs to import. This will
+     *     be a PHP array of associative arrays if no format, or 'php' format was specified,
+     *     and a string otherwise. The field names (keys) used in both cases
+     *     are: data_access_group_name, unique_group_name
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return integer the number of DAGs imported.
+     */
+    public function importDags($dags, $format = 'php')
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'dag',
+                'action'       => 'import',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format']   = $this->processFormatArgument($format, $legalFormats);
+        $data['data']     = $this->processImportDataArgument($dags, 'dag', $format);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
+    
+
+     /**
+     * Deletes the specified dags from the project.
+     *
+     * @param array $dags an array of the unique_group_names to delete.
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return integer the number of DAGs imported.
+     */
+    public function deleteDags($dags)
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'dag',
+                'action'       => 'delete',
+                'returnFormat' => 'json'
+        );
+        
+        $required = true;
+        $data['dags'] = $this->processDagsArgument($dags, $required);
+
+        $result = $this->connection->callWithArray($data);
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
+
+
+    /**
+     * Exports the User-DataAccessGroup assignaments for a project.
+     *
+     * @param $format string the format used to export the data.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @return mixed For 'php' format, array of arrays that have the following keys:
+     *     <ul>
+     *       <li>'username'</li>
+     *       <li>'redcap_data_access_group'</li>
+     *     </ul>
+     */
+    public function exportUserDagAssignment($format)
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'userDagMapping',
+                'returnFormat' => 'json'
+        );
+
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        $dagAssignments = $this->connection->callWithArray($data);
+        $dagAssignments = $this->processExportResult($dagAssignments, $format);
+        
+        return $dagAssignments;
+    }
+
+     /**
+     * Imports User-DAG assignments, allowing you to assign users to any
+     * data access group.o the project. If you wish to modify an existing
+     * mapping, you must provide its unique username and group name.
+     * If the 'redcap_data_access_group' column is not provided, user
+     * will not be assigned to any group. There should be only one record
+     * per username.
+     *
+     * @param mixed $dagAssignments the User-DAG assignments to import.
+     * This will be a PHP array of associative arrays if no format, or 'php'
+     * format was specified, and a string otherwise. The field names (keys)
+     * used in both cases are: username, recap_data_access_group
+     *
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return integer the number of DAGs imported.
+     */
+    public function importUserDagAssignment($dagAssignments, $format = 'php')
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'userDagMapping',
+                'action'       => 'import',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format']   = $this->processFormatArgument($format, $legalFormats);
+        $data['data']     = $this->processImportDataArgument($dagAssignments, 'userDagMapping', $format);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
+
+
     /**
      * Exports information about the specified events.
      *
@@ -777,7 +965,80 @@ class RedCapProject
         
         return (integer) $result;
     }
-    
+
+
+     /**
+     * Exports the logging (audit trail) of all changes made to this project,
+     * including data exports, data changes, project metadata changes,
+     * modification of user rights, etc.
+     *
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param string $logType type of logging to return. Defaults to NULL
+     *     to return all types.
+     * @param string $username returns only the events belong to specific
+     *     username. If not specified, it will assume all users.
+     * @param string $recordId the record ID for the file to be exported.
+     * @param string $dag returns only the events belong to specific DAG
+     *     (referring to group_id), provide a dag. If not specified, it will
+     *     assume all dags.
+     * @param string $beginTime specifies to return only those records
+     *     *after* a given date/time, provide a timestamp in the format
+     *     YYYY-MM-DD HH:MM (e.g., '2017-01-01 17:00' for January 1, 2017
+     *     at 5:00 PM server time). If not specified, it will assume no
+     *     begin time.
+     * @param string $endTime returns only records that have been logged
+     *     *before* a given date/time, provide a timestamp in the format
+     *     YYYY-MM-DD HH:MM (e.g., '2017-01-01 17:00' for January 1, 2017
+     *     at 5:00 PM server time). If not specified, it will use the current
+     *     server time.
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return array information, filtered by event (logtype), listing all
+     *     changes made to thise project. Each element of the array is an
+     *     associative array with the following keys:
+     *     'timestamp', 'username', 'action', 'details'
+     */
+    public function exportLogging(
+        $format = 'php',
+        $logType = null,
+        $username = null,
+        $recordId = null,
+        $dag = null,
+        $beginTime = null,
+        $endTime = null
+    ) {
+        $required = false;
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'log',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format']    = $this->processFormatArgument($format, $legalFormats);
+
+        $data['logtype']   = $this->processLogTypeArgument($logType);
+        $data['user']      = $this->processUserArgument($username);
+        $data['record']    = $this->processRecordIdArgument($recordId, $required);
+        $data['dag']       = $this->processDagArgument($dag);
+        $data['beginTime'] = $this->processDateRangeArgument($beginTime);
+        $data['endTime']   = $this->processDateRangeArgument($endTime);
+
+        $logs = $this->connection->callWithArray($data);
+        $logs = $this->processExportResult($logs, $format);
+        
+        return $logs;
+    }
+
     
     /**
      * Exports metadata about the project, i.e., information about the fields in the project.
@@ -1181,7 +1442,8 @@ class RedCapProject
         $dateRangeBegin = null,
         $dateRangeEnd = null,
         $csvDelimiter = ',',
-        $decimalCharacter = null
+        $decimalCharacter = null,
+        $exportBlankForGrayFormStatus = false
     ) {
         $data = array(
                 'token'        => $this->apiToken,
@@ -1217,6 +1479,9 @@ class RedCapProject
         };
 
         $data['decimalCharacter'] = $this->processDecimalCharacterArgument($decimalCharacter);
+
+        # FIX! $data['exportBlankForGrayFormStatus']
+        #     = $this->processStuff????DecimalCharacterArgument($exportBlankForGrayFormStatus);
 
         #---------------------------------------
         # Get the records and process them
@@ -1325,6 +1590,9 @@ class RedCapProject
                 case 'decimalCharacter':
                     $decimalCharacter = $value;
                     break;
+                case 'exportBlankForGrayFormStatus':
+                    $exportBlankForGrayFormStatus = $value;
+                    break;
                 default:
                     $this->errorHandler->throwException(
                         'Unrecognized argument name "' . $name . '".',
@@ -1336,22 +1604,23 @@ class RedCapProject
         }
         
         $records = $this->exportRecords(
-            isset($format)                 ? $format                 : 'php',
-            isset($type)                   ? $type                   : 'flat',
-            isset($recordIds)              ? $recordIds              : null,
-            isset($fields)                 ? $fields                 : null,
-            isset($forms)                  ? $forms                  : null,
-            isset($events)                 ? $events                 : null,
-            isset($filterLogic)            ? $filterLogic            : null,
-            isset($rawOrLabel)             ? $rawOrLabel             : 'raw',
-            isset($rawOrLabelHeaders)      ? $rawOrLabelHeaders      : 'raw',
-            isset($exportCheckboxLabel)    ? $exportCheckboxLabel    : false,
-            isset($exportSurveyFields)     ? $exportSurveyFields     : false,
-            isset($exportDataAccessGroups) ? $exportDataAccessGroups : false,
-            isset($dateRangeBegin)         ? $dateRangeBegin         : null,
-            isset($dateRangeEnd)           ? $dateRangeEnd           : null,
-            isset($csvDelimiter)           ? $csvDelimiter           : ',',
-            isset($decimalCharacter)       ? $decimalCharacter       : null
+            isset($format)                       ? $format                       : 'php',
+            isset($type)                         ? $type                         : 'flat',
+            isset($recordIds)                    ? $recordIds                    : null,
+            isset($fields)                       ? $fields                       : null,
+            isset($forms)                        ? $forms                        : null,
+            isset($events)                       ? $events                       : null,
+            isset($filterLogic)                  ? $filterLogic                  : null,
+            isset($rawOrLabel)                   ? $rawOrLabel                   : 'raw',
+            isset($rawOrLabelHeaders)            ? $rawOrLabelHeaders            : 'raw',
+            isset($exportCheckboxLabel)          ? $exportCheckboxLabel          : false,
+            isset($exportSurveyFields)           ? $exportSurveyFields           : false,
+            isset($exportDataAccessGroups)       ? $exportDataAccessGroups       : false,
+            isset($dateRangeBegin)               ? $dateRangeBegin               : null,
+            isset($dateRangeEnd)                 ? $dateRangeEnd                 : null,
+            isset($csvDelimiter)                 ? $csvDelimiter                 : ',',
+            isset($decimalCharacter)             ? $decimalCharacter             : null,
+            isset($exportBlankForGrayFormStatus) ? $exportBlankForGrayFormStatus : false
         );
         
         return $records;
@@ -2324,6 +2593,35 @@ class RedCapProject
         return $connection;
     }
     
+
+    protected function processCsvDelimiterArgument($csvDelimiter, $format)
+    {
+        $legalCsvDelimiters = array(',',';','tab','|','^');
+        if ($format == 'csv') {
+            if (empty($csvDelimiter)) {
+                $csvDelimiter = ',';
+            }
+            if (gettype($csvDelimiter) !== 'string') {
+                $message = 'The csv delimiter specified has type "'.gettype($csvDelimiter)
+                    .'", but it should be a string.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
+        
+            $csvDelimiter = strtolower(trim($csvDelimiter));
+        
+            if (!in_array($csvDelimiter, $legalCsvDelimiters)) {
+                $message = 'Invalid csv delimiter "'.$csvDelimiter.'" specified.'
+                    .' Valid csv delimiter options are: "'.
+                    implode('", "', $legalCsvDelimiters).'".';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
+        }
+        return $csvDelimiter;
+    }
+
+
     protected function processDateFormatArgument($dateFormat)
     {
         if (!isset($dateFormat)) {
@@ -2991,34 +3289,6 @@ class RedCapProject
         } // @codeCoverageIgnore
         return $type;
     }
-
-    protected function processCsvDelimiterArgument($csvDelimiter, $format)
-    {
-        $legalCsvDelimiters = array(',',';','tab','|','^');
-        if ($format == 'csv') {
-            if (empty($csvDelimiter)) {
-                $csvDelimiter = ',';
-            }
-            if (gettype($csvDelimiter) !== 'string') {
-                $message = 'The csv delimiter specified has type "'.gettype($csvDelimiter)
-                    .'", but it should be a string.';
-                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-            } // @codeCoverageIgnore
-        
-            $csvDelimiter = strtolower(trim($csvDelimiter));
-        
-            if (!in_array($csvDelimiter, $legalCsvDelimiters)) {
-                $message = 'Invalid csv delimiter "'.$csvDelimiter.'" specified.'
-                    .' Valid csv delimiter options are: "'.
-                    implode('", "', $legalCsvDelimiters).'".';
-                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-            } // @codeCoverageIgnore
-        }
-        return $csvDelimiter;
-    }
-
     protected function processDateRangeArgument($date)
     {
         if (isset($date)) {
@@ -3076,85 +3346,8 @@ class RedCapProject
         }
         return $compactDisplay;
     }
-  
-     /**
-     * Exports the Data Access Groups for a project.
-     *
-     * @param $format string the format used to export the data.
-     *     <ul>
-     *       <li> 'php' - [default] array of maps of values</li>
-     *       <li> 'csv' - string of CSV (comma-separated values)</li>
-     *       <li> 'json' - string of JSON encoded values</li>
-     *       <li> 'xml' - string of XML encoded data</li>
-     *     </ul>
-     *
-     * @return mixed For 'php' format, array of arrays that have the following keys:
-     *     <ul>
-     *       <li>'data_access_group_name'</li>
-             <li>'unique_group_name'</li>
-     *     </ul>
-     */
-    public function exportDags($format = 'php')
-    {
-        $data = array(
-                'token' => $this->apiToken,
-                'content' => 'dag',
-                'returnFormat' => 'json'
-        );
-        
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        
-        $dags = $this->connection->callWithArray($data);
-        $dags = $this->processExportResult($dags, $format);
-        
-        return $dags;
-    }
-    
-     /**
-     * Imports the specified dags into the project. Allows import of new DAGs or update of the
-     * data_access_group_name of any existing DAGs. DAGs can be renamed by changing
-     * the data_access_group_name. A DAG can be created by providing group name value with
-     *  unique group name set to blank.
-     *
-     * @param mixed $dags the DAGs to import. This will
-     *     be a PHP array of associative arrays if no format, or 'php' format was specified,
-     *     and a string otherwise. The field names (keys) used in both cases
-     *     are: data_access_group_name, unique_group_name
-     * @param string $format the format for the export.
-     *     <ul>
-     *       <li> 'php' - [default] array of maps of values</li>
-     *       <li> 'csv' - string of CSV (comma-separated values)</li>
-     *       <li> 'json' - string of JSON encoded values</li>
-     *       <li> 'xml' - string of XML encoded data</li>
-     *     </ul>
-     * @throws PhpCapException if an error occurs.
-     *
-     * @return integer the number of DAGs imported.
-     */
-    public function importDags($dags, $format = 'php')
-    {
-        $data = array(
-                'token'        => $this->apiToken,
-                'content'      => 'dag',
-                'action'       => 'import',
-                'returnFormat' => 'json'
-        );
-        
-        #---------------------------------------
-        # Process arguments
-        #---------------------------------------
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format']   = $this->processFormatArgument($format, $legalFormats);
-        $data['data']     = $this->processImportDataArgument($dags, 'dag', $format);
-        
-        $result = $this->connection->callWithArray($data);
-        
-        $this->processNonExportResult($result);
-        
-        return (integer) $result;
-    }
-    
+
+
     protected function processDagsArgument($dags, $required = true)
     {
         if (!isset($dags)) {
@@ -3193,185 +3386,7 @@ class RedCapProject
         
         return $dags;
     }
-    
-     /**
-     * Deletes the specified dags from the project.
-     *
-     * @param array $dags an array of the unique_group_names to delete.
-     * @throws PhpCapException if an error occurs.
-     *
-     * @return integer the number of DAGs imported.
-     */
-    public function deleteDags($dags)
-    {
-        $data = array(
-                'token'        => $this->apiToken,
-                'content'      => 'dag',
-                'action'       => 'delete',
-                'returnFormat' => 'json'
-        );
-        
-        $required = true;
-        $data['dags'] = $this->processDagsArgument($dags, $required);
 
-        $result = $this->connection->callWithArray($data);
-        $this->processNonExportResult($result);
-        
-        return (integer) $result;
-    }
-
-    /**
-     * Exports the User-DataAccessGroup assignaments for a project.
-     *
-     * @param $format string the format used to export the data.
-     *     <ul>
-     *       <li> 'php' - [default] array of maps of values</li>
-     *       <li> 'csv' - string of CSV (comma-separated values)</li>
-     *       <li> 'json' - string of JSON encoded values</li>
-     *       <li> 'xml' - string of XML encoded data</li>
-     *     </ul>
-     *
-     * @return mixed For 'php' format, array of arrays that have the following keys:
-     *     <ul>
-     *       <li>'username'</li>
-     *       <li>'redcap_data_access_group'</li>
-     *     </ul>
-     */
-    public function exportUserDagAssignment($format)
-    {
-        $data = array(
-                'token'        => $this->apiToken,
-                'content'      => 'userDagMapping',
-                'returnFormat' => 'json'
-        );
-
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        
-        $dagAssignments = $this->connection->callWithArray($data);
-        $dagAssignments = $this->processExportResult($dagAssignments, $format);
-        
-        return $dagAssignments;
-    }
-
-     /**
-     * Imports User-DAG assignments, allowing you to assign users to any
-     * data access group.o the project. If you wish to modify an existing
-     * mapping, you must provide its unique username and group name.
-     * If the 'redcap_data_access_group' column is not provided, user
-     * will not be assigned to any group. There should be only one record
-     * per username.
-     *
-     * @param mixed $dagAssignments the User-DAG assignments to import.
-     * This will be a PHP array of associative arrays if no format, or 'php'
-     * format was specified, and a string otherwise. The field names (keys)
-     * used in both cases are: username, recap_data_access_group
-     *
-     * @param string $format the format for the export.
-     *     <ul>
-     *       <li> 'php' - [default] array of maps of values</li>
-     *       <li> 'csv' - string of CSV (comma-separated values)</li>
-     *       <li> 'json' - string of JSON encoded values</li>
-     *       <li> 'xml' - string of XML encoded data</li>
-     *     </ul>
-     * @throws PhpCapException if an error occurs.
-     *
-     * @return integer the number of DAGs imported.
-     */
-    public function importUserDagAssignment($dagAssignments, $format = 'php')
-    {
-        $data = array(
-                'token'        => $this->apiToken,
-                'content'      => 'userDagMapping',
-                'action'       => 'import',
-                'returnFormat' => 'json'
-        );
-        
-        #---------------------------------------
-        # Process arguments
-        #---------------------------------------
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format']   = $this->processFormatArgument($format, $legalFormats);
-        $data['data']     = $this->processImportDataArgument($dagAssignments, 'userDagMapping', $format);
-        
-        $result = $this->connection->callWithArray($data);
-        
-        $this->processNonExportResult($result);
-        
-        return (integer) $result;
-    }
-
-     /**
-     * Exports the logging (audit trail) of all changes made to this project,
-     * including data exports, data changes, project metadata changes,
-     * modification of user rights, etc.
-     *
-     * @param string $format the format for the export.
-     *     <ul>
-     *       <li> 'php' - [default] array of maps of values</li>
-     *       <li> 'csv' - string of CSV (comma-separated values)</li>
-     *       <li> 'json' - string of JSON encoded values</li>
-     *       <li> 'xml' - string of XML encoded data</li>
-     *     </ul>
-     * @param string $logType type of logging to return. Defaults to NULL
-     *     to return all types.
-     * @param string $username returns only the events belong to specific
-     *     username. If not specified, it will assume all users.
-     * @param string $recordId the record ID for the file to be exported.
-     * @param string $dag returns only the events belong to specific DAG
-     *     (referring to group_id), provide a dag. If not specified, it will
-     *     assume all dags.
-     * @param string $beginTime specifies to return only those records
-     *     *after* a given date/time, provide a timestamp in the format
-     *     YYYY-MM-DD HH:MM (e.g., '2017-01-01 17:00' for January 1, 2017
-     *     at 5:00 PM server time). If not specified, it will assume no
-     *     begin time.
-     * @param string $endTime returns only records that have been logged
-     *     *before* a given date/time, provide a timestamp in the format
-     *     YYYY-MM-DD HH:MM (e.g., '2017-01-01 17:00' for January 1, 2017
-     *     at 5:00 PM server time). If not specified, it will use the current
-     *     server time.
-     * @throws PhpCapException if an error occurs.
-     *
-     * @return array information, filtered by event (logtype), listing all
-     *     changes made to thise project. Each element of the array is an
-     *     associative array with the following keys:
-     *     'timestamp', 'username', 'action', 'details'
-     */
-    public function exportLogging(
-        $format = 'php',
-        $logType = null,
-        $username = null,
-        $recordId = null,
-        $dag = null,
-        $beginTime = null,
-        $endTime = null
-    ) {
-        $required = false;
-        $data = array(
-                'token'        => $this->apiToken,
-                'content'      => 'log',
-                'returnFormat' => 'json'
-        );
-        
-        #---------------------------------------
-        # Process arguments
-        #---------------------------------------
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format']    = $this->processFormatArgument($format, $legalFormats);
-
-        $data['logtype']   = $this->processLogTypeArgument($logType);
-        $data['user']      = $this->processUserArgument($username);
-        $data['record']    = $this->processRecordIdArgument($recordId, $required);
-        $data['dag']       = $this->processDagArgument($dag);
-        $data['beginTime'] = $this->processDateRangeArgument($beginTime);
-        $data['endTime']   = $this->processDateRangeArgument($endTime);
-
-        $logs = $this->connection->callWithArray($data);
-        $logs = $this->processExportResult($logs, $format);
-        
-        return $logs;
-    }
 
     protected function processLogTypeArgument($logType)
     {
