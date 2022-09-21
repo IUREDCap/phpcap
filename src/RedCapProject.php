@@ -2582,6 +2582,19 @@ class RedCapProject
         return $caCertificateFile;
     }
     
+
+    protected function processCompactDisplayArgument($compactDisplay)
+    {
+        if (!isset($compactDisplay) || $compactDisplay === null) {
+            ;  // That's OK
+        } elseif (!is_bool($compactDisplay)) {
+            $message = 'The compact display argument has type "'.gettype($compactDisplay).
+            '", but it should be a boolean (true/false).';
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+        }
+        return $compactDisplay;
+    }
+
     protected function processConnectionArgument($connection)
     {
         if (!($connection instanceof RedCapApiConnectionInterface)) {
@@ -2622,6 +2635,46 @@ class RedCapProject
     }
 
 
+    protected function processDagsArgument($dags, $required = true)
+    {
+        if (!isset($dags)) {
+            if ($required === true) {
+                $this->errorHandler->throwException(
+                    'The dags argument was not set.',
+                    ErrorHandlerInterface::INVALID_ARGUMENT
+                );
+            }
+            // @codeCoverageIgnoreStart
+            $dags = array();
+            // @codeCoverageIgnoreEnd
+        } else {
+            if (!is_array($dags)) {
+                $this->errorHandler->throwException(
+                    'The dags argument has invalid type "'.gettype($dags).'"; it should be an array.',
+                    ErrorHandlerInterface::INVALID_ARGUMENT
+                );
+            } elseif ($required === true && count($dags) < 1) {
+                $this->errorHandler->throwException(
+                    'No dags were specified in the dags argument; at least one must be specified.',
+                    ErrorHandlerInterface::INVALID_ARGUMENT
+                );
+            }
+        }
+        
+        foreach ($dags as $dag) {
+            $type = gettype($dag);
+            if (strcmp($type, 'string') !== 0) {
+                $message = 'A dag with type "'.$type.'" was found in the dags array.'.
+                    ' Dags should be strings.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            }
+        }
+        
+        return $dags;
+    }
+
+
     protected function processDateFormatArgument($dateFormat)
     {
         if (!isset($dateFormat)) {
@@ -2644,6 +2697,54 @@ class RedCapProject
         return $dateFormat;
     }
     
+
+    protected function processDateRangeArgument($date)
+    {
+        if (isset($date)) {
+            if (trim($date) === '') {
+                $date = null;
+            } else {
+                $legalFormat = 'Y-m-d H:i:s';
+                $err = false;
+
+                if (gettype($date) === 'string') {
+                    $dt = \DateTime::createFromFormat($legalFormat, $date);
+        
+                    if (!($dt && $dt->format($legalFormat) == $date)) {
+                        $err = true;
+                    }
+                } else {
+                    $err = true;
+                }
+
+                if ($err) {
+                    $errMsg = 'Invalid date format. ';
+                    $errMsg .= "The date format for export dates is YYYY-MM-DD HH:MM:SS, ";
+                    $errMsg .= 'e.g., 2020-01-31 00:00:00.';
+                    $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                    $this->errorHandler->throwException($errMsg, $code);
+                } // @codeCoverageIgnore
+            }
+        }
+        return $date;
+    }
+
+
+    protected function processDecimalCharacterArgument($decimalCharacter)
+    {
+        $legalDecimalCharacters = array(',','.');
+        if ($decimalCharacter) {
+            if (!in_array($decimalCharacter, $legalDecimalCharacters)) {
+                $message = 'Invalid decimal character of "'.$decimalCharacter.'" specified.'
+                    .' Valid decimal character options are: "'.
+                    implode('", "', $legalDecimalCharacters).'".';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
+        }
+        return $decimalCharacter;
+    }
+
     protected function processErrorHandlerArgument($errorHandler)
     {
         if (!($errorHandler instanceof ErrorHandlerInterface)) {
@@ -3288,103 +3389,6 @@ class RedCapProject
             $this->errorHandler->throwException($message, $code);
         } // @codeCoverageIgnore
         return $type;
-    }
-    protected function processDateRangeArgument($date)
-    {
-        if (isset($date)) {
-            if (trim($date) === '') {
-                $date = null;
-            } else {
-                $legalFormat = 'Y-m-d H:i:s';
-                $err = false;
-
-                if (gettype($date) === 'string') {
-                    $dt = \DateTime::createFromFormat($legalFormat, $date);
-        
-                    if (!($dt && $dt->format($legalFormat) == $date)) {
-                        $err = true;
-                    }
-                } else {
-                    $err = true;
-                }
-
-                if ($err) {
-                    $errMsg = 'Invalid date format. ';
-                    $errMsg .= "The date format for export dates is YYYY-MM-DD HH:MM:SS, ";
-                    $errMsg .= 'e.g., 2020-01-31 00:00:00.';
-                    $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                    $this->errorHandler->throwException($errMsg, $code);
-                } // @codeCoverageIgnore
-            }
-        }
-        return $date;
-    }
-
-    protected function processDecimalCharacterArgument($decimalCharacter)
-    {
-        $legalDecimalCharacters = array(',','.');
-        if ($decimalCharacter) {
-            if (!in_array($decimalCharacter, $legalDecimalCharacters)) {
-                $message = 'Invalid decimal character of "'.$decimalCharacter.'" specified.'
-                    .' Valid decimal character options are: "'.
-                    implode('", "', $legalDecimalCharacters).'".';
-                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-            } // @codeCoverageIgnore
-        }
-        return $decimalCharacter;
-    }
-
-    protected function processCompactDisplayArgument($compactDisplay)
-    {
-        if (!isset($compactDisplay) || $compactDisplay === null) {
-            ;  // That's OK
-        } elseif (!is_bool($compactDisplay)) {
-            $message = 'The compact display argument has type "'.gettype($compactDisplay).
-            '", but it should be a boolean (true/false).';
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
-        return $compactDisplay;
-    }
-
-
-    protected function processDagsArgument($dags, $required = true)
-    {
-        if (!isset($dags)) {
-            if ($required === true) {
-                $this->errorHandler->throwException(
-                    'The dags argument was not set.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
-            // @codeCoverageIgnoreStart
-            $dags = array();
-            // @codeCoverageIgnoreEnd
-        } else {
-            if (!is_array($dags)) {
-                $this->errorHandler->throwException(
-                    'The dags argument has invalid type "'.gettype($dags).'"; it should be an array.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            } elseif ($required === true && count($dags) < 1) {
-                $this->errorHandler->throwException(
-                    'No dags were specified in the dags argument; at least one must be specified.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
-        }
-        
-        foreach ($dags as $dag) {
-            $type = gettype($dag);
-            if (strcmp($type, 'string') !== 0) {
-                $message = 'A dag with type "'.$type.'" was found in the dags array.'.
-                    ' Dags should be strings.';
-                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-            }
-        }
-        
-        return $dags;
     }
 
 
