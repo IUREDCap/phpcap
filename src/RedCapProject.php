@@ -1480,8 +1480,8 @@ class RedCapProject
 
         $data['decimalCharacter'] = $this->processDecimalCharacterArgument($decimalCharacter);
 
-        # FIX! $data['exportBlankForGrayFormStatus']
-        #     = $this->processStuff????DecimalCharacterArgument($exportBlankForGrayFormStatus);
+        $data['exportBlankForGrayFormStatus']
+            = $this->processExportBlankForGrayFormStatusArgument($exportBlankForGrayFormStatus);
 
         #---------------------------------------
         # Get the records and process them
@@ -2817,6 +2817,20 @@ class RedCapProject
         return $events;
     }
     
+    protected function processExportBlankForGrayFormStatusArgument($exportBlankForGrayFormStatus)
+    {
+        if ($exportBlankForGrayFormStatus == null) {
+            $exportBlankForGrayFormStatus = false;
+        } elseif (gettype($exportBlankForGrayFormStatus) !== 'boolean') {
+            $this->errorHandler->throwException(
+                'Invalid type for exportBlankForGrayFormStatus. It should be a boolean (true or false),'
+                .' but has type: '.gettype($exportBlankForGrayFormStatus).'.',
+                ErrorHandlerInterface::INVALID_ARGUMENT
+            );
+        }
+        return $exportBlankForGrayFormStatus;
+    }
+
     
     protected function processExportCheckboxLabelArgument($exportCheckboxLabel)
     {

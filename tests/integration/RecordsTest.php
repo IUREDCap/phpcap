@@ -54,6 +54,81 @@ class RecordsTest extends TestCase
         }
     }
     
+    public function testExportRecordsWithBlankForGrayFormStatus()
+    {
+        $callInfo = true;
+
+        # Import test records
+        $records = FileUtil::fileToString(__DIR__.'/../data/longitudinal-data-import-2.csv');
+        $result = self::$longitudinalDataProject->importRecords(
+            $records,
+            $format = 'csv',
+            null,
+            $overwriteBehavior = 'overwrite',
+            $dateFormat = 'MDY'
+        );
+
+        #------------------------------------------------------------
+        # Check for case WITHOUT returning blanks
+        #------------------------------------------------------------
+        $recordsWithoutBlanks = self::$longitudinalDataProject->exportRecordsAp(
+            [
+                'recordIds' => [1102],
+                'exportBlankForGrayFormStatus' => false
+            ]
+        );
+        $finalRecordWithoutBlanks = $recordsWithoutBlanks[6];
+        $this->assertTrue(
+            $finalRecordWithoutBlanks['patient_morale_questionnaire_complete'] === '0',
+            'Patient morale complete zero check.'
+        );
+        $this->assertTrue(
+            $finalRecordWithoutBlanks['completion_data_complete'] === '0',
+            'Completion data complete zero check.'
+        );
+
+        #------------------------------------------------------------
+        # Check for case WITH returning blanks
+        #------------------------------------------------------------
+        $recordsWithBlanks = self::$longitudinalDataProject->exportRecordsAp(
+            [
+                'recordIds' => [1102],
+                'exportBlankForGrayFormStatus' => true
+            ]
+        );
+        $finalRecordWithBlanks = $recordsWithBlanks[6];
+        $this->assertTrue(
+            $finalRecordWithBlanks['patient_morale_questionnaire_complete'] === '',
+            'Patient morale complete blank check.'
+        );
+        $this->assertTrue(
+            $finalRecordWithBlanks['completion_data_complete'] === '',
+            'Completion data complete blank check.'
+        );
+
+        #----------------------------------------------------
+        ## Delete the test records that were imported
+        #----------------------------------------------------
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1101, 1102]);
+        $this->assertEquals(2, $recordsDeleted, 'Records deleted check.');
+    }
+    
+    public function testExportRecordsWithBlankForGrayFormStatusWithInvalidType()
+    {
+        $caughtException = false;
+        try {
+            $recordsWithoutBlanks = self::$longitudinalDataProject->exportRecordsAp(
+                [
+                    'recordIds' => [1102],
+                    'exportBlankForGrayFormStatus' => 123 // illegal type
+                ]
+            );
+        } catch (\Exception $exception) {
+            $caughtException = true;
+        }
+
+        $this->assertTrue($caughtException, 'Exception caught check.');
+    }
 
     public function testExportRecordsWithNullFormat()
     {
