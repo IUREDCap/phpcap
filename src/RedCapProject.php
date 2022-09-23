@@ -2635,6 +2635,20 @@ class RedCapProject
     }
 
 
+    protected function processDagArgument($dag)
+    {
+        if ($dag) {
+            if (!is_string($dag)) {
+                $message = 'The dag argument has invalid type "'.gettype($dag)
+                    .'"; it should be a string.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            }
+        }
+        return $dag;
+    }
+
+
     protected function processDagsArgument($dags, $required = true)
     {
         if (!isset($dags)) {
@@ -3139,6 +3153,32 @@ class RedCapProject
         return $data;
     }
     
+
+    protected function processLogTypeArgument($logType)
+    {
+        $legalLogTypes = array(
+            'export',
+            'manage',
+            'user',
+            'record',
+            'record_add',
+            'record_edit',
+            'record_delete',
+            'lock_record',
+            'page_view'
+        );
+        if ($logType) {
+            if (!in_array($logType, $legalLogTypes)) {
+                $message = 'Invalid log type of "'.$logType.'" specified.'
+                    .' Valid log types are: "'.
+                    implode('", "', $legalLogTypes).'".';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            }
+        }
+        return $logType;
+    }
+
     /**
      * Checks the result returned from the REDCap API for non-export methods.
      * PHPCap is set to return errors from REDCap using JSON, so the result
@@ -3391,44 +3431,6 @@ class RedCapProject
         return $type;
     }
 
-
-    protected function processLogTypeArgument($logType)
-    {
-        $legalLogTypes = array(
-            'export',
-            'manage',
-            'user',
-            'record',
-            'record_add',
-            'record_edit',
-            'record_delete',
-            'lock_record',
-            'page_view'
-        );
-        if ($logType) {
-            if (!in_array($logType, $legalLogTypes)) {
-                $message = 'Invalid log type of "'.$logType.'" specified.'
-                    .' Valid log types are: "'.
-                    implode('", "', $legalLogTypes).'".';
-                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-            }
-        }
-        return $logType;
-    }
-
-    protected function processDagArgument($dag)
-    {
-        if ($dag) {
-            if (!is_string($dag)) {
-                $message = 'The dag argument has invalid type "'.gettype($dag)
-                    .'"; it should be a string.';
-                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-            }
-        }
-        return $dag;
-    }
 
     protected function processUserArgument($username)
     {
