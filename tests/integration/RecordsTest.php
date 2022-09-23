@@ -1349,6 +1349,17 @@ class RecordsTest extends TestCase
         $this->assertEquals(2, $recordsDeleted, 'Test record delete check.');
     }
 
+    public function testRenameRecordWithInvalidRecordId()
+    {
+        $caughtException = false;
+        try {
+            self::$longitudinalDataProject->renameRecord('12345', '1201');
+        } catch (\Exception $exception) {
+            $caughtException = true;
+        }
+
+        $this->assertTrue($caughtException, 'Exception caught check.');
+    }
 
     public function testExportRecordsWithDateRange()
     {
