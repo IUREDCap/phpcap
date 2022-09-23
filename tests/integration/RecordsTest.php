@@ -1227,7 +1227,6 @@ class RecordsTest extends TestCase
         $this->assertEquals(1, $recordsDeleted, 'Records deleted check after first delete.');
     }
     
-    /** WORK IN PROGRESS */
     public function testDeleteRecordsWithForm()
     {
         $records = FileUtil::fileToString(__DIR__.'/../data/longitudinal-data-import.csv');
@@ -1320,7 +1319,6 @@ class RecordsTest extends TestCase
     }
 
 
-    /** WORK IN PROGRESS */
     public function testRenameRecord()
     {
         $records = FileUtil::fileToString(__DIR__.'/../data/longitudinal-data-import.csv');
