@@ -25,18 +25,30 @@ class RecordsTest extends TestCase
     private static $config;
     private static $basicDemographyProject;
     private static $longitudinalDataProject;
+    private static $repeatingFormsProject;
     
     public static function setUpBeforeClass(): void
     {
         self::$config = parse_ini_file(self::$configFile);
+
         self::$basicDemographyProject = new RedCapProject(
             self::$config['api.url'],
             self::$config['basic.demography.api.token']
         );
+
         self::$longitudinalDataProject = new RedCapProject(
             self::$config['api.url'],
             self::$config['longitudinal.data.api.token']
         );
+
+        self::$repeatingFormsProject = null;
+        if (array_key_exists('repeating.forms.api.token', self::$config)
+                && !empty(self::$config['repeating.forms.api.token'])) {
+            self::$repeatingFormsProject = new RedCapProject(
+                self::$config['api.url'],
+                self::$config['repeating.forms.api.token']
+            );
+        }
 
         # Make sure that all the test records that can be added by this class are deleted,
         # in case the test failed the last time it was run.
@@ -1227,6 +1239,7 @@ class RecordsTest extends TestCase
         $this->assertEquals(1, $recordsDeleted, 'Records deleted check after first delete.');
     }
     
+
     public function testDeleteRecordsWithForm()
     {
         $records = FileUtil::fileToString(__DIR__.'/../data/longitudinal-data-import.csv');
@@ -1273,6 +1286,53 @@ class RecordsTest extends TestCase
         # delete remaining parts of records
         $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1101, 1102]);
         $this->assertEquals(2, $recordsDeleted, 'Records deleted check after first delete.');
+    }
+    
+    public function testDeleteRecordsWithRepeatInstance()
+    {
+        if (self::$repeatingFormsProject == null) {
+            $this->markTestSkipped('testExportLoggingDag: No dag assignments found.');
+        } else {
+            $records = FileUtil::fileToString(__DIR__.'/../data/repeating-forms-import.csv');
+         
+            # Import the test records
+            $result = self::$repeatingFormsProject->importRecords(
+                $records,
+                $format = 'csv',
+                null,
+                null,
+                $dateFormat = 'MDY'
+            );
+        
+            $records = self::$repeatingFormsProject->exportRecordsAp();
+
+            $this->assertEquals(16, count($records), 'Record count check after import.');
+
+            $records = self::$repeatingFormsProject->exportRecordsAp(
+                ['format' => 'csv', 'recordIds' => [1002]]
+            );
+            $countBeforeDelete = count(preg_split("/\n/", $records));
+
+            # Delete the records for the forms for the visit event for 1102
+            $arm   = null;
+            $form  = 'weight';
+            $event = null;
+
+            # Delete repeating instances 1 and 3 for form weight for record ID 1002
+            $recordsDeleted = self::$repeatingFormsProject->deleteRecords([1002], $arm, $form, $event, 1);
+            $recordsDeleted = self::$repeatingFormsProject->deleteRecords([1002], $arm, $form, $event, 3);
+
+
+            $records = self::$repeatingFormsProject->exportRecordsAp(
+                ['format' => 'csv', 'recordIds' => [1002]]
+            );
+            $countAfterDelete = count(preg_split("/\n/", $records));
+            $this->assertEquals($countBeforeDelete - 2, $countAfterDelete, 'Record count after delete.');
+
+            # delete remaining imported records
+            $recordsDeleted = self::$repeatingFormsProject->deleteRecords([1001, 1002, 1003, 1004]);
+            $this->assertEquals(4, $recordsDeleted, 'Records deleted check after first delete.');
+        }
     }
     
     public function testDeleteRecordsWithNonNumericStringArm()
