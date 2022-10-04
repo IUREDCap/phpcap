@@ -1421,6 +1421,8 @@ class RedCapProject
      *       <li> ',' - comma </li>
      *       <li> null - numbers will be exported using the fields' native decimal format</li>
      *     </ul>
+     * @param boolean $exportBlankForGrayFormStatus indicates if the complete field for a form that
+     *     has not been started should be returned as a blank (instead of a zero).
      *
      * @return mixed If 'php' format is specified, an array of records will be returned where the format
      *     of the records depends on the 'type'parameter (see above). For other
@@ -1772,16 +1774,12 @@ class RedCapProject
      *     (only these field will be deleted).
      * @param string $event event for which fields should be deleted
      *     (must be spefied for longitudinal studies if an event is spcified).
-     * @param integer $repeatInstance for repeatable forms, the instance for
+     * @param integer $repeatInstance for repeating events and forms, the instance for
      *     which fields should be deleted.
      *
      * @throws PhpCapException
      *
-     * @return integer the number of records deleted. Note that as of
-     *     REDCap version 7.0.15 (at least) the number of records
-     *     deleted will not be correct for the case where an arm
-     *     is specified and some of the record IDs specified are
-     *     not in that arm.
+     * @return integer the number of records deleted.
      */
     public function deleteRecords($recordIds, $arm = null, $form = null, $event = null, $repeatInstance = null)
     {
@@ -1815,6 +1813,8 @@ class RedCapProject
      * @param string $newRecordId the new record ID to set for the specified records.
      * @param string $arm if specified, the rename will only be done for the redcord ID
      *     in that arm.
+     *
+     * @return mixed "1" if the records was successfully renamed, and throws an exception otherwise.
      */
     public function renameRecord($recordId, $newRecordId, $arm = null)
     {
