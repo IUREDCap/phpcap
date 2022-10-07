@@ -44,8 +44,8 @@ Setup
 
         phpdoc
 
-### Example Setup on Ubuntu 16
-To set up PHPCap for development on Ubuntu 16, execute the following commands:
+### Example Setup on Ubuntu 20
+To set up PHPCap for development on Ubuntu 20, execute the following commands:
 
     sudo apt-get install php php-curl php-xml php-mbstring
     sudo apt-get install php-xdebug
@@ -102,7 +102,11 @@ following setup steps are completed:
    the tokens requested in the previous step.
 6. In the Control Center in REDCap, download the "Date Calculated Fields" external module and then enable it.
 7. In REDCap, enable the "Date Calculated Fields" external module for the "Basic Demography" project.
-8. In REDCap, add a test user to the DAG project, assigning only default, basic permissions. Add that user to the 'group1' DAG.
+8. In REDCap, add a test user to the DAG project, assigning only default, basic permissions.
+    1. Add the test user to the 'group1' DAG
+    2. Using the "DAG Switcher" in REDCap, assign the test user access to DAGs 'group1' and 'group2'
+    3. Create an API token for the test user with export/import/update permission for the DAG project
+    4. Set the **dags.test.user.api.token** property in your test config.ini file to the value for the API token created in the previous step
  
 #### Setup for Optional CA Certificate File Integration Tests
 To run the optional tests involving the CA certificate file, you will need to set up

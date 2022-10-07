@@ -310,6 +310,36 @@ class RedCapProject
 
 
     /**
+     * Switches the DAG (Data Access Group) to the specified DAG.
+     *
+     * @param string $dag the DAG to switch to.
+     *
+     * @return mixed "1" if the records was successfully renamed, and throws an exception otherwise.
+     */
+    public function switchDag($dag)
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'dag',
+                'action'       => 'switch',
+                'returnFormat' => 'json'
+        );
+        
+        $required = true;
+        $data['dag'] = $this->processDagArgument($dag, $required);
+
+        $result = $this->connection->callWithArray($data);
+
+        if ($result != 1) {
+            $message = "Error switching to DAG '{$dag}': {$result}.";
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+        }
+
+        return $result;
+    }
+
+
+    /**
      * Exports the User-DataAccessGroup assignaments for a project.
      *
      * @param $format string the format used to export the data.
@@ -2635,16 +2665,21 @@ class RedCapProject
     }
 
 
-    protected function processDagArgument($dag)
+    protected function processDagArgument($dag, $required = false)
     {
-        if ($dag) {
+        if (!empty($dag)) {
             if (!is_string($dag)) {
                 $message = 'The dag argument has invalid type "'.gettype($dag)
                     .'"; it should be a string.';
                 $code = ErrorHandlerInterface::INVALID_ARGUMENT;
                 $this->errorHandler->throwException($message, $code);
             }
+        } elseif ($required) {
+            $message = 'No DAG (Data Access Group) was specified.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
         }
+
         return $dag;
     }
 
