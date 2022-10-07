@@ -864,7 +864,8 @@ class RedCapProject
         $event = null,
         $form = null,
         $allRecords = null,
-        $compactDisplay = null
+        $compactDisplay = null,
+        $repeatInstance = null
     ) {
         $data = array(
                 'token'       => $this->apiToken,
@@ -877,8 +878,10 @@ class RedCapProject
         $data['record']     = $this->processRecordIdArgument($recordId, $required = false);
         $data['event']      = $this->processEventArgument($event);
         $data['instrument'] = $this->processFormArgument($form);
-        $data['allRecords'] = $this->processAllRecordsArgument($allRecords);
-        $data['compactDisplay'] = $this->processCompactDisplayArgument($compactDisplay);
+
+        $data['allRecords']      = $this->processAllRecordsArgument($allRecords);
+        $data['compactDisplay']  = $this->processCompactDisplayArgument($compactDisplay);
+        $data['repeat_instance'] = $this->processRepeatInstanceArgument($repeatInstance);
 
         $result = $this->connection->callWithArray($data);
         
