@@ -1205,6 +1205,7 @@ class RedCapProject
      * surveys_enabled, scheduling_enabled, record_autonumbering_enabled,
      * randomization_enabled, project_irb_number, project_grant_number,
      * project_pi_firstname, project_pi_lastname, display_today_now_button
+     * bypass_branching_erase_field_prompt
      *
      * You do not need to specify all of these fields when doing an import,
      * only the ones that you actually want to change. For example:
@@ -2227,9 +2228,9 @@ class RedCapProject
     public function exportUsers($format = 'php')
     {
         $data = array(
-                'token' => $this->apiToken,
-                'content' => 'user',
-                'returnFormat' => 'json'
+            'token'        => $this->apiToken,
+            'content'      => 'user',
+            'returnFormat' => 'json'
         );
         
         $legalFormats = array('csv', 'json', 'php', 'xml');
@@ -2261,7 +2262,7 @@ class RedCapProject
      * api_export, api_import, mobile_app, mobile_app_download_data,
      * record_create, record_rename, record_delete,
      * lock_records_customization, lock_records, lock_records_all_forms,
-     * forms
+     * forms, forms_export
      * </code>
      * </pre>
      *
@@ -2294,8 +2295,8 @@ class RedCapProject
     public function importUsers($users, $format = 'php')
     {
         $data = array(
-            'token' => $this->apiToken,
-            'content' => 'user',
+            'token'        => $this->apiToken,
+            'content'      => 'user',
             'returnFormat' => 'json'
         );
         
@@ -2314,7 +2315,241 @@ class RedCapProject
         
         return (integer) $result;
     }
+
+
+    /**
+     * Deletes the specified users.
+     *
+     * @param array $users array of usernames for users to delete.
+     *
+     * @return integer the number of users deleted.
+     */
+    public function deleteUsers($users)
+    {
+        $data = array(
+            'token'        => $this->apiToken,
+            'content'      => 'user',
+            'action'       => 'delete',
+            'returnFormat' => 'json'
+        );
+
+        $data['users'] = $this->processUsersArgument($users);
+        $result = $this->connection->callWithArray($data);
+
+        return (integer) $result;
+    }
+
     
+    /**
+     * Exports the user roles of the project.
+     *
+     * @param string $format output data format.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @return mixed a list of user roles. For the 'php' format an array of associative
+     *     arrays is returned, where the keys are the field names and the values
+     *     are the field values. For all other formats, a string is returned with
+     *     the data in the specified format.
+     */
+    public function exportUserRoles($format = 'php')
+    {
+        $data = array(
+            'token'        => $this->apiToken,
+            'content'      => 'userRole',
+            'returnFormat' => 'json'
+        );
+        
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        #---------------------------------------------------
+        # Get and process user roles
+        #---------------------------------------------------
+        $userRoles = $this->connection->callWithArray($data);
+        $userRoles = $this->processExportResult($userRoles, $format);
+        
+        return $userRoles;
+    }
+    
+    /**
+     * Imports the specified user roles into the project.
+     * This method can also be used to update user roles by importing
+     * a user role that already exist in the project and
+     * specifying new values in the data that is imported.
+     *
+     * The available field names for user import are:
+     * <pre>
+     * <code class="phpdocumentor-code">
+     * unique_role_name, role_label, design, user_rights, data_access_groups,
+     * reports, stats_and_charts, manage_survey_participants, calendar,
+     * data_import_tool, data_comparison_tool, logging, file_repository,
+     * data_quality_create, data_quality_execute,
+     * api_export, api_import, mobile_app, mobile_app_download_data,
+     * record_create, record_rename, record_delete,
+     * lock_records_customization, lock_records, lock_records_all_forms,
+     * forms, forms_export
+     * </code>
+     * </pre>
+     *
+     *
+     * See the REDCap API documentation for more information, or print the results
+     * of PHPCap's exportUsers method to see what the data looks like for the current users.
+     *
+     * @param mixed $userRoles for 'php' format, an array should be used that
+     *     maps field names to field values. For all other formats a string
+     *     should be used that has the data in the correct format.
+     *
+     * @param string $format output data format.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @return integer the number of user roles added or updated.
+     */
+    public function importUserRoles($userRoles, $format = 'php')
+    {
+        $data = array(
+            'token'        => $this->apiToken,
+            'content'      => 'userRole',
+            'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------------
+        # Process arguments
+        #----------------------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['data']   = $this->processImportDataArgument($userRoles, 'userRoles', $format);
+
+        #---------------------------------------------------
+        # Get and process users
+        #---------------------------------------------------
+        $result = $this->connection->callWithArray($data);
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
+
+    /**
+     * Deletes the specified user roles.
+     *
+     * @param array $userRoles array of unique roles names for roles to delete.
+     *
+     * @return integer the number of user roles deleted.
+     */
+    public function deleteUserRoles($userRoles)
+    {
+        $data = array(
+            'token'        => $this->apiToken,
+            'content'      => 'userRole',
+            'action'       => 'delete',
+            'returnFormat' => 'json'
+        );
+
+        $data['roles'] = $this->processUserRolesArgument($userRoles);
+        $result = $this->connection->callWithArray($data);
+
+        return (integer) $result;
+    }
+
+
+    /**
+     * Exports the user role assignments of the project.
+     *
+     * @param string $format output data format.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @return mixed a list of user roles assignments.
+     *     For the 'php' format an array of associative
+     *     arrays is returned, where the keys are the field names and the values
+     *     are the field values. For all other formats, a string is returned with
+     *     the data in the specified format.
+     */
+    public function exportUserRoleAssignments($format = 'php')
+    {
+        $data = array(
+            'token'        => $this->apiToken,
+            'content'      => 'userRoleMapping',
+            'returnFormat' => 'json'
+        );
+        
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        #---------------------------------------------------
+        # Get and process user role assignments
+        #---------------------------------------------------
+        $userRoleAssignments = $this->connection->callWithArray($data);
+        $userRoleAssignments = $this->processExportResult($userRoleAssignments, $format);
+        
+        return $userRoleAssignments;
+    }
+
+    
+    /**
+     * Imports the specified user role assignments into the project.
+     * This method can also be used to update user role assignments by importing
+     * a user role that already exist in the project and
+     * specifying new values in the data that is imported.
+     *
+     * The data is a map from username to unqiue_role_name.
+     *
+     * See the REDCap API documentation for more information, or print the results
+     * of PHPCap's exportUsers method to see what the data looks like for the current users.
+     *
+     * @param mixed $userRoleAssignments for 'php' format, an array should be used that
+     *     maps usernames to unique role names. For all other formats a string
+     *     should be used that has the data in the correct format.
+     *
+     * @param string $format output data format.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @return integer the number of user roles added or updated.
+     */
+    public function importUserRoleAssignments($userRoleAssignments, $format = 'php')
+    {
+        $data = array(
+            'token'        => $this->apiToken,
+            'content'      => 'userRoleMapping',
+            'action'       => 'import',
+            'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------------
+        # Process arguments
+        #----------------------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['data']   = $this->processImportDataArgument($userRoleAssignments, 'userRoleMapping', $format);
+
+        #---------------------------------------------------
+        # Get and process users
+        #---------------------------------------------------
+        $result = $this->connection->callWithArray($data);
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
+
+
     /**
      * Gets the PHPCap version number.
      */
@@ -3495,5 +3730,54 @@ class RedCapProject
             }
         }
         return $username;
+    }
+
+    protected function processUsersArgument($users)
+    {
+        if (isset($users)) {
+            if (!is_array($users)) {
+                $message = 'The users argument has invalid type "' . gettype($users)
+                    . '": it should be an array of strings that represent usernames.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } else {
+                foreach ($users as $user) {
+                    if (!is_string($user)) {
+                        $message = 'The users argument contains an element of type "' . gettype($user)
+                            . '": it should have type string.';
+                        $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                        $this->errorHandler->throwException($message, $code);
+                    }
+                }
+                $users = array_unique($users); // remove duplicate user roles (if any)
+            }
+        }
+
+        return $users;
+    }
+
+    /* CHECK !!!!!!!!!!!!!!!!!!!!!!!!! */
+    protected function processUserRolesArgument($userRoles)
+    {
+        if (isset($userRoles)) {
+            if (!is_array($userRoles)) {
+                $message = 'The user roles argument has invalid type "' . gettype($userRoles)
+                    . '": it should be an array of strings that represent user roles.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } else {
+                foreach ($userRoles as $userRole) {
+                    if (!is_string($userRole)) {
+                        $message = 'The user roles argument contains an element of type "' . gettype($userRole)
+                            . '": it should have type string.';
+                        $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                        $this->errorHandler->throwException($message, $code);
+                    }
+                }
+                $userRoles = array_unique($userRoles); // remove duplicate user roles (if any)
+            }
+        }
+
+        return $userRoles;
     }
 }
