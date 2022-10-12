@@ -36,38 +36,17 @@ class UserRoleAssignmentsTest extends TestCase
     
     public function testUserRoleAssignments()
     {
-        /*
-        $userRoles = [
-            [
-                //'unique_role_name' => 'U-2273084CA4',
-                //'unique_role_name' => 'U-527D39JXAC',
-                //'unique_role_name' => 'U-2119C4Y87T',
-                //'unique_role_name' => '2119',
-                'role_label' => 'Project Manager',
-                'user_rights' => 0
-            ]
-        ];
-
-        $importResult = self::$basicDemographyProject->importUserRoles($userRoles);
-         */
-
+        # Export the current user role assignments
         $userRoleAssignments = self::$basicDemographyProject->exportUserRoleAssignments();
         $this->assertNotNull($userRoleAssignments, 'User role assignments non-null check.');
 
-        print_r($userRoleAssignments);
+        # Import the user role assignments that were just exported
+        $importResult = self::$basicDemographyProject->importUserRoleAssignments($userRoleAssignments);
+        $this->assertEquals(1, $importResult, 'Import result check.');
 
-        /*
-        foreach ($uniqueRoleNames as $key => $value) {
-            print("[{$key}] => '{$value}'\n");
-            if ($value === '') {
-                unset($uniqueRoleNames[$key]);
-            }
-        }
-
-        $rolesDeleted = self::$basicDemographyProject->deleteUserRoles($uniqueRoleNames);
-        // print("\nROLES DELETED: {$rolesDeleted}\n\n");
-
-        $userRoles = self::$basicDemographyProject->exportUserRoles();
-         */
+        # Check to make sure that importing the exported user role assignments didn't change the
+        # user role assignments
+        $newUserRoleAssignments = self::$basicDemographyProject->exportUserRoleAssignments();
+        $this->assertEquals($userRoleAssignments, $newUserRoleAssignments, 'User role assignments no change check');
     }
 }

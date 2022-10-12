@@ -2441,7 +2441,7 @@ class RedCapProject
     /**
      * Deletes the specified user roles.
      *
-     * @param array $userRoles array of unique roles names for roles to delete.
+     * @param array $userRoles array of unique roles names of roles to delete.
      *
      * @return integer the number of user roles deleted.
      */
@@ -3762,7 +3762,7 @@ class RedCapProject
         if (isset($userRoles)) {
             if (!is_array($userRoles)) {
                 $message = 'The user roles argument has invalid type "' . gettype($userRoles)
-                    . '": it should be an array of strings that represent user roles.';
+                    . '": it should be an array of strings that represent unique user role names.';
                 $code = ErrorHandlerInterface::INVALID_ARGUMENT;
                 $this->errorHandler->throwException($message, $code);
             } else {

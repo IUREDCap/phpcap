@@ -38,10 +38,6 @@ class UserRolesTest extends TestCase
     {
         $userRoles = [
             [
-                //'unique_role_name' => 'U-2273084CA4',
-                //'unique_role_name' => 'U-527D39JXAC',
-                //'unique_role_name' => 'U-2119C4Y87T',
-                //'unique_role_name' => '2119',
                 'role_label' => 'Project Manager',
                 'user_rights' => 0
             ]
@@ -53,10 +49,10 @@ class UserRolesTest extends TestCase
         $uniqueRoleNames = array_column($userRoles, 'unique_role_name');
 
         $this->assertNotNull($userRoles, 'Non-null users check.');
-        //$this->assertEquals(1, count($userRoles), 'User roles count check.');
+        // $this->assertEquals(1, count($userRoles), 'User roles count check.');
 
         foreach ($uniqueRoleNames as $key => $value) {
-            print("[{$key}] => '{$value}'\n");
+            // print("[{$key}] => '{$value}'\n");
             if ($value === '') {
                 unset($uniqueRoleNames[$key]);
             }
@@ -66,5 +62,27 @@ class UserRolesTest extends TestCase
         // print("\nROLES DELETED: {$rolesDeleted}\n\n");
 
         $userRoles = self::$basicDemographyProject->exportUserRoles();
+    }
+
+    public function testDeleteUserRolesErrors()
+    {
+        $uniqueRoleNames = 123;
+
+        $exceptionCaught = false;
+        try {
+            $rolesDeleted = self::$basicDemographyProject->deleteUserRoles($uniqueRoleNames);
+        } catch (\Exception $exception) {
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Non-array user roles error check.');
+
+        $uniqueRoleNames = ['test', 'abc', 123];
+        $exceptionCaught = false;
+        try {
+            $rolesDeleted = self::$basicDemographyProject->deleteUserRoles($uniqueRoleNames);
+        } catch (\Exception $exception) {
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Non-string role in user roles array error check.');
     }
 }
