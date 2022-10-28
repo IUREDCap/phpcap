@@ -49,17 +49,9 @@ class UserRolesTest extends TestCase
         $uniqueRoleNames = array_column($userRoles, 'unique_role_name');
 
         $this->assertNotNull($userRoles, 'Non-null users check.');
-        // $this->assertEquals(1, count($userRoles), 'User roles count check.');
-
-        foreach ($uniqueRoleNames as $key => $value) {
-            // print("[{$key}] => '{$value}'\n");
-            if ($value === '') {
-                unset($uniqueRoleNames[$key]);
-            }
-        }
+        $this->assertEquals(1, count($userRoles), 'User roles count check.');
 
         $rolesDeleted = self::$basicDemographyProject->deleteUserRoles($uniqueRoleNames);
-        // print("\nROLES DELETED: {$rolesDeleted}\n\n");
 
         $userRoles = self::$basicDemographyProject->exportUserRoles();
     }
