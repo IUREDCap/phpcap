@@ -421,6 +421,11 @@ Search.appendIndex(
             "summary": "Deletes\u0020the\u0020specified\u0020dags\u0020from\u0020the\u0020project.",
             "url": "classes/IU-PHPCap-RedCapProject.html#method_deleteDags"
         },                {
+            "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AswitchDag\u0028\u0029",
+            "name": "switchDag",
+            "summary": "Switches\u0020the\u0020DAG\u0020\u0028Data\u0020Access\u0020Group\u0029\u0020to\u0020the\u0020specified\u0020DAG.",
+            "url": "classes/IU-PHPCap-RedCapProject.html#method_switchDag"
+        },                {
             "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AexportUserDagAssignment\u0028\u0029",
             "name": "exportUserDagAssignment",
             "summary": "Exports\u0020the\u0020User\u002DDataAccessGroup\u0020assignaments\u0020for\u0020a\u0020project.",
@@ -595,6 +600,36 @@ Search.appendIndex(
             "name": "importUsers",
             "summary": "Imports\u0020the\u0020specified\u0020users\u0020into\u0020the\u0020project.\u0020This\u0020method\ncan\u0020also\u0020be\u0020used\u0020to\u0020update\u0020user\u0020priveleges\u0020by\u0020importing\na\u0020users\u0020that\u0020already\u0020exist\u0020in\u0020the\u0020project\u0020and\nspecifying\u0020new\u0020privleges\u0020for\u0020that\u0020user\u0020in\u0020the\u0020user\ndata\u0020that\u0020is\u0020imported.",
             "url": "classes/IU-PHPCap-RedCapProject.html#method_importUsers"
+        },                {
+            "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AdeleteUsers\u0028\u0029",
+            "name": "deleteUsers",
+            "summary": "Deletes\u0020the\u0020specified\u0020users.",
+            "url": "classes/IU-PHPCap-RedCapProject.html#method_deleteUsers"
+        },                {
+            "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AexportUserRoles\u0028\u0029",
+            "name": "exportUserRoles",
+            "summary": "Exports\u0020the\u0020user\u0020roles\u0020of\u0020the\u0020project.",
+            "url": "classes/IU-PHPCap-RedCapProject.html#method_exportUserRoles"
+        },                {
+            "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AimportUserRoles\u0028\u0029",
+            "name": "importUserRoles",
+            "summary": "Imports\u0020the\u0020specified\u0020user\u0020roles\u0020into\u0020the\u0020project.",
+            "url": "classes/IU-PHPCap-RedCapProject.html#method_importUserRoles"
+        },                {
+            "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AdeleteUserRoles\u0028\u0029",
+            "name": "deleteUserRoles",
+            "summary": "Deletes\u0020the\u0020specified\u0020user\u0020roles.",
+            "url": "classes/IU-PHPCap-RedCapProject.html#method_deleteUserRoles"
+        },                {
+            "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AexportUserRoleAssignments\u0028\u0029",
+            "name": "exportUserRoleAssignments",
+            "summary": "Exports\u0020the\u0020user\u0020role\u0020assignments\u0020of\u0020the\u0020project.",
+            "url": "classes/IU-PHPCap-RedCapProject.html#method_exportUserRoleAssignments"
+        },                {
+            "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AimportUserRoleAssignments\u0028\u0029",
+            "name": "importUserRoleAssignments",
+            "summary": "Imports\u0020the\u0020specified\u0020user\u0020role\u0020assignments\u0020into\u0020the\u0020project.",
+            "url": "classes/IU-PHPCap-RedCapProject.html#method_importUserRoleAssignments"
         },                {
             "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AgetPhpCapVersion\u0028\u0029",
             "name": "getPhpCapVersion",

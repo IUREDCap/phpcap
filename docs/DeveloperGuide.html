@@ -25,7 +25,7 @@
 <ul class="intraPage">
     <li class="active"><a href="#Setup">Setup</a></li>
 <ul class="intraPage">
-    <li class="active"><a href="#Example Setup on Ubuntu 16">Example Setup on Ubuntu 16</a></li>
+    <li class="active"><a href="#Example Setup on Ubuntu 20">Example Setup on Ubuntu 20</a></li>
 </ul>
     <li class="active"><a href="#Development">Development</a></li>
 <ul class="intraPage">
@@ -96,8 +96,8 @@ It should be set up so that it can be run from the command line using:</p>
 <div class="description"><pre><code>phpdoc</code></pre></div>
 </li>
 </ol>
-<h3 id="Example Setup on Ubuntu 16">Example Setup on Ubuntu 16</h3>
-<p>To set up PHPCap for development on Ubuntu 16, execute the following commands:</p>
+<h3 id="Example Setup on Ubuntu 20">Example Setup on Ubuntu 20</h3>
+<p>To set up PHPCap for development on Ubuntu 20, execute the following commands:</p>
 <div class="description"><pre><code>sudo apt-get install php php-curl php-xml php-mbstring
 sudo apt-get install php-xdebug
 sudo apt-get install git
@@ -147,7 +147,13 @@ URL for the API of your REDCap instance, and set the tokens to be
 the tokens requested in the previous step.</li>
 <li>In the Control Center in REDCap, download the &quot;Date Calculated Fields&quot; external module and then enable it.</li>
 <li>In REDCap, enable the &quot;Date Calculated Fields&quot; external module for the &quot;Basic Demography&quot; project.</li>
-<li>In REDCap, add a test user to the DAG project, assigning only default, basic permissions. Add that user to the 'group1' DAG.</li>
+<li>In REDCap, add a test user to the DAG project, assigning only default, basic permissions.
+<ol>
+<li>Add the test user to the 'group1' DAG</li>
+<li>Using the &quot;DAG Switcher&quot; in REDCap, assign the test user access to DAGs 'group1' and 'group2'</li>
+<li>Create an API token for the test user with export/import/update permission for the DAG project</li>
+<li>Set the <strong>dags.test.user.api.token</strong> property in your test config.ini file to the value for the API token created in the previous step</li>
+</ol></li>
 </ol>
 <h4>Setup for Optional CA Certificate File Integration Tests</h4>
 <p>To run the optional tests involving the CA certificate file, you will need to set up
