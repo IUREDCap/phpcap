@@ -81,7 +81,9 @@ class EventsTest extends TestCase
         $this->assertEquals(15, count($csv), 'Correct number of rows');
         
         $expectedHeader = [
-            'event_name', 'arm_num', 'day_offset', 'offset_min', 'offset_max', 'unique_event_name', 'custom_event_label'
+            'event_name', 'arm_num',
+            'day_offset', 'offset_min', 'offset_max',
+            'unique_event_name', 'custom_event_label', 'event_id'
         ];
         $header = $csv[0];
 
