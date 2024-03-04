@@ -206,8 +206,6 @@ class RedCapIntegrationTest extends TestCase
             $filepath = __DIR__ .'/../data/' . $filename;
             $fileContents = file_get_contents($filepath);
             $result = $project->importFileRepositoryFile($filepath);
-            print "\n\nRESULT:\n";
-            print_r($result);
             $list = $project->exportFileRepositoryList();
             $this->assertEquals(2, count($list), 'File import list check');
 
