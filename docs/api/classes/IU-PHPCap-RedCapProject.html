@@ -1171,7 +1171,7 @@ and/or instruments).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1960</span>
+    <span class="phpdocumentor-element-found-in__line">1967</span>
 
     </aside>
 
@@ -1179,7 +1179,7 @@ and/or instruments).</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">deleteRecords</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$recordIds</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$arm</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$form</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$repeatInstance</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+                    <span class="phpdocumentor-signature__name">deleteRecords</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$recordIds</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$arm</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$form</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$repeatInstance</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$deleteLogging</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1234,6 +1234,21 @@ which fields should be deleted.</p>
 </section>
 
             </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$deleteLogging</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>flag that indicates if the logging associated
+with the records being deleted should also be deleted. This is only applicable
+for projects where the setting to delete logging for deleted records
+has been enabled by an admin.
+For these projects, set $deleteLogging to 1 (or leave it unset) to delete the
+logging for the deleted records,
+and set $deleteLogging to 0 to keep the logging for the deleted records.</p>
+</section>
+
+            </dd>
             </dl>
 
     
@@ -1273,7 +1288,7 @@ which fields should be deleted.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2590</span>
+    <span class="phpdocumentor-element-found-in__line">2607</span>
 
     </aside>
 
@@ -1320,7 +1335,7 @@ which fields should be deleted.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2469</span>
+    <span class="phpdocumentor-element-found-in__line">2486</span>
 
     </aside>
 
@@ -2906,7 +2921,7 @@ $records = $project->exportRecordsAp(['forms' => ['lab_data'], 'fields' => ['stu
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2113</span>
+    <span class="phpdocumentor-element-found-in__line">2130</span>
 
     </aside>
 
@@ -2941,7 +2956,7 @@ $records = $project->exportRecordsAp(['forms' => ['lab_data'], 'fields' => ['stu
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2039</span>
+    <span class="phpdocumentor-element-found-in__line">2056</span>
 
     </aside>
 
@@ -3001,7 +3016,7 @@ value will be returned for the 'custom form label' if it is not defined.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2180</span>
+    <span class="phpdocumentor-element-found-in__line">2197</span>
 
     </aside>
 
@@ -3141,7 +3156,7 @@ numeric values being returned. Options are:
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2232</span>
+    <span class="phpdocumentor-element-found-in__line">2249</span>
 
     </aside>
 
@@ -3216,7 +3231,7 @@ to return a link for.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2273</span>
+    <span class="phpdocumentor-element-found-in__line">2290</span>
 
     </aside>
 
@@ -3291,7 +3306,7 @@ in the specified format as a string.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2302</span>
+    <span class="phpdocumentor-element-found-in__line">2319</span>
 
     </aside>
 
@@ -3338,7 +3353,7 @@ in the specified format as a string.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2331</span>
+    <span class="phpdocumentor-element-found-in__line">2348</span>
 
     </aside>
 
@@ -3470,7 +3485,7 @@ to return to.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2623</span>
+    <span class="phpdocumentor-element-found-in__line">2640</span>
 
     </aside>
 
@@ -3527,7 +3542,7 @@ the data in the specified format.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2501</span>
+    <span class="phpdocumentor-element-found-in__line">2518</span>
 
     </aside>
 
@@ -3583,7 +3598,7 @@ the data in the specified format.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2370</span>
+    <span class="phpdocumentor-element-found-in__line">2387</span>
 
     </aside>
 
@@ -3679,7 +3694,7 @@ where Data Access Groups are being used).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2807</span>
+    <span class="phpdocumentor-element-found-in__line">2824</span>
 
     </aside>
 
@@ -3714,7 +3729,7 @@ where Data Access Groups are being used).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2797</span>
+    <span class="phpdocumentor-element-found-in__line">2814</span>
 
     </aside>
 
@@ -3749,7 +3764,7 @@ where Data Access Groups are being used).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2821</span>
+    <span class="phpdocumentor-element-found-in__line">2838</span>
 
     </aside>
 
@@ -3788,7 +3803,7 @@ used by the project.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2842</span>
+    <span class="phpdocumentor-element-found-in__line">2859</span>
 
     </aside>
 
@@ -3823,7 +3838,7 @@ used by the project.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2698</span>
+    <span class="phpdocumentor-element-found-in__line">2715</span>
 
     </aside>
 
@@ -3856,7 +3871,7 @@ used by the project.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2735</span>
+    <span class="phpdocumentor-element-found-in__line">2752</span>
 
     </aside>
 
@@ -3945,7 +3960,7 @@ for the records IDs parameter for an export records method.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2785</span>
+    <span class="phpdocumentor-element-found-in__line">2802</span>
 
     </aside>
 
@@ -4840,7 +4855,7 @@ to sent IDs will be returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2078</span>
+    <span class="phpdocumentor-element-found-in__line">2095</span>
 
     </aside>
 
@@ -4991,7 +5006,7 @@ used in both cases are: username, recap_data_access_group</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2669</span>
+    <span class="phpdocumentor-element-found-in__line">2686</span>
 
     </aside>
 
@@ -5062,7 +5077,7 @@ should be used that has the data in the correct format.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2559</span>
+    <span class="phpdocumentor-element-found-in__line">2576</span>
 
     </aside>
 
@@ -5145,7 +5160,7 @@ should be used that has the data in the correct format.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2437</span>
+    <span class="phpdocumentor-element-found-in__line">2454</span>
 
     </aside>
 
@@ -5237,7 +5252,7 @@ should be used that has the data in the correct format.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1995</span>
+    <span class="phpdocumentor-element-found-in__line">2012</span>
 
     </aside>
 
@@ -5303,7 +5318,7 @@ in that arm.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2832</span>
+    <span class="phpdocumentor-element-found-in__line">2849</span>
 
     </aside>
 
@@ -5349,7 +5364,7 @@ for calls to the REDCap API.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/RedCapProject.php"><a href="files/src-redcapproject.html"><abbr title="src/RedCapProject.php">RedCapProject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2852</span>
+    <span class="phpdocumentor-element-found-in__line">2869</span>
 
     </aside>
 
