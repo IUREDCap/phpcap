@@ -1952,13 +1952,26 @@ class RedCapProject
      *     (must be spefied for longitudinal studies if an event is spcified).
      * @param integer $repeatInstance for repeating events and forms, the instance for
      *     which fields should be deleted.
+     * @param integer $deleteLogging flag that indicates if the logging associated
+     *     with the records being deleted should also be deleted. This is only applicable
+     *     for projects where the setting to delete logging for deleted records
+     *     has been enabled by an admin.
+     *     For these projects, set $deleteLogging to 1 (or leave it unset) to delete the
+     *     logging for the deleted records,
+     *     and set $deleteLogging to 0 to keep the logging for the deleted records.
      *
      * @throws PhpCapException
      *
      * @return integer the number of records deleted.
      */
-    public function deleteRecords($recordIds, $arm = null, $form = null, $event = null, $repeatInstance = null)
-    {
+    public function deleteRecords(
+        $recordIds,
+        $arm = null,
+        $form = null,
+        $event = null,
+        $repeatInstance = null,
+        $deleteLogging = null
+    ) {
         $data = array (
                 'token'        => $this->apiToken,
                 'content'      => 'record',
@@ -1969,11 +1982,15 @@ class RedCapProject
         $data['records'] = $this->processRecordIdsArgument($recordIds);
         $data['arm']     = $this->processArmArgument($arm);
 
-        $data['instrument']      = $this->ProcessFormArgument($form, $required = false);
-        $data['event']           = $this->ProcessEventArgument($event);
-        $data['repeat_instance'] = $this->ProcessRepeatInstanceArgument($repeatInstance);
+        $data['instrument']      = $this->processFormArgument($form, $required = false);
+        $data['event']           = $this->processEventArgument($event);
+        $data['repeat_instance'] = $this->processRepeatInstanceArgument($repeatInstance);
 
-        
+        $deleteLogging = $this->processDeleteLoggingArgument($deleteLogging);
+        if ($deleteLogging !== null) {
+            $data['delete_logging']  = $deleteLogging;
+        }
+
         $result = $this->connection->callWithArray($data);
         
         $this->processNonExportResult($result);
@@ -2241,9 +2258,9 @@ class RedCapProject
         # Process arguments
         #----------------------------------------------
         $data['record']          = $this->processRecordIdArgument($recordId, $required = true);
-        $data['instrument']      = $this->ProcessFormArgument($form, $required = true);
-        $data['event']           = $this->ProcessEventArgument($event);
-        $data['repeat_instance'] = $this->ProcessRepeatInstanceArgument($repeatInstance);
+        $data['instrument']      = $this->processFormArgument($form, $required = true);
+        $data['event']           = $this->processEventArgument($event);
+        $data['repeat_instance'] = $this->processRepeatInstanceArgument($repeatInstance);
         
         $surveyLink = $this->connection->callWithArray($data);
         $surveyLink = $this->processExportResult($surveyLink, 'string');
@@ -2283,8 +2300,8 @@ class RedCapProject
         #----------------------------------------------
         $legalFormats = array('csv', 'json', 'php', 'xml');
         $data['format']     = $this->processFormatArgument($format, $legalFormats);
-        $data['instrument'] = $this->ProcessFormArgument($form, $required = true);
-        $data['event']      = $this->ProcessEventArgument($event);
+        $data['instrument'] = $this->processFormArgument($form, $required = true);
+        $data['event']      = $this->processEventArgument($event);
         
         $surveyParticipants = $this->connection->callWithArray($data);
         $surveyParticipants = $this->processExportResult($surveyParticipants, $format);
@@ -2340,9 +2357,9 @@ class RedCapProject
         # Process arguments
         #----------------------------------------------
         $data['record']          = $this->processRecordIdArgument($recordId, $required = true);
-        $data['instrument']      = $this->ProcessFormArgument($form, $required = true);
-        $data['event']           = $this->ProcessEventArgument($event);
-        $data['repeat_instance'] = $this->ProcessRepeatInstanceArgument($repeatInstance);
+        $data['instrument']      = $this->processFormArgument($form, $required = true);
+        $data['event']           = $this->processEventArgument($event);
+        $data['repeat_instance'] = $this->processRepeatInstanceArgument($repeatInstance);
         
         $surveyReturnCode = $this->connection->callWithArray($data);
         $surveyReturnCode = $this->processExportResult($surveyReturnCode, 'string');
@@ -3237,6 +3254,18 @@ class RedCapProject
             } // @codeCoverageIgnore
         }
         return $decimalCharacter;
+    }
+
+    protected function processDeleteLoggingArgument($deleteLogging)
+    {
+        if ($deleteLogging == null) {
+            ; // OK
+        } elseif (!is_int($deleteLogging) || ($deleteLogging != 0 && $deleteLogging != 1)) {
+            $message = 'Invalid delete logging value. The delete logging value must be 0 or 1';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        }
+        return $deleteLogging;
     }
 
     protected function processErrorHandlerArgument($errorHandler)
