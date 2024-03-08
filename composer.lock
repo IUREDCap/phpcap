@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9f1d350c42190d3efaaa77afac56514",
+    "content-hash": "018d27a5ad4a815322c8bb9b9c0e48ef",
     "packages": [],
     "packages-dev": [
         {
@@ -56,46 +56,6 @@
                 "source": "https://github.com/erusev/parsedown/tree/1.7.x"
             },
             "time": "2019-12-30T22:54:17+00:00"
-        },
-        {
-            "name": "kzykhys/php-csv-parser",
-            "version": "1.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kzykhys/PHPCsvParser.git",
-                "reference": "4f5b6db78c687d22b37a5d24542ae433b2fa48cf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kzykhys/PHPCsvParser/zipball/4f5b6db78c687d22b37a5d24542ae433b2fa48cf",
-                "reference": "4f5b6db78c687d22b37a5d24542ae433b2fa48cf",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kazuyuki Hayashi",
-                    "email": "hayashi@valnur.net"
-                }
-            ],
-            "description": "Convert CSV to array (Excel style is fully suppoted!)",
-            "support": {
-                "issues": "https://github.com/kzykhys/PHPCsvParser/issues",
-                "source": "https://github.com/kzykhys/PHPCsvParser/tree/master"
-            },
-            "time": "2014-01-15T05:17:19+00:00"
         },
         {
             "name": "myclabs/deep-copy",

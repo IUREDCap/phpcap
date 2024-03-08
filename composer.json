@@ -14,7 +14,6 @@
 		"phpunit/phpunit" : "10.0.0",
 		"squizlabs/php_codesniffer" : "3.9.0",
 		"erusev/parsedown" : "1.7.4",
-		"kzykhys/php-csv-parser" : "1.4.1",
         "smalot/pdfparser" : "2.9.0"
 	},
 	"autoload" : {
