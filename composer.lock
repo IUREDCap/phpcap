@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b498a2b1ea7c30b81540965b70a82d78",
+    "content-hash": "ad684a0f112fc6d2d65b29205387d8ae",
     "packages": [],
     "packages-dev": [
         {
@@ -617,16 +617,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.0.0",
+            "version": "11.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "ece3536c22fc5113906a42e7e82de00baaef36d0"
+                "reference": "3f4261269c91370e9b2b3f64cc76c617c442c35a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ece3536c22fc5113906a42e7e82de00baaef36d0",
-                "reference": "ece3536c22fc5113906a42e7e82de00baaef36d0",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3f4261269c91370e9b2b3f64cc76c617c442c35a",
+                "reference": "3f4261269c91370e9b2b3f64cc76c617c442c35a",
                 "shasum": ""
             },
             "require": {
@@ -697,7 +697,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.0.0"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.0.4"
             },
             "funding": [
                 {
@@ -713,7 +713,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-02T06:12:57+00:00"
+            "time": "2024-02-29T16:21:10+00:00"
         },
         {
             "name": "sebastian/cli-parser",
