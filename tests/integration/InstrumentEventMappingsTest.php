@@ -75,8 +75,10 @@ class InstrumentEventMappingsTest extends TestCase
     public function testExportInstrumentsAsCsv()
     {
         $result = self::$longitudinalDataProject->exportInstrumentEventMappings($format = 'csv');
-        $parser = \KzykHys\CsvParser\CsvParser::fromString($result);
-        $csv = $parser->parse();
+        #$parser = \KzykHys\CsvParser\CsvParser::fromString($result);
+        #$csv = $parser->parse();
+        $csv = CsvUtil::csvStringToArray($result);
+
         
         $header = $csv[0];
         

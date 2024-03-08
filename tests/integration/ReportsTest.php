@@ -62,8 +62,10 @@ class ReportsTest extends TestCase
             $format = 'csv';
             $records = self::$longitudinalDataProject->exportReports($reportId, $format);
     
-            $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
-            $csv = $parser->parse();
+            #$parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+            #$csv = $parser->parse();
+            $csv = CsvUtil::csvStringToArray($records);
+
     
             $header = $csv[0];
     

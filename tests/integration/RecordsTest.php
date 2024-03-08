@@ -544,8 +544,9 @@ class RecordsTest extends TestCase
     
         $records = self::$basicDemographyProject->exportRecords($format = 'csv', $type = null, $recordIds);
 
-        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
-        $csv = $parser->parse();
+        #$parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        #$csv = $parser->parse();
+        $csv = CsvUtil::csvStringToArray($records);
         $this->assertEquals(2, count($csv), 'Correct number of records returned test.');
 
         $firstDataRow = $csv[1];
@@ -563,8 +564,9 @@ class RecordsTest extends TestCase
             ['format' => 'csv', 'recordIds' => $recordIds, 'csvDelimiter' => '']
         );
 
-        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
-        $csv = $parser->parse();
+        #$parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        #$csv = $parser->parse();
+        $csv = CsvUtil::csvStringToArray($records);
         $this->assertEquals(2, count($csv), 'Correct number of records returned test.');
 
         $firstDataRow = $csv[1];
@@ -664,8 +666,9 @@ class RecordsTest extends TestCase
             ]
         );
         
-        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
-        $csv = $parser->parse();
+        #$parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        #$csv = $parser->parse();
+        $csv = CsvUtil::csvStringToArray($records);
 
         $header = $csv[0];
         
@@ -693,8 +696,9 @@ class RecordsTest extends TestCase
             ]
         );
         
-        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
-        $csv = $parser->parse();
+        #$parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        #$csv = $parser->parse();
+        $csv = CsvUtil::csvStringToArray($records);
         
         $header = $csv[0];
         
@@ -737,8 +741,9 @@ class RecordsTest extends TestCase
             ]
         );
         
-        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
-        $csv = $parser->parse();
+        #$parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        #$csv = $parser->parse();
+        $csv = CsvUtil::csvStringToArray($records);
     
         $header = $csv[0];
         
@@ -772,8 +777,9 @@ class RecordsTest extends TestCase
             ]
         );
         
-        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
-        $csv = $parser->parse();
+        #$parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        #$csv = $parser->parse();
+        $csv = CsvUtil::csvStringToArray($records);
     
         $header = $csv[0];
     
