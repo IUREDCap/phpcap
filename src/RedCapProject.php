@@ -1066,7 +1066,7 @@ class RedCapProject
      *     for which instrument/event mapping infomation should be exported.
      *     If no arms are specified, then information for all arms will be exported.
      *
-     * @return arrray an array of arrays that have the following keys:
+     * @return array an array of arrays that have the following keys:
      *     <ul>
      *       <li>'arm_num'</li>
      *       <li>'unique_event_name'</li>
