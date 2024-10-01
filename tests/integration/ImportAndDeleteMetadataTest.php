@@ -66,9 +66,17 @@ class ImportAndDeleteMetadataTest extends TestCase
         $expectedMetadata = self::$longitudinalDataProject->exportMetadata();
         $actualMetadata   = self::$emptyProject->exportMetadata();
 
-        #foreach ($actualMetadata as &$str) {
-        #    $str = str_replace(" | ", "|", $str);
-        #}
+        if (array_key_exists('select_choices_or_calculations', $actualMetadata)
+                && !empty($actualMetadata('select_choices_or_calculations'))) {
+            $actualMetadata['select_choices_or_calculations']
+                = str_replace(" | ", "|", $actualMetadata['select_choices_or_calculations']);
+        }
+
+        if (array_key_exists('select_choices_or_calculations', $expectedMetadata)
+                && !empty($expectedMetadata('select_choices_or_calculations'))) {
+            $expectedMetadata['select_choices_or_calculations']
+                = str_replace(" | ", "|", $expectedMetadata['select_choices_or_calculations']);
+        }
 
         $this->assertEquals($expectedMetadata, $actualMetadata, 'Metadata comparison.');
          
