@@ -1861,6 +1861,9 @@ class RedCapProject
      *           <li> '^' - caret </li>
      *         </ul>
      *
+     * @param boolean $backgroundProcess if true, indicates that the records import
+     *         should be done in the background.
+     *
      * @return mixed if 'count' was specified for 'returnContent', then an integer will
      *         be returned that is the number of records imported.
      *         If 'ids' was specified, then an array of record IDs that were imported will
@@ -1875,7 +1878,8 @@ class RedCapProject
         $dateFormat = 'YMD',
         $returnContent = 'count',
         $forceAutoNumber = false,
-        $csvDelimiter = ','
+        $csvDelimiter = ',',
+        $backgroundProcess = false
     ) {
             
         $data = array (
@@ -1899,6 +1903,8 @@ class RedCapProject
         $data['forceAutoNumber']   = $this->processForceAutoNumberArgument($forceAutoNumber);
         $data['returnContent']     = $this->processReturnContentArgument($returnContent, $forceAutoNumber);
         $data['dateFormat']        = $this->processDateFormatArgument($dateFormat);
+
+        $data['backgroundProcess'] = $this->processBackgroundProcessArgument($backgroundProcess);
         
         $result = $this->connection->callWithArray($data);
 
@@ -3031,6 +3037,22 @@ class RedCapProject
         }
         
         return $arms;
+    }
+    
+    protected function processBackgroundProcessArgument($backgroundProcess)
+    {
+        if ($backgroundProcess == null) {
+            $backgroundProcess = false;
+        } else {
+            if (gettype($backgroundProcess) !== 'boolean') {
+                $message = 'Invalid type for backgroundProcess.'
+                    .' It should be a boolean (true or false),'
+                    .' but has type: '.gettype($backgroundProcess).'.';
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
+        }
+        return $backgroundProcess;
     }
     
     protected function processCaCertificateFileArgument($caCertificateFile)
