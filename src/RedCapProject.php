@@ -1693,7 +1693,8 @@ class RedCapProject
      *
      * @see exportRecords()
      *
-     * @param array $argumentArray array of arguments.
+     * @param array $arrayParameter parameter array.
+     *
      * @return mixed the specified records.
      */
     public function exportRecordsAp($arrayParameter = [])
