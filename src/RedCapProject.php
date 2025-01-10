@@ -2883,22 +2883,20 @@ class RedCapProject
     {
         $fileInfo = array();
         if (isset($callInfo) && is_array($callInfo) && array_key_exists('content_type', $callInfo)) {
-            if (!empty($callInfo)) {
-                $contentType = $callInfo = explode(';', $callInfo['content_type']);
-                if (count($contentType) >= 1) {
-                    $fileInfo['mime_type'] = trim($contentType[0]);
-                }
-                if (count($contentType) >= 2) {
-                    $fileName = trim($contentType[1]);
-                    # remove starting 'name="' and ending '"'
-                    $fileName = substr($fileName, 6, strlen($fileName) - 7);
-                    $fileInfo['name'] = $fileName;
-                }
-                if (count($contentType) >= 3) {
-                    $charset = trim($contentType[2]);
-                    $charset = substr($charset, 8);
-                    $fileInfo['charset'] = $charset;
-                }
+            $contentType = $callInfo = explode(';', $callInfo['content_type']);
+            if (count($contentType) >= 1) {
+                $fileInfo['mime_type'] = trim($contentType[0]);
+            }
+            if (count($contentType) >= 2) {
+                $fileName = trim($contentType[1]);
+                # remove starting 'name="' and ending '"'
+                $fileName = substr($fileName, 6, strlen($fileName) - 7);
+                $fileInfo['name'] = $fileName;
+            }
+            if (count($contentType) >= 3) {
+                $charset = trim($contentType[2]);
+                $charset = substr($charset, 8);
+                $fileInfo['charset'] = $charset;
             }
         }
         return $fileInfo;
