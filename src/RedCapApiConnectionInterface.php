@@ -141,8 +141,6 @@ interface RedCapApiConnectionInterface
     
     /**
      * Sets the timeout for time to make a connection in seconds.
-     *
-     * @return integer connection timeout in seconds.
      */
     public function setConnectionTimeoutInSeconds($connectionTimeoutInSeconds);
 }
