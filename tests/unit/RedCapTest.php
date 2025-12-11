@@ -17,9 +17,13 @@ class RedCapTest extends TestCase
     {
         $apiUrl = 'https://redcap.somplace.edu/api/';
         $apiToken = '12345678901234567890123456789012';
-        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
+
+        # $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
+        #     ->disableOriginalConstructor()
+        #     ->getMock();
+        $connection = $this->createStub(__NAMESPACE__.'\RedCapApiConnectionInterface')
+            ;
+
         $this->redCap = new RedCap($apiUrl, null, null, null, null, $connection);
     }
     
@@ -28,17 +32,19 @@ class RedCapTest extends TestCase
         $apiUrl = 'https://redcap.somplace.edu/api/';
         $apiToken = '12345678901234567890123456789012';
         
-        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
+        # $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
+        #     ->disableOriginalConstructor()
+        #     ->getMock();
+        $connection = $this->createStub(__NAMESPACE__.'\RedCapApiConnectionInterface');
         
-        $redCapProject = $this->getMockBuilder(__NAMESPACE__.'\RedCapProject')
-            //->setMethods(['__construct'])
-            ->setConstructorArgs(
-                [$apiUrl, $apiToken, $sslVerify = null,
-                $caCertificateFile = null, $errorHandler = null, $connection = null]
-            )
-            ->getMock();
+        # $redCapProject = $this->getMockBuilder(__NAMESPACE__.'\RedCapProject')
+        #     //->setMethods(['__construct'])
+        #     ->setConstructorArgs(
+        #         [$apiUrl, $apiToken, $sslVerify = null,
+        #         $caCertificateFile = null, $errorHandler = null, $connection = null]
+        #     )
+        #     ->getMock();
+        $redCapProject = $this->createStub(__NAMESPACE__.'\RedCapProject');
         
         $redCap = new RedCap($apiUrl, null, null, null, null, $connection);
         $this->assertNotNull($redCap, 'RedCap not null.');
@@ -287,11 +293,13 @@ class RedCapTest extends TestCase
     
     public function testCreateProject()
     {
-        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
+        # $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
+        #     ->disableOriginalConstructor()
+        #     ->getMock();
+        $connection = $this->createStub(__NAMESPACE__.'\RedCapApiConnectionInterface');
 
-        $errorHandler = $this->getMockBuilder(__NAMESPACE__.'\ErrorHandlerInterface')->getMock();
+        # $errorHandler = $this->getMockBuilder(__NAMESPACE__.'\ErrorHandlerInterface')->getMock();
+        $errorHandler = $this->createStub(__NAMESPACE__.'\ErrorHandlerInterface');
         
         $callback = function (
             $apiUrl,
@@ -321,9 +329,10 @@ class RedCapTest extends TestCase
     
     public function testCreateProjectWithJsonAndOdm()
     {
-        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
+        # $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
+        #     ->disableOriginalConstructor()
+        #     ->getMock();
+        $connection = $this->createStub(__NAMESPACE__.'\RedCapApiConnectionInterface');
         
         $callback = function (
             $apiUrl,
@@ -501,10 +510,13 @@ class RedCapTest extends TestCase
     
     public function testGetProject()
     {
-        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $errorHandler = $this->getMockBuilder(__NAMESPACE__.'\ErrorHandlerInterface')->getMock();
+        # $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
+        #     ->disableOriginalConstructor()
+        #     ->getMock();
+        $connection = $this->createStub(__NAMESPACE__.'\RedCapApiConnectionInterface');
+
+        # $errorHandler = $this->getMockBuilder(__NAMESPACE__.'\ErrorHandlerInterface')->getMock();
+        $errorHandler = $this->createStub(__NAMESPACE__.'\ErrorHandlerInterface');
         
         $callback = function (
             $apiUrl,
@@ -546,9 +558,11 @@ class RedCapTest extends TestCase
     
     public function testGetProjectWithApiTokenWithInvalidType()
     {
-        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
+        # $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
+        #     ->disableOriginalConstructor()
+        #     ->getMock();
+        $connection = $this->createStub(__NAMESPACE__.'\RedCapApiConnectionInterface');
+
         $apiUrl = 'https://redcap.somplace.edu/api';
         $redCap = new RedCap($apiUrl, null, null, null, null, $connection);
         
@@ -566,9 +580,11 @@ class RedCapTest extends TestCase
     
     public function testGetProjectWithApiTokenWithInvalidFormat()
     {
-        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
+        # $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
+        #     ->disableOriginalConstructor()
+        #     ->getMock();
+        $connection = $this->createStub(__NAMESPACE__.'\RedCapApiConnectionInterface');
+
         $apiUrl = 'https://redcap.somplace.edu/api';
         $redCap = new RedCap($apiUrl, null, null, null, null, $connection);
         
@@ -587,9 +603,10 @@ class RedCapTest extends TestCase
     
     public function testGetProjectWithApiTokenWithInvalidLength()
     {
-        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
+        # $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
+        #     ->disableOriginalConstructor()
+        #     ->getMock();
+        $connection = $this->createStub(__NAMESPACE__.'\RedCapApiConnectionInterface');
 
         $apiUrl = 'https://redcap.somplace.edu/api';
         $redCap = new RedCap($apiUrl, null, null, null, null, $connection);

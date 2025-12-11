@@ -20,9 +20,11 @@ class RedCapProjectTest extends TestCase
     {
         $this->apiUrl   = 'https://redcap.somplace.edu/api/';
         $this->apiToken = '12345678901234567890123456789012';
-        $this->connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
+
+        # $this->connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
+        #     ->disableOriginalConstructor()
+        #     ->getMock();
+        $this->connection = $this->createStub(__NAMESPACE__.'\RedCapApiConnectionInterface');
         
         $this->redCapProject = new RedCapProject(
             $this->apiUrl,
