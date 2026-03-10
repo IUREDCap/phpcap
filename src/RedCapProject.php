@@ -172,7 +172,7 @@ class RedCapProject
         
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
     
     /**
@@ -199,7 +199,7 @@ class RedCapProject
         
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
 
 
@@ -278,7 +278,7 @@ class RedCapProject
         
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
     
 
@@ -305,7 +305,7 @@ class RedCapProject
         $result = $this->connection->callWithArray($data);
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
 
 
@@ -417,7 +417,7 @@ class RedCapProject
         
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
 
 
@@ -523,7 +523,7 @@ class RedCapProject
         
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
 
     
@@ -551,7 +551,7 @@ class RedCapProject
         
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
     
     
@@ -798,7 +798,7 @@ class RedCapProject
         $folderId = null;
         $result = json_decode($jsonResult, true);
         if (is_array($result) && count($result) === 1 && array_key_exists('folder_id', $result[0])) {
-            $folderId = (integer) $result[0]['folder_id'];
+            $folderId = (int) $result[0]['folder_id'];
         }
 
         return $folderId;
@@ -1138,7 +1138,7 @@ class RedCapProject
         
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
 
 
@@ -1297,7 +1297,7 @@ class RedCapProject
         
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
 
     
@@ -1397,7 +1397,7 @@ class RedCapProject
         
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
     
     /**
@@ -2125,7 +2125,7 @@ class RedCapProject
         
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
 
 
@@ -2479,7 +2479,7 @@ class RedCapProject
         $result = $this->connection->callWithArray($data);
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
 
 
@@ -2502,7 +2502,7 @@ class RedCapProject
         $data['users'] = $this->processUsersArgument($users);
         $result = $this->connection->callWithArray($data);
 
-        return (integer) $result;
+        return (int) $result;
     }
 
     
@@ -2601,7 +2601,7 @@ class RedCapProject
         $result = $this->connection->callWithArray($data);
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
 
     /**
@@ -2623,7 +2623,7 @@ class RedCapProject
         $data['roles'] = $this->processUserRolesArgument($userRoles);
         $result = $this->connection->callWithArray($data);
 
-        return (integer) $result;
+        return (int) $result;
     }
 
 
@@ -2712,7 +2712,7 @@ class RedCapProject
         $result = $this->connection->callWithArray($data);
         $this->processNonExportResult($result);
         
-        return (integer) $result;
+        return (int) $result;
     }
 
 

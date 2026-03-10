@@ -84,7 +84,7 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
     public function __destruct()
     {
         if (isset($this->curlHandle)) {
-            curl_close($this->curlHandle);
+            // DEPRECATED: curl_close($this->curlHandle);
             $this->curlHandle = null;
         }
     }

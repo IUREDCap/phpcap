@@ -22,7 +22,12 @@ class CsvUtil
     {
         $values = [];
         $file = fopen($csvFile, 'r');
-        while (($line = fgetcsv($file)) !== FALSE) {
+
+        $length = null;
+        $separator = ",";
+        $enclosure = "\"";
+        $escape = "\\";
+        while (($line = fgetcsv($file, $length, $separator, $enclosure, $escape)) !== FALSE) {
             $values[] = $line;
         }
         fclose($file);
@@ -37,7 +42,12 @@ class CsvUtil
         $file = fopen("php://temp", 'r+');
         fputs($file, $csvString ?? '');
         rewind($file);
-        while (($line = fgetcsv($file)) !== FALSE) {
+
+        $length = null;
+        $separator = ",";
+        $enclosure = "\"";
+        $escape = "\\";
+        while (($line = fgetcsv($file, $length, $separator, $enclosure, $escape)) !== FALSE) {
             $values[] = $line;
         }
         fclose($file);

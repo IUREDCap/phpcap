@@ -107,7 +107,7 @@ class LoggingTest extends TestCase
             $endTime = $fiveMinutesFromNow->format('Y-m-d H:i:s')
         );
 
-        $this->assertGreaterThan(0, count($result), 'Export logging count check.');
+        $this->assertGreaterThan(0, count($result), "Export logging count check for range {$beginTime} to {$endTime}.");
         
         // It appears that from version 11 to 12 of REDCap, the messages generated changed a bit.
         $actions = array_column($result, 'action');
