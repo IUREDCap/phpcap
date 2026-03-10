@@ -71,30 +71,30 @@ user guides.</p>
 </li>
 <li>
 <p>Get PHPCap:</p>
-<div class="description"><pre><code>git clone https://github.com/iuredcap/phpcap</code></pre></div>
+<div class="description"><pre><code> git clone https://github.com/iuredcap/phpcap</code></pre></div>
 </li>
 <li>
 <p>Get Composer. Composer is needed to download the development dependencies for PHPCap.
 See: <a href="https://getcomposer.org/download/">https://getcomposer.org/download/</a>.
-You can either install the composer.phar file to the root directory of PHPCap (the .gitignore
+You can either install the composer.phar file to the root directory of PHPCap (the .gitignore 
 file is set to ignore this file), or install it globally at the system or account level.</p>
 </li>
 <li>
 <p>Install PHPCap's development dependencies:</p>
-<div class="description"><pre><code># If you installed the composer.phar file in PHPCap's root directory:
-php composer.phar install
+<div class="description"><pre><code> # If you installed the composer.phar file in PHPCap's root directory:
+ php composer.phar install
 
-# If you installed composer globally:
-composer install
+ # If you installed composer globally:
+ composer install
 
-# The dependencies should be installed into a "vendor" directory
-# (which will be ignored by Git).    </code></pre></div>
+ # The dependencies should be installed into a "vendor" directory
+ # (which will be ignored by Git).    </code></pre></div>
 </li>
 <li>
 <p>Install <a href="https://phpdoc.org/">phpDocumentor</a>, which is used for
 generating API documentation from PHPDoc comments in the code.
 It should be set up so that it can be run from the command line using:</p>
-<div class="description"><pre><code>phpdoc</code></pre></div>
+<div class="description"><pre><code> phpdoc</code></pre></div>
 </li>
 </ol>
 <h3 id="Example Setup on Ubuntu 20">Example Setup on Ubuntu 20</h3>
@@ -112,25 +112,25 @@ chmod +x phpDocumentor.phar
 sudo mv phpDocumentor.phar /usr/local/bin/phpdoc</code></pre></div>
 <h2 id="Development">Development</h2>
 <h3 id="Automated Tests">Automated Tests</h3>
-<p>PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency for your PHPCap project when you run the &quot;composer install&quot; command.
+<p>PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency for your PHPCap project when you run the "composer install" command.
 PHPCap has the following types of automated tests:</p>
 <ol>
-<li><strong>unit tests</strong>
-<ul>
+<li><strong>unit tests</strong><ul>
 <li>in directory <strong>tests/unit</strong></li>
 <li>don't require a REDCap instance to run</li>
-</ul></li>
-<li><strong>integration tests</strong>
-<ul>
+</ul>
+</li>
+<li><strong>integration tests</strong><ul>
 <li>in directory <strong>tests/integration</strong></li>
 <li>require a REDCap instance to run</li>
 <li>require setup and configuration to run</li>
-</ul></li>
+</ul>
+</li>
 </ol>
 <p>You can test your PHPUnit installation by running the following in the root PHPCap directory, which will run the unit tests for PHPCap:</p>
 <div class="description"><pre><code>    ./vendor/bin/phpunit --testsuite unit</code></pre></div>
-<p>If the above command succeeds, you should see an &quot;OK&quot; message with the number of tests and assertions that were run, and you should see no errors of failures.</p>
-<p>To run <em>all</em> the automated tests (the unit tests as well as the integration tests), setup steps needs to be completed. Some of the integration tests are considered optional. If
+<p>If the above command succeeds, you should see an "OK" message with the number of tests and assertions that were run, and you should see no errors of failures.</p>
+<p>To run <em>all</em> the automated tests (the unit tests as well as the integration tests), setup steps needs to be completed. Some of the integration tests are considered optional. If 
 you don't do the setup steps for these optional tests, they will not be run. But if you don't do the setup steps for the non-optional integration tests, phpunit will fail
 when you try to run them.</p>
 <h4>Setup for Non-Optional Integration Tests</h4>
@@ -139,22 +139,22 @@ following setup steps are completed:</p>
 <ol>
 <li>Log in to your REDCap site.</li>
 <li>Create an empty project in REDCap.</li>
-<li>Create a project in REDCap for the &quot;Basic Demography,&quot; &quot;DAG,&quot; and &quot;Longitudinal Data&quot; test projects in directory <strong>tests/projects/</strong>, and import each of those test project files into the REDCap project created for it.</li>
+<li>Create a project in REDCap for the "Basic Demography," "DAG," and "Longitudinal Data" test projects in directory <strong>tests/projects/</strong>, and import each of those test project files into the REDCap project created for it.</li>
 <li>In REDCap, request API tokens for the empty project and the projects imported in the step above. Make sure that user setting for each
 project allow API import and export.</li>
-<li>Once you have your tokens, copy the &quot;config-example.ini&quot; file to a file
-named &quot;config.ini&quot; and then set the URL in that file to be the
+<li>Once you have your tokens, copy the "config-example.ini" file to a file
+named "config.ini" and then set the URL in that file to be the
 URL for the API of your REDCap instance, and set the tokens to be
 the tokens requested in the previous step.</li>
-<li>In the Control Center in REDCap, download the &quot;Date Calculated Fields&quot; external module and then enable it.</li>
-<li>In REDCap, enable the &quot;Date Calculated Fields&quot; external module for the &quot;Basic Demography&quot; project.</li>
-<li>In REDCap, add a test user to the DAG project, assigning only default, basic permissions.
-<ol>
+<li>In the Control Center in REDCap, download the "Date Calculated Fields" external module and then enable it.</li>
+<li>In REDCap, enable the "Date Calculated Fields" external module for the "Basic Demography" project.</li>
+<li>In REDCap, add a test user to the DAG project, assigning only default, basic permissions.<ol>
 <li>Add the test user to the 'group1' DAG</li>
-<li>Using the &quot;DAG Switcher&quot; in REDCap, assign the test user access to DAGs 'group1' and 'group2'</li>
+<li>Using the "DAG Switcher" in REDCap, assign the test user access to DAGs 'group1' and 'group2'</li>
 <li>Create an API token for the test user with export/import/update permission for the DAG project</li>
 <li>Set the <strong>dags.test.user.api.token</strong> property in your test config.ini file to the value for the API token created in the previous step</li>
-</ol></li>
+</ol>
+</li>
 </ol>
 <h4>Setup for Optional CA Certificate File Integration Tests</h4>
 <p>To run the optional tests involving the CA certificate file, you will need to set up
@@ -167,81 +167,121 @@ do this.</p>
 <p>To run all of the optional report tests, you will need to manually set up 2 reports.</p>
 <p>You need to set up a report for the
 basic demography project.
-and then set the
+and then set the 
 <strong>basic.demography.report.id</strong> property in your <strong>tests/config.ini</strong> file
 to the ID of the report. If the ID property is not set, then the tests
-that use the report will not be run. You need to set up an &quot;Exercise&quot; report
+that use the report will not be run. You need to set up an "Exercise" report
 as follows:</p>
 <ul>
 <li>Include these fields in this order: record_id, bmi</li>
 </ul>
 <p>You need to set up a report for the
 longitudinal data project
-and then set the
+and then set the 
 <strong>longitudinal.data.report.id</strong> property in your <strong>tests/config.ini</strong> file
 to the ID of the report. If the ID property is not set, then the tests
-that use the report will not be run. You need to set up an &quot;Exercise&quot; report
+that use the report will not be run. You need to set up an "Exercise" report
 as follows:</p>
 <ul>
 <li>Include these fields in this order: study_id, age, ethnicity, race, sex, gym, aerobics</li>
-<li>Filter (only) by the following events: &quot;Enrollment (Arm 1: Drug A)&quot;, &quot;Enrollment (Arm 2: Drug B)&quot; </li>
+<li>Filter (only) by the following events: "Enrollment (Arm 1: Drug A)", "Enrollment (Arm 2: Drug B)" </li>
 </ul>
 <h4>Setup for Optional Survey Integration Tests</h4>
 <p>To run the survey tests, use the following steps:</p>
 <ol>
-<li>In REDCap, create a project for the &quot;Repeatable Survey&quot; project test file in the <strong>tests/projects</strong> directory, and import the project test file into that project.</li>
-<li>In the &quot;Project Setup&quot; tab for the project created in the step above, click on the <strong>Enable</strong> button for &quot;Use surveys for this project?&quot;</li>
-<li>In the &quot;Project Setup&quot; tab, click on the <strong>Designer</strong> button</li>
-<li>In the &quot;Online Designer&quot; tab, click on the <strong>Enable</strong> button for instrument &quot;Basic Information&quot;, and then:
+<li>
+<p>In REDCap, create a project for the "Repeatable Survey" project test file in the <strong>tests/projects</strong> directory, and import the project test file into that project.</p>
+</li>
+<li>
+<p>In the "Project Setup" tab for the project created in the step above, click on the <strong>Enable</strong> button for "Use surveys for this project?"</p>
+</li>
+<li>
+<p>In the "Project Setup" tab, click on the <strong>Designer</strong> button</p>
+</li>
+<li>
+<p>In the "Online Designer" tab, click on the <strong>Enable</strong> button for instrument "Basic Information", and then:</p>
 <ol>
-<li>Select &quot;Yes&quot; for &quot;Allow 'Save &amp; Return Later' option for respondents?&quot;</li>
+<li>Select "Yes" for "Allow 'Save &amp; Return Later' option for respondents?"</li>
 <li>Click on the <strong>Save Changes</strong> button</li>
-</ol></li>
-<li>In the &quot;Online Designer&quot; tab, click on the <strong>Enable</strong> button for instrument &quot;Weight&quot;, and then:
+</ol>
+</li>
+<li>
+<p>In the "Online Designer" tab, click on the <strong>Enable</strong> button for instrument "Weight", and then:</p>
 <ol>
-<li>Select &quot;Yes&quot; for &quot;Allow 'Save &amp; Return Later' option for respondents?&quot;</li>
-<li>Check the box for &quot;(Optional) Allow respondents to repeat the survey&quot;</li>
+<li>Select "Yes" for "Allow 'Save &amp; Return Later' option for respondents?"</li>
+<li>Check the box for "(Optional) Allow respondents to repeat the survey"</li>
 <li>Click on the <strong>Save Changes</strong> button</li>
-</ol></li>
-<li>In the &quot;Online Designer&quot; tab, click on the &quot;Survey Queue&quot; button</li>
-<li>In the &quot;Set up Survey Queue&quot; dialog:
+</ol>
+</li>
+<li>
+<p>In the "Online Designer" tab, click on the "Survey Queue" button</p>
+</li>
+<li>
+<p>In the "Set up Survey Queue" dialog:</p>
 <ol>
-<li>Click on the <strong>Activate</strong> button for &quot;Weight&quot;</li>
-<li>Check &quot;When the following survey is completed:&quot;</li>
-<li>In the selection below &quot;When the following survey is completed:&quot;, select &quot;Basic Information&quot;</li>
+<li>Click on the <strong>Activate</strong> button for "Weight"</li>
+<li>Check "When the following survey is completed:"</li>
+<li>In the selection below "When the following survey is completed:", select "Basic Information"</li>
 <li>Click on the <strong>Save</strong> button</li>
-</ol></li>
-<li>Click on the &quot;Manage Survey Participants&quot; or &quot;Survey Distribution Tools&quot; link on the left (depending on your REDCap version)</li>
-<li>Go to the &quot;Participant List&quot; tab</li>
-<li>Click on the <strong>Add participants</strong> button</li>
-<li>Add an e-mail that you have access to and click on the <strong>Add participants</strong> button</li>
-<li>Click on the <strong>Enable</strong> button for participant identifiers, and confirm this action</li>
-<li>Enter an identifier for the participant for the e-mail that you entered above and then click on the <strong>Save</strong> button</li>
-<li>Click on the <strong>Compose Survey Invitations</strong> button</li>
-<li>In the &quot;Send a Survey Invitation to Participants&quot; dialog:
+</ol>
+</li>
+<li>
+<p>Click on the "Manage Survey Participants" or "Survey Distribution Tools" link on the left (depending on your REDCap version)</p>
+</li>
+<li>
+<p>Go to the "Participant List" tab</p>
+</li>
+<li>
+<p>Click on the <strong>Add participants</strong> button</p>
+</li>
+<li>
+<p>Add an e-mail that you have access to and click on the <strong>Add participants</strong> button</p>
+</li>
+<li>
+<p>Click on the <strong>Enable</strong> button for participant identifiers, and confirm this action</p>
+</li>
+<li>
+<p>Enter an identifier for the participant for the e-mail that you entered above and then click on the <strong>Save</strong> button</p>
+</li>
+<li>
+<p>Click on the <strong>Compose Survey Invitations</strong> button</p>
+</li>
+<li>
+<p>In the "Send a Survey Invitation to Participants" dialog:</p>
 <ol>
-<li>Make sure that &quot;Immediately&quot; is selected for when the e-mail should be sent</li>
+<li>Make sure that "Immediately" is selected for when the e-mail should be sent</li>
 <li>Make sure that the participant you create above is selected</li>
 <li>Click on the <strong>Send Invitations</strong> button</li>
-</ol></li>
-<li>Open the e-mail that should have been sent (you may need to wait a few minutes to receive it)</li>
-<li>Click on the &quot;Basic Information&quot; link in the e-mail and fill out the survey, and then at least one &quot;Weight&quot; survey</li>
-<li>In your project window in REDCap, click on the &quot;API&quot; link on the left and request (or create if you are an admin) an API token with at least API Export rights</li>
+</ol>
+</li>
+<li>
+<p>Open the e-mail that should have been sent (you may need to wait a few minutes to receive it)</p>
+</li>
+<li>
+<p>Click on the "Basic Information" link in the e-mail and fill out the survey, and then at least one "Weight" survey</p>
+</li>
+<li>
+<p>In your project window in REDCap, click on the "API" link on the left and request (or create if you are an admin) an API token with at least API Export rights</p>
+</li>
 <li>
 <p>Once you have your API token, use it and the e-mail and identifier entered earlier to set the following properties in the config.ini file in the tests directory:</p>
-<div class="description"><pre><code>repeatable.survey.api.token
-survey.participant.email
-survey.participant.identifier</code></pre></div>
+<div class="description"><pre><code> repeatable.survey.api.token
+ survey.participant.email
+ survey.participant.identifier</code></pre></div>
 </li>
 </ol>
 <h4>Setup for the Optional Repeating Forms Tests</h4>
 <p>To run the repeating forms tests, use the following steps:</p>
 <ol>
-<li>In REDCap, create a project for the &quot;Repeating Forms&quot; project test file in the <strong>tests/projects</strong> directory, and import the project test file into that project.</li>
-<li>In your project window in REDCap, click on the &quot;API&quot; link on the left and request (or create if you are an admin) an API token with at least API Export rights</li>
+<li>
+<p>In REDCap, create a project for the "Repeating Forms" project test file in the <strong>tests/projects</strong> directory, and import the project test file into that project.</p>
+</li>
+<li>
+<p>In your project window in REDCap, click on the "API" link on the left and request (or create if you are an admin) an API token with at least API Export rights</p>
+</li>
 <li>
 <p>Once you have your API token, use it to set the following property in the config.ini file in the tests directory:</p>
-<div class="description"><pre><code>repeating.forms.api.token</code></pre></div>
+<div class="description"><pre><code> repeating.forms.api.token</code></pre></div>
 </li>
 </ol>
 <h4>Setup for Optional Project Creation Tests</h4>
@@ -334,7 +374,7 @@ generated, these files should not be edited manually.</p>
 <h4>API Document Generation</h4>
 <p>To generate the API documentation (stored in <strong>./docs/api</strong>), execute the following command in PHPCap's root directory:</p>
 <div class="description"><pre><code>phpdoc</code></pre></div>
-<p>Note: For this command to work, phpDocumentor needs to have been installed as command &quot;phpdoc&quot;.
+<p>Note: For this command to work, phpDocumentor needs to have been installed as command "phpdoc".
 The configuration file used by this command is <strong>phpdoc.xml</strong> in the root directory of PHPCap.</p>
 <p>The API documentation <em>is</em> stored in Git to eliminate the need for non-developer users
 to install Composer and the developer dependencies.</p>
@@ -346,13 +386,13 @@ script below will fix this issue, so it should always be run after the phpdoc co
 execute the following command in PHPCap's root directory:</p>
 <div class="description"><pre><code>php generate-html-docs.php</code></pre></div>
 <h3 id="Tagging Releases">Tagging Releases</h3>
-<p>Releases should be tagged in accordance with semantic versioning:
+<p>Releases should be tagged in accordance with semantic versioning: 
 <a href="http://semver.org/">http://semver.org/</a></p>
 <h3 id="Developer Dependencies">Developer Dependencies</h3>
 <p>PHPCap uses a few development dependencies.</p>
 <p>To check for out of date dependencies, use:</p>
 <div class="description"><pre><code>composer outdated --direct</code></pre></div>
-<p>The &quot;--direct&quot; option above only checks dependencies directly used by PHPCap (i.e., specified in the
+<p>The "--direct" option above only checks dependencies directly used by PHPCap (i.e., specified in the
 composer.json file).</p></div>
 <div id="footer">
 PHPCap documentation

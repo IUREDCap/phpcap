@@ -47,9 +47,12 @@ SPDX-License-Identifier: BSD-3-Clause
 <h1>User Guide 1 - Getting Started</h1>
 <h2 id="Prerequisites">Prerequisites</h2>
 <ul>
-<li><strong>REDCap 7.0+.</strong> You need to have an account for a REDCap version 7.0 or greater site.
-The version of your REDCap site should be listed on the bottom of the page after you log in.</li>
-<li><strong>Your REDCap API URL.</strong> You need to know the URL of your REDCap's API (Application Programming Interface). You can see this from within REDCap by using the following steps:
+<li>
+<p><strong>REDCap 7.0+.</strong> You need to have an account for a REDCap version 7.0 or greater site.
+The version of your REDCap site should be listed on the bottom of the page after you log in.</p>
+</li>
+<li>
+<p><strong>Your REDCap API URL.</strong> You need to know the URL of your REDCap's API (Application Programming Interface). You can see this from within REDCap by using the following steps:</p>
 <ol>
 <li>Select a project.</li>
 <li>Click on the <strong>API</strong> link on the left.</li>
@@ -58,14 +61,17 @@ toward the the top of the page.</li>
 <li>Select one of the methods in the left, such as <strong>Export Arms</strong>.</li>
 <li>Your REDCap API URL should be displayed in the page for the method
 under <strong>URL</strong>.</li>
-</ol></li>
-<li><strong>REDCap Project with API Token.</strong> You need to have an API token for a project in REDCap. You would typically get this
+</ol>
+</li>
+<li>
+<p><strong>REDCap Project with API Token.</strong> You need to have an API token for a project in REDCap. You would typically get this
 by creating a project in REDCap and then requesting an API token. To request an API
-token, from your project's page in REDCap:
+token, from your project's page in REDCap:</p>
 <ol>
 <li>Click on the <strong>API</strong> link on the left.</li>
 <li>On the API page, click on the <strong>Request API token</strong> button.</li>
-</ol></li>
+</ol>
+</li>
 <li>
 <p><strong>PHP 5.6+ with cURL and OpenSSL.</strong> You need to have a computer (with Internet access) that has PHP version 5.6 or greater installed. And you need to have the following PHP modules enabled:</p>
 <ul>
@@ -77,10 +83,10 @@ automatically check that the above modules are enabled,
 and generate an error message if they are not. If you don't
 use Composer, you can use the following command to check
 which modules are enabled:</p>
-<div class="description"><pre><code class="language-shell">php -m</code></pre></div>
+<div class="description"><pre><code class="language-shell">  php -m</code></pre></div>
 <p>Example PHP Setup on Ubuntu 16:</p>
-<div class="description"><pre><code class="language-shell">sudo apt-get install php php-curl composer</code></pre></div>
-<p>Information on installing PHP on Windows:
+<div class="description"><pre><code class="language-shell">  sudo apt-get install php php-curl composer</code></pre></div>
+<p>Information on installing PHP on Windows: 
 <a href="http://php.net/manual/en/install.windows.php">http://php.net/manual/en/install.windows.php</a></p>
 </li>
 </ul>
@@ -96,7 +102,7 @@ cd phpcap-project</code></pre></div>
 <div class="description"><pre><code>git clone https://github.com/iuredcap/phpcap </code></pre></div>
 <p>If you don't have Composer or Git installed, you can get a Zip file of PHPCap from GitHub by clicking on this link:</p>
 <p><a href="https://github.com/iuredcap/phpcap/archive/master.zip">https://github.com/iuredcap/phpcap/archive/master.zip</a></p>
-<p>Or go to this page and click on the &quot;Clone or download&quot; button, and then click on &quot;Download ZIP&quot;:</p>
+<p>Or go to this page and click on the "Clone or download" button, and then click on "Download ZIP":</p>
 <p><a href="https://github.com/iuredcap/phpcap/">https://github.com/iuredcap/phpcap/</a></p>
 <p>Then unzip the file to your project directory.</p>
 <p>You should now have the following directory structure:</p>
@@ -123,8 +129,8 @@ cd phpcap-project</code></pre></div>
       </td>
     </tr>
 </table>
-<p>You will need to include the PHPCap autoloader (shown in bold above) in your code to access the PHPCap classes. And the location and name of the autoloader to use will depend on
-whether you used Composer to download PHPCap, or downloaded it from GitHub (using Git or directly).</p>
+You will need to include the PHPCap autoloader (shown in bold above) in your code to access the PHPCap classes. And the location and name of the autoloader to use will depend on
+whether you used Composer to download PHPCap, or downloaded it from GitHub (using Git or directly).
 <h3 id="Create your first test program">Create your first test program</h3>
 <p>Create a file <strong>test.php</strong> in your project directory:</p>
 <table>
@@ -158,6 +164,7 @@ whether you used Composer to download PHPCap, or downloaded it from GitHub (usin
 # Use only one of the following requires:
 require('vendor/autoload.php');   # For Composer
 require('PHPCap/autoloader.php'); # For Git 
+
 
 use IU\PHPCap\RedCapProject;
 
@@ -276,7 +283,7 @@ print_r($projectInfo);</code></pre></div>
 <p>If everything is working correctly, the test program should (still) output information about your project.</p>
 <h3 id="Checking for errors">Checking for errors</h3>
 <p>In general, when an error occurs in PHPCap, it throws a PhpCapException.
-These exceptions can be checked and handled using &quot;try&quot; and &quot;catch&quot;. For example,
+These exceptions can be checked and handled using "try" and "catch". For example,
 to handle exceptions in the sample program, it could be modified as follows:</p>
 <div class="description"><pre><code class="language-php">&lt;?php
 
@@ -303,8 +310,9 @@ try {
     print "Here is a stack trace:\n";
     print $exception-&gt;getTraceAsString()."\n";
 }
+
 </code></pre></div>
-<p>Note that in addition to the &quot;try&quot; and &quot;catch&quot; that were added, an additional use statement was
+<p>Note that in addition to the "try" and "catch" that were added, an additional use statement was
 added for the PhpCapException class: </p>
 <div class="description"><pre><code class="language-php">use IU\PHPCap\PhpCapException;</code></pre></div></div>
 <div id="footer">
