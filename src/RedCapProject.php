@@ -2039,6 +2039,37 @@ class RedCapProject
         return $result;
     }
 
+    /**
+     * Randomizes a record.
+     *
+     * @param string $recordId the record ID of the record to randomize.
+     * @param string $randomizationId unique id of the randomization
+     * @param string $returnAlt if specified, eturn the value for the alternative
+     *     target field.
+     *
+     * @return mixed the values for the target randomization field (plus optionally
+     *     the alternative target value), and throws an exception otherwise.
+     */
+    public function randomizeRecord($recordId, $randomizationId, $returnAlt = null)
+    {
+        $data = array (
+                'token'        => $this->apiToken,
+                'content'      => 'record',
+                'action'       => 'randomize',
+                'format'       => 'json',
+                'returnFormat' => 'json'
+        );
+        #---------------------------------------
+        # Process the arguments
+        #---------------------------------------
+        $data['record']          = $this->processRecordIdArgument($recordId);
+        $data['randomization_id']= $this->processRandomizationIdArgument($randomizationId);
+        $data['returnAlt']       = $this->processReturnAltArgument($returnAlt);
+
+        $result = $this->connection->callWithArray($data);
+        $this->processNonExportResult($result);
+        return $result;
+    }
 
     /**
      * Exports the repeating instruments and events.
@@ -4038,6 +4069,33 @@ class RedCapProject
         }
 
         return $users;
+    }
+
+    protected function processRandomizationIdArgument($randomizationId)
+    {
+        if (!isset($randomizationId) || empty($randomizationId)) {
+            $message = 'No randomization ID specified to randomize record.';
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
+        
+        return $randomizationId;
+    }
+
+    protected function processReturnAltArgument($returnAlt)
+    {
+        if (empty($returnAlt)) {
+            $returnAlt = null;
+        } elseif (isset($returnAlt)) {
+            if ($returnAlt != 'true' && $returnAlt != 'false') {
+                $message = "Invalid value for the randomization Return Alt variable. "
+                    ."Valid values are 'true' and 'false'";
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            }
+        } // @codeCoverageIgnore
+        
+        return $returnAlt;
     }
 
     /* CHECK !!!!!!!!!!!!!!!!!!!!!!!!! */
