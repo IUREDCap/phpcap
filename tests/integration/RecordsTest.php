@@ -26,6 +26,7 @@ class RecordsTest extends TestCase
     private static $basicDemographyProject;
     private static $longitudinalDataProject;
     private static $repeatingFormsProject;
+    private static $randomizationProject;
     
     public static function setUpBeforeClass(): void
     {
@@ -49,6 +50,15 @@ class RecordsTest extends TestCase
                 self::$config['repeating.forms.api.token']
             );
         }
+        
+        self::$randomizationProject = null;
+        if (array_key_exists('randomization.api.token', self::$config)
+                && !empty(self::$config['randomization.api.token'])) {
+            self::$randomizationProject = new RedCapProject(
+                self::$config['api.url'],
+                self::$config['randomization.api.token']
+            );
+        }
 
         # Make sure that all the test records that can be added by this class are deleted,
         # in case the test failed the last time it was run.
@@ -62,6 +72,11 @@ class RecordsTest extends TestCase
             $exists = self::$longitudinalDataProject->exportRecordsAp(['recordIds' => [$id]]);
             if (count($exists) > 0) {
                 self::$longitudinalDataProject->deleteRecords([$id]);
+            }
+
+            $exists = self::$randomizationProject->exportRecordsAp(['recordIds' => [$id]]);
+            if (count($exists) > 0) {
+                self::$randomizationProject->deleteRecords([$id]);
             }
         }
     }
@@ -1974,5 +1989,64 @@ class RecordsTest extends TestCase
                 }
             }
         } while ($i <= $maxIndex);
+    }
+    
+    public function testRandomization()
+    {
+        $callInfo = true;
+        $randomizationId = self::$config['randomization.id'];
+
+        if (isset($randomizationId) && trim($randomizationId) != '') {
+            # Import test records
+            $records = FileUtil::fileToString(__DIR__.'/../data/randomization-data-import.csv');
+            $result = self::$randomizationProject->importRecords(
+                $records,
+                $format = 'csv',
+                null,
+                $overwriteBehavior = 'overwrite',
+                $dateFormat = 'MDY'
+            );
+
+            # make sure the records got imported
+            $this->assertEquals(1, $result, 'randomization: confirm records inserted.');
+
+            $returnAlt = 'true';
+
+            # Test 1: randomize first record
+            $expectedTargetFieldName = 'randomization_group';
+            $expectedTargetFieldAlt = '1';
+            $recordId = '1101';
+            $result = self::$randomizationProject->randomizeRecord(
+                $recordId,
+                $randomizationId,
+                $returnAlt
+            );
+            $data = json_decode($result, true);
+            $this->assertIsArray($data, 'randomization Test1: confirm result not null');
+            $this->assertEquals(
+                $expectedTargetFieldName,
+                $data['target_field_name'],
+                'randomization Test1: confirm target_field_name'
+            );
+            $this->assertEquals(
+                $expectedTargetFieldAlt = '1',
+                $data['target_field_alt'],
+                'randomization Test1: confirm target_field_alt'
+            );
+
+            # Test 2: randomize already randomized record
+            $expected = 'Cannot randomize. Randomization already completed for record.';
+            $result = self::$randomizationProject->randomizeRecord(
+                $recordId,
+                $randomizationId,
+                $returnAlt
+            );
+
+            $this->assertEquals(
+                $expected,
+                $result,
+                'randomization Test2: record already randomized'
+            );
+        }
     }
 }

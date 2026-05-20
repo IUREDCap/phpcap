@@ -2043,8 +2043,8 @@ class RedCapProject
      * Randomizes a record.
      *
      * @param string $recordId the record ID of the record to randomize.
-     * @param string $randomizationId unique id of the randomization
-     * @param string $returnAlt if specified, eturn the value for the alternative
+     * @param string $randomizationId unique id of the randomization.
+     * @param string $returnAlt if specified, return the value for the alternative
      *     target field.
      *
      * @return mixed the values for the target randomization field (plus optionally

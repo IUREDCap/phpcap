@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="PHP Randomization Test" AsOfDateTime="2026-05-05T13:52:31" CreationDateTime="2026-05-05T13:52:31" SourceSystem="REDCap" SourceSystemVersion="16.0.18">
+<Study OID="Project.PHPRandomizationTest">
+<GlobalVariables>
+	<StudyName>PHP Randomization Test</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "PHP Randomization Test".</StudyDescription>
+	<ProtocolName>PHP Randomization Test</ProtocolName>
+	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
+	<redcap:CustomRecordLabel></redcap:CustomRecordLabel>
+	<redcap:SecondaryUniqueField></redcap:SecondaryUniqueField>
+	<redcap:SecondaryUniqueFieldDisplayValue>1</redcap:SecondaryUniqueFieldDisplayValue>
+	<redcap:SecondaryUniqueFieldDisplayLabel>1</redcap:SecondaryUniqueFieldDisplayLabel>
+	<redcap:SchedulingEnabled>0</redcap:SchedulingEnabled>
+	<redcap:SurveysEnabled>0</redcap:SurveysEnabled>
+	<redcap:SurveyInvitationEmailField></redcap:SurveyInvitationEmailField>
+	<redcap:SurveyParticipantIdentifiers>0</redcap:SurveyParticipantIdentifiers>
+	<redcap:RandomizationEnabled>1</redcap:RandomizationEnabled>
+	<redcap:DisplayTodayNowButton>1</redcap:DisplayTodayNowButton>
+	<redcap:PreventBranchingEraseValues>0</redcap:PreventBranchingEraseValues>
+	<redcap:RequireChangeReason>0</redcap:RequireChangeReason>
+	<redcap:DataHistoryPopup>1</redcap:DataHistoryPopup>
+	<redcap:OrderRecordsByField></redcap:OrderRecordsByField>
+	<redcap:taskCompleteStatus>2</redcap:taskCompleteStatus>
+	<redcap:DataResolutionWorkflowEnabled>1</redcap:DataResolutionWorkflowEnabled>
+	<redcap:FieldCommentLogOptionEditDelete>1</redcap:FieldCommentLogOptionEditDelete>
+	<redcap:DataResolutionWorkflowHideClosedQueries>1</redcap:DataResolutionWorkflowHideClosedQueries>
+	<redcap:MyCapEnabled>0</redcap:MyCapEnabled>
+	<redcap:Purpose>0</redcap:Purpose>
+	<redcap:PurposeOther></redcap:PurposeOther>
+	<redcap:ProjectNotes></redcap:ProjectNotes>
+	<redcap:SurveyQueueCustomText></redcap:SurveyQueueCustomText>
+	<redcap:SurveyQueueHide>0</redcap:SurveyQueueHide>
+	<redcap:SurveyAuthEnabled>0</redcap:SurveyAuthEnabled>
+	<redcap:SurveyAuthField1></redcap:SurveyAuthField1>
+	<redcap:SurveyAuthEvent1></redcap:SurveyAuthEvent1>
+	<redcap:SurveyAuthField2></redcap:SurveyAuthField2>
+	<redcap:SurveyAuthEvent2></redcap:SurveyAuthEvent2>
+	<redcap:SurveyAuthField3></redcap:SurveyAuthField3>
+	<redcap:SurveyAuthEvent3></redcap:SurveyAuthEvent3>
+	<redcap:SurveyAuthMinFields></redcap:SurveyAuthMinFields>
+	<redcap:SurveyAuthApplyAllSurveys>1</redcap:SurveyAuthApplyAllSurveys>
+	<redcap:SurveyAuthCustomMessage></redcap:SurveyAuthCustomMessage>
+	<redcap:SurveyAuthFailLimit></redcap:SurveyAuthFailLimit>
+	<redcap:SurveyAuthFailWindow></redcap:SurveyAuthFailWindow>
+	<redcap:DataMartProjectEnabled>0</redcap:DataMartProjectEnabled>
+	<redcap:DatamartAllowRepeatRevision>0</redcap:DatamartAllowRepeatRevision>
+	<redcap:DatamartAllowCreateRevision>0</redcap:DatamartAllowCreateRevision>
+	<redcap:DatamartCronEnabled>0</redcap:DatamartCronEnabled>
+	<redcap:HideFilledForms>1</redcap:HideFilledForms>
+	<redcap:HideDisabledForms>0</redcap:HideDisabledForms>
+	<redcap:MissingDataCodes></redcap:MissingDataCodes>
+	<redcap:ProtectedEmailMode>0</redcap:ProtectedEmailMode>
+	<redcap:ProtectedEmailModeCustomText></redcap:ProtectedEmailModeCustomText>
+	<redcap:ProtectedEmailModeTrigger>ALL</redcap:ProtectedEmailModeTrigger>
+	<redcap:ProtectedEmailModeLogo></redcap:ProtectedEmailModeLogo>
+	<redcap:RandomizationGroup>
+		<redcap:Randomization stratified="1" group_by="" target_field="randomization_group" target_event="" source_field1="race" source_event1="event_1_arm_1" source_field2="sex" source_event2="event_1_arm_1" source_field3="" source_event3="" source_field4="" source_event4="" source_field5="" source_event5="" source_field6="" source_event6="" source_field7="" source_event7="" source_field8="" source_event8="" source_field9="" source_event9="" source_field10="" source_event10="" source_field11="" source_event11="" source_field12="" source_event12="" source_field13="" source_event13="" source_field14="" source_event14="" source_field15="" source_event15="" trigger_option="" trigger_instrument="" trigger_event_id="" trigger_logic=""/>
+	</redcap:RandomizationGroup>
+	<redcap:MycapProjectsGroup>
+		<redcap:MycapProjects/>
+	</redcap:MycapProjectsGroup>
+	<redcap:MycapThemesGroup>
+		<redcap:MycapThemes/>
+	</redcap:MycapThemesGroup>
+	<redcap:MultilanguageSettingsGroup>
+		<redcap:MultilanguageSettings settings="YToyMzp7czo3OiJ2ZXJzaW9uIjtzOjc6IjE2LjAuMTgiO3M6NToibGFuZ3MiO2E6MDp7fXM6OToicHJvamVjdElkIjtzOjM6IjE4MiI7czoxNToiZGVzaWduYXRlZEZpZWxkIjtzOjA6IiI7czo2OiJzdGF0dXMiO3M6MzoiZGV2IjtzOjU6ImRlYnVnIjtiOjA7czoxMzoiYWRtaW4tZW5hYmxlZCI7YjowO3M6MTQ6ImFkbWluLWRpc2FibGVkIjtiOjA7czoxNToiYWxsb3ctZnJvbS1maWxlIjtiOjA7czoxODoiYWxsb3ctZnJvbS1zY3JhdGNoIjtiOjA7czoyMToib3B0aW9uYWwtc3Vic2NyaXB0aW9uIjtiOjA7czoxODoiYWxsb3ctdWktb3ZlcnJpZGVzIjtiOjA7czo3OiJyZWZMYW5nIjtzOjA6IiI7czoxMjoiZmFsbGJhY2tMYW5nIjtzOjA6IiI7czo4OiJkaXNhYmxlZCI7YjowO3M6MjU6ImhpZ2hsaWdodE1pc3NpbmdEYXRhZW50cnkiO2I6MDtzOjIyOiJoaWdobGlnaHRNaXNzaW5nU3VydmV5IjtiOjA7czoyMToiYXV0b0RldGVjdEJyb3dzZXJMYW5nIjtiOjA7czoxMjoiYWxlcnRTb3VyY2VzIjthOjA6e31zOjEwOiJhc2lTb3VyY2VzIjthOjA6e31zOjE0OiJleGNsdWRlZEFsZXJ0cyI7YTowOnt9czoxNDoiZXhjbHVkZWRGaWVsZHMiO2E6MDp7fXM6MTY6ImV4Y2x1ZGVkU2V0dGluZ3MiO2E6MDp7fX0="/>
+	</redcap:MultilanguageSettingsGroup>
+</GlobalVariables>
+<MetaDataVersion OID="Metadata.PHPRandomizationTest_2026-05-05_1352" Name="PHP Randomization Test" redcap:RecordIdField="study_id">
+	<FormDef OID="Form.demographics" Name="Demographics" Repeating="No" redcap:FormName="demographics">
+		<ItemGroupRef ItemGroupOID="demographics.study_id" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.date_enrolled" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.first_name" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.last_name" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.demographics_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.randomization_form" Name="Randomization Form" Repeating="No" redcap:FormName="randomization_form">
+		<ItemGroupRef ItemGroupOID="randomization_form.randomization_group" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="randomization_form.randomization_form_complete" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="demographics.study_id" Name="Demographics" Repeating="No">
+		<ItemRef ItemOID="study_id" Mandatory="No" redcap:Variable="study_id"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.date_enrolled" Name="Consent Information" Repeating="No">
+		<ItemRef ItemOID="date_enrolled" Mandatory="No" redcap:Variable="date_enrolled"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.first_name" Name="Contact Information" Repeating="No">
+		<ItemRef ItemOID="first_name" Mandatory="No" redcap:Variable="first_name"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.last_name" Name="Demographics" Repeating="No">
+		<ItemRef ItemOID="last_name" Mandatory="No" redcap:Variable="last_name"/>
+		<ItemRef ItemOID="dob" Mandatory="No" redcap:Variable="dob"/>
+		<ItemRef ItemOID="ethnicity" Mandatory="No" redcap:Variable="ethnicity"/>
+		<ItemRef ItemOID="race" Mandatory="No" redcap:Variable="race"/>
+		<ItemRef ItemOID="sex" Mandatory="No" redcap:Variable="sex"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.demographics_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="demographics_complete" Mandatory="No" redcap:Variable="demographics_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="randomization_form.randomization_group" Name="General Comments" Repeating="No">
+		<ItemRef ItemOID="randomization_group" Mandatory="No" redcap:Variable="randomization_group"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="randomization_form.randomization_form_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="randomization_form_complete" Mandatory="No" redcap:Variable="randomization_form_complete"/>
+	</ItemGroupDef>
+	<ItemDef OID="study_id" Name="study_id" DataType="text" Length="999" redcap:Variable="study_id" redcap:FieldType="text">
+		<Question><TranslatedText>Study ID</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="date_enrolled" Name="date_enrolled" DataType="date" Length="999" redcap:Variable="date_enrolled" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:FieldNote="YYYY-MM-DD" redcap:SectionHeader="Consent Information">
+		<Question><TranslatedText>Date subject signed consent</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="first_name" Name="first_name" DataType="text" Length="999" redcap:Variable="first_name" redcap:FieldType="text" redcap:SectionHeader="Contact Information" redcap:Identifier="y">
+		<Question><TranslatedText>First Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="last_name" Name="last_name" DataType="text" Length="999" redcap:Variable="last_name" redcap:FieldType="text" redcap:Identifier="y">
+		<Question><TranslatedText>Last Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="dob" Name="dob" DataType="date" Length="999" redcap:Variable="dob" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:Identifier="y">
+		<Question><TranslatedText>Date of birth</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="ethnicity" Name="ethnicity" DataType="text" Length="1" redcap:Variable="ethnicity" redcap:FieldType="radio" redcap:CustomAlignment="LH">
+		<Question><TranslatedText>Ethnicity</TranslatedText></Question>
+		<CodeListRef CodeListOID="ethnicity.choices"/>
+	</ItemDef>
+	<ItemDef OID="race" Name="race" DataType="text" Length="1" redcap:Variable="race" redcap:FieldType="select">
+		<Question><TranslatedText>Race</TranslatedText></Question>
+		<CodeListRef CodeListOID="race.choices"/>
+	</ItemDef>
+	<ItemDef OID="sex" Name="sex" DataType="text" Length="1" redcap:Variable="sex" redcap:FieldType="radio">
+		<Question><TranslatedText>sex</TranslatedText></Question>
+		<CodeListRef CodeListOID="sex.choices"/>
+	</ItemDef>
+	<ItemDef OID="demographics_complete" Name="demographics_complete" DataType="text" Length="1" redcap:Variable="demographics_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="demographics_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="randomization_group" Name="randomization_group" DataType="text" Length="1" redcap:Variable="randomization_group" redcap:FieldType="select" redcap:SectionHeader="General Comments">
+		<Question><TranslatedText>Randomization Group</TranslatedText></Question>
+		<CodeListRef CodeListOID="randomization_group.choices"/>
+	</ItemDef>
+	<ItemDef OID="randomization_form_complete" Name="randomization_form_complete" DataType="text" Length="1" redcap:Variable="randomization_form_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="randomization_form_complete.choices"/>
+	</ItemDef>
+	<CodeList OID="ethnicity.choices" Name="ethnicity" DataType="text" redcap:Variable="ethnicity">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Hispanic or Latino</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>NOT Hispanic or Latino</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Unknown / Not Reported</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="race.choices" Name="race" DataType="text" redcap:Variable="race">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>American Indian/Alaska Native</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Asian</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Native Hawaiian or Other Pacific Islander</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Black or African American</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="4"><Decode><TranslatedText>White</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="5"><Decode><TranslatedText>More Than One Race</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="6"><Decode><TranslatedText>Unknown / Not Reported</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="sex.choices" Name="sex" DataType="text" redcap:Variable="sex">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Female</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Male</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Other</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Prefer not to say</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="demographics_complete.choices" Name="demographics_complete" DataType="text" redcap:Variable="demographics_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="randomization_group.choices" Name="randomization_group" DataType="text" redcap:Variable="randomization_group">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Drug A</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Drug B</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Drug C</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="randomization_form_complete.choices" Name="randomization_form_complete" DataType="text" redcap:Variable="randomization_form_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+</MetaDataVersion>
+</Study>
+<ClinicalData StudyOID="Project.PHPRandomizationTest" MetaDataVersionOID="Metadata.PHPRandomizationTest_2026-05-05_1352">
+</ClinicalData>
+</ODM>
