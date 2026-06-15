@@ -203,16 +203,10 @@ To run the randomization tests, use the following steps:
 2. Request an API token for the project imported in the step above. Make sure that user setting allows API import and export.
 3. If you have not already done so, copy the "config-example.ini" file to a file named _config.ini_. Edit _config,ini_ and set __randomization.api.token__
    to the API token created in the previous step.
-4. In REDCap, edit the project. In the "Applications" section on the left side of screen, click on the __Randomization__ link.
-
-        You should see the _Summary_ tab of the _Randomization_ page that lists one target, _randomization_group_.
-
+4. In REDCap, edit the project. In the "Applications" section on the left side of screen, click on the __Randomization__ link. You should see the _Summary_ tab of the _Randomization_ page that lists one target, _randomization_group_.
 5. Make note of the __Randomization ID__ for _randomization_group_.
 6. Edit the _config.ini_ file and set  __randomization.id__ to the _randomization_group_ value.
-7. In REDCap, return to the "Randomization" page for the project. Click on the __Setup__ icon for _randomization_group_.
-
-        The "Setup1" tab should appear.
-
+7. In REDCap, return to the "Randomization" page for the project. Click on the __Setup__ icon for _randomization_group_. The "Setup1" tab should appear.
 8. In section "STEP 3: Upload your allocation table (CSV file)", for _Upload allocation table (CSV file) for use in DEVELOPMENT status_, 
    browse to the __tests/data__ directory where you installed PHPCap and upload the file __randomization_dev_allocation.csv__.
    You should see a brief message that the upload was successful.
