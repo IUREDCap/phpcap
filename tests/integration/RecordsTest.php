@@ -74,9 +74,11 @@ class RecordsTest extends TestCase
                 self::$longitudinalDataProject->deleteRecords([$id]);
             }
 
-            $exists = self::$randomizationProject->exportRecordsAp(['recordIds' => [$id]]);
-            if (count($exists) > 0) {
-                self::$randomizationProject->deleteRecords([$id]);
+            if (self::$randomizationProject) {
+                $exists = self::$randomizationProject->exportRecordsAp(['recordIds' => [$id]]);
+                if (count($exists) > 0) {
+                    self::$randomizationProject->deleteRecords([$id]);
+                }
             }
         }
     }
@@ -1993,6 +1995,19 @@ class RecordsTest extends TestCase
     
     public function testRandomization()
     {
+        if (!self::$randomizationProject) {
+            $this->markTestSkipped(
+                'testRandomization: no randomization project API token specified.'
+            );
+        }
+
+        if (!isset(self::$config['randomization.id'])
+            || trim(self::$config['randomization.id']) === '') {
+            $this->markTestSkipped(
+                'testRandomization: no randomization ID specified.'
+            );
+        }
+
         $callInfo = true;
         $randomizationId = self::$config['randomization.id'];
 
@@ -2029,7 +2044,7 @@ class RecordsTest extends TestCase
                 'randomization Test1: confirm target_field_name'
             );
             $this->assertEquals(
-                $expectedTargetFieldAlt = '1',
+                $expectedTargetFieldAlt,
                 $data['target_field_alt'],
                 'randomization Test1: confirm target_field_alt'
             );
