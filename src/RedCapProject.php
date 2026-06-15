@@ -4084,16 +4084,16 @@ class RedCapProject
 
     protected function processReturnAltArgument($returnAlt)
     {
-        if (empty($returnAlt)) {
-            $returnAlt = null;
-        } elseif (isset($returnAlt)) {
-            if ($returnAlt != 'true' && $returnAlt != 'false') {
-                $message = "Invalid value for the randomization Return Alt variable. "
-                    ."Valid values are 'true' and 'false'";
-                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-            }
-        } // @codeCoverageIgnore
+        if ($returnAlt === null || $returnAlt === '') {
+            return null;
+        }
+
+        if (!in_array($returnAlt, ['true', 'false'], true)) {
+            $message = "Invalid value for the randomization Return Alt variable. "
+                ."Valid values are 'true' and 'false'";
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } 
         
         return $returnAlt;
     }

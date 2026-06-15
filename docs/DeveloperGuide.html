@@ -289,6 +289,21 @@ as follows:</p>
 <strong>super.token</strong> to a valid super token value. Note that the tests for project creation
 have no way to delete the projects that are created, so they will need to be deleted
 manually.</p>
+<h4>Setup for Optional Randomization Tests</h4>
+<p>To run the randomization tests, use the following steps:</p>
+<ol>
+<li>In REDCap, create a project for the "Randomization" project test file in the <strong>tests/projects</strong> directory, and import the project test file into that project.</li>
+<li>Request an API token for the project imported in the step above. Make sure that user setting allows API import and export.</li>
+<li>If you have not already done so, copy the "config-example.ini" file to a file named <em>config.ini</em>. Edit <em>config,ini</em> and set <strong>randomization.api.token</strong>
+to the API token created in the previous step.</li>
+<li>In REDCap, edit the project. In the "Applications" section on the left side of screen, click on the <strong>Randomization</strong> link. You should see the <em>Summary</em> tab of the <em>Randomization</em> page that lists one target, _randomization<em>group</em>.</li>
+<li>Make note of the <strong>Randomization ID</strong> for _randomization<em>group</em>.</li>
+<li>Edit the <em>config.ini</em> file and set  <strong>randomization.id</strong> to the _randomization<em>group</em> value.</li>
+<li>In REDCap, return to the "Randomization" page for the project. Click on the <strong>Setup</strong> icon for _randomization<em>group</em>. The "Setup1" tab should appear.</li>
+<li>In section "STEP 3: Upload your allocation table (CSV file)", for <em>Upload allocation table (CSV file) for use in DEVELOPMENT status</em>, 
+browse to the <strong>tests/data</strong> directory where you installed PHPCap and upload the file <strong>randomization_dev_allocation.csv</strong>.
+You should see a brief message that the upload was successful.</li>
+</ol>
 <h4>Set the Timezone</h4>
 <p>Set the timezone property in the <strong>config.ini</strong> file.</p>
 <p>Note: the .gitignore file in PHPCap is set to ignore the <strong>tests/config.ini</strong> file, so that your
