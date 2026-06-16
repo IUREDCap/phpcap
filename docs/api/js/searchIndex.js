@@ -576,6 +576,11 @@ Search.appendIndex(
             "summary": "Renames\u0020the\u0020specified\u0020record\u0020with\u0020the\u0020new\u0020specified\u0020record\u0020ID.",
             "url": "classes/IU-PHPCap-RedCapProject.html#method_renameRecord"
         },                {
+            "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003ArandomizeRecord\u0028\u0029",
+            "name": "randomizeRecord",
+            "summary": "Randomizes\u0020a\u0020record.",
+            "url": "classes/IU-PHPCap-RedCapProject.html#method_randomizeRecord"
+        },                {
             "fqsen": "\\IU\\PHPCap\\RedCapProject\u003A\u003AexportRepeatingInstrumentsAndEvents\u0028\u0029",
             "name": "exportRepeatingInstrumentsAndEvents",
             "summary": "Exports\u0020the\u0020repeating\u0020instruments\u0020and\u0020events.",
